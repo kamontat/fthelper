@@ -202,6 +202,14 @@ docker_manifests:
     image_templates:
       - ghcr.io/kamontat/ftgenerator:amd64
       - ghcr.io/kamontat/ftgenerator:arm64
+  - name_template: ghcr.io/kamontat/ftgenerator:{{ .Tag }}-busybox
+    image_templates:
+      - ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64-busybox
+      - ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64-busybox
+  - name_template: ghcr.io/kamontat/ftgenerator:busybox
+    image_templates:
+      - ghcr.io/kamontat/ftgenerator:amd64-busybox
+      - ghcr.io/kamontat/ftgenerator:arm64-busybox
 
   - name_template: ghcr.io/kamontat/ftmetric:{{ .Tag }}
     image_templates:
@@ -211,6 +219,14 @@ docker_manifests:
     image_templates:
       - ghcr.io/kamontat/ftmetric:amd64
       - ghcr.io/kamontat/ftmetric:arm64
+  - name_template: ghcr.io/kamontat/ftmetric:{{ .Tag }}-busybox
+    image_templates:
+      - ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64-busybox
+      - ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64-busybox
+  - name_template: ghcr.io/kamontat/ftmetric:busybox
+    image_templates:
+      - ghcr.io/kamontat/ftmetric:amd64-busybox
+      - ghcr.io/kamontat/ftmetric:arm64-busybox
 
 release:
   draft: false
