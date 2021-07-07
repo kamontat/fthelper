@@ -36,7 +36,7 @@ dockers:
     ids:
       - ftgenerator
     skip_push: false
-    dockerfile: metrics/Dockerfile.busybox
+    dockerfile: metric/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:amd64"
       - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64"
@@ -56,7 +56,7 @@ dockers:
     ids:
       - ftgenerator
     skip_push: false
-    dockerfile: metrics/Dockerfile.busybox
+    dockerfile: metric/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:arm64"
       - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64"
@@ -77,7 +77,7 @@ dockers:
     ids:
       - ftmetric
     skip_push: false
-    dockerfile: metrics/Dockerfile.busybox
+    dockerfile: metric/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftmetric:amd64"
       - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64"
@@ -91,13 +91,13 @@ dockers:
       - "--build-arg=FTP_SERVER__ARCH=amd64"
       - "--platform=linux/amd64"
     extra_files:
-      - metrics/configs
+      - metric/configs
   - goos: linux
     goarch: arm64
     ids:
       - ftmetric
     skip_push: false
-    dockerfile: metrics/Dockerfile.busybox
+    dockerfile: metric/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftmetric:arm64"
       - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64"
@@ -111,7 +111,7 @@ dockers:
       - "--build-arg=FTP_SERVER__ARCH=arm64"
       - "--platform=linux/arm64"
     extra_files:
-      - metrics/configs
+      - metric/configs
 
 docker_manifests:
   - name_template: ghcr.io/kamontat/ftgenerator:{{ .Tag }}
