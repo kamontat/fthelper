@@ -1,0 +1,151 @@
+# This is an example .goreleaser.yml file with some sane defaults.
+# Make sure to check the documentation at http://goreleaser.com
+
+project_name: fthelper
+
+gomod:
+  proxy: true
+
+builds:
+  - id: ftgenerator
+    binary: ftgenerator
+    dir: generator
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+  - id: ftmetric
+    binary: ftmetric
+    dir: metric
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    ids:
+      - ftgenerator
+    skip_push: false
+    dockerfile: metrics/Dockerfile.busybox
+    image_templates:
+      - "ghcr.io/kamontat/ftgenerator:amd64"
+      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.title=ftgenerator"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.tag={{ .Tag }}"
+      - "--build-arg=FTP_SERVER__ARCH=amd64"
+      - "--platform=linux/amd64"
+    extra_files:
+      - generator/.env.docker
+  - goos: linux
+    goarch: arm64
+    ids:
+      - ftgenerator
+    skip_push: false
+    dockerfile: metrics/Dockerfile.busybox
+    image_templates:
+      - "ghcr.io/kamontat/ftgenerator:arm64"
+      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.title=ftgenerator"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.tag={{ .Tag }}"
+      - "--build-arg=FTP_SERVER__ARCH=arm64"
+      - "--platform=linux/arm64"
+    extra_files:
+      - generator/.env.docker
+
+  - goos: linux
+    goarch: amd64
+    ids:
+      - ftmetric
+    skip_push: false
+    dockerfile: metrics/Dockerfile.busybox
+    image_templates:
+      - "ghcr.io/kamontat/ftmetric:amd64"
+      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.title=ftmetric"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.tag={{ .Tag }}"
+      - "--build-arg=FTP_SERVER__ARCH=amd64"
+      - "--platform=linux/amd64"
+    extra_files:
+      - metrics/configs
+  - goos: linux
+    goarch: arm64
+    ids:
+      - ftmetric
+    skip_push: false
+    dockerfile: metrics/Dockerfile.busybox
+    image_templates:
+      - "ghcr.io/kamontat/ftmetric:arm64"
+      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.title=ftmetric"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.tag={{ .Tag }}"
+      - "--build-arg=FTP_SERVER__ARCH=arm64"
+      - "--platform=linux/arm64"
+    extra_files:
+      - metrics/configs
+
+docker_manifests:
+  - name_template: ghcr.io/kamontat/ftgenerator:{{ .Tag }}
+    image_templates:
+      - ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64
+      - ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64
+  - name_template: ghcr.io/kamontat/ftgenerator:latest
+    image_templates:
+      - ghcr.io/kamontat/ftgenerator:amd64
+      - ghcr.io/kamontat/ftgenerator:arm64
+
+  - name_template: ghcr.io/kamontat/ftmetric:{{ .Tag }}
+    image_templates:
+      - ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64
+      - ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64
+  - name_template: ghcr.io/kamontat/ftmetric:latest
+    image_templates:
+      - ghcr.io/kamontat/ftmetric:amd64
+      - ghcr.io/kamontat/ftmetric:arm64
+
+release:
+  draft: false
+  prerelease: auto
+  name_template: "{{ .Tag }}"
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  name_template: "{{ .Tag }}-snapshot"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^chore"
+      - "^refac"

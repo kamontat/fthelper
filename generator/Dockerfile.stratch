@@ -1,0 +1,6 @@
+FROM scratch
+
+WORKDIR /fth
+COPY ftgenerator /fth
+
+ENTRYPOINT ["/fth/ftgenerator", "--pwd", "/fth"]

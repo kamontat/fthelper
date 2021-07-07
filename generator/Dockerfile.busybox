@@ -1,0 +1,6 @@
+FROM busybox:1.33.1
+
+WORKDIR /fth
+COPY ftgenerator /fth
+
+ENTRYPOINT ["/fth/ftgenerator", "--pwd", "/fth"]
