@@ -128,3 +128,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/go,vim,linux,macos,windows,visualstudiocode
+
+.env/*
+!.env/.env.default

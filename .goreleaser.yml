@@ -50,7 +50,7 @@ dockers:
       - "--build-arg=FTP_SERVER__ARCH=amd64"
       - "--platform=linux/amd64"
     extra_files:
-      - generator/.env.docker
+      - generator/.env/.env.docker
   - goos: linux
     goarch: arm64
     ids:
@@ -70,7 +70,7 @@ dockers:
       - "--build-arg=FTP_SERVER__ARCH=arm64"
       - "--platform=linux/arm64"
     extra_files:
-      - generator/.env.docker
+      - generator/.env/.env.docker
 
   - goos: linux
     goarch: amd64
