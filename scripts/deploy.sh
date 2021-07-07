@@ -20,61 +20,32 @@ error() {
   exit 1
 }
 
-directories=()
+echo "1. list all tags that already exist:"
+git tag -l --column "v*"
 
-echo "1. ftgenerator"
-echo "2. ftmetric"
-echo "3. all above"
-printf "Choose Application to release (1|2|3): "
-read -rn 1 app
-echo
+version=""
+valid_tag=false
+while ! $valid_tag; do
+  printf "2. enter version (v0.0.0): "
+  read -r version
+  if [[ $version == "" ]]; then
+    echo "exit"
+    exit 0
+  fi
 
-if [[ "$app" == 1 ]]; then
-  directories+=("generator")
-elif [[ "$app" == 2 ]]; then
-  directories+=("metric")
-elif [[ "$app" == 3 ]]; then
-  directories+=("generator" "metric")
-else
-  error "your input is not match is supported number, try again"
-fi
-
-root="$PWD"
-for directory in "${directories[@]}"; do
-  name="ft$directory"
-  echo "Publishing $name:"
-  cd "$root/$directory" || exit 1
-
-  echo "  1. list all tags that already exist:"
-  git tag -l --column "$name/*"
-
-  version=""
-  valid_tag=false
-  while ! $valid_tag; do
-    printf "  2. select version for %s (v0.0.0): " "$name"
-    read -r version
-    if [[ $version == "" ]]; then
-      echo "exit"
-      exit 0
+  if [[ "$version" =~ ^v ]]; then # must has prefix v
+    if ! git tag | grep -q "^$version$"; then
+      valid_tag=true
     fi
-
-    if [[ "$version" =~ ^v ]]; then # must has prefix v
-      if ! git tag | grep -q "^$name/$version$"; then
-        valid_tag=true
-      fi
-    fi
-  done
-  version="$name/$version"
-
-  echo "  3. commit with release message"
-  git add .
-  git commit --allow-empty -m "chore(release): published '$version'"
-
-  echo "  4. create git tag called '$version'"
-  git tag "$version"
-
-  cd "$root" || exit 1
+  fi
 done
 
-echo "push all changes and tag to Github repository"
+echo "3. commit with release message"
+git add .
+git commit --allow-empty -m "chore(release): published '$version'"
+
+echo "4. create git tag called '$version'"
+git tag "$version"
+
+echo "5. push all changes and tag to Github repository"
 git push && git push --tag

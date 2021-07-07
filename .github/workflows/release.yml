@@ -36,6 +36,12 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
+      - name: Tidy module in generator
+        working-directory: generator
+        run: go mod tidy
+      - name: Tidy module in metric
+        working-directory: metric
+        run: go mod tidy
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
