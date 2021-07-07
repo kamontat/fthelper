@@ -21,7 +21,7 @@ error() {
 }
 
 echo "1. list all tags that already exist:"
-git tag -l --column "v*"
+git tag -l --column "v*" --sort v:refname
 
 version=""
 valid_tag=false
