@@ -36,6 +36,7 @@ dockers:
     ids:
       - ftgenerator
     skip_push: false
+    use: buildx
     dockerfile: generator/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:amd64-busybox"
@@ -56,6 +57,7 @@ dockers:
     ids:
       - ftgenerator
     skip_push: false
+    use: buildx
     dockerfile: generator/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:amd64"
@@ -76,6 +78,7 @@ dockers:
     ids:
       - ftgenerator
     skip_push: false
+    use: buildx
     dockerfile: generator/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:arm64-busybox"
@@ -96,6 +99,7 @@ dockers:
     ids:
       - ftgenerator
     skip_push: false
+    use: buildx
     dockerfile: generator/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:arm64"
@@ -117,6 +121,7 @@ dockers:
     ids:
       - ftmetric
     skip_push: false
+    use: buildx
     dockerfile: metric/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftmetric:amd64-busybox"
@@ -137,6 +142,7 @@ dockers:
     ids:
       - ftmetric
     skip_push: false
+    use: buildx
     dockerfile: metric/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftmetric:amd64"
@@ -157,6 +163,7 @@ dockers:
     ids:
       - ftmetric
     skip_push: false
+    use: buildx
     dockerfile: metric/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftmetric:arm64-busybox"
@@ -177,6 +184,7 @@ dockers:
     ids:
       - ftmetric
     skip_push: false
+    use: buildx
     dockerfile: metric/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftmetric:arm64"
