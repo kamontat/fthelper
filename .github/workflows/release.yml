@@ -41,6 +41,6 @@ jobs:
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --rm-dist --parallelism 1
+          args: release --rm-dist --parallelism 1 --debug
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
