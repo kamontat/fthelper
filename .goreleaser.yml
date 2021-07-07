@@ -36,7 +36,27 @@ dockers:
     ids:
       - ftgenerator
     skip_push: false
-    dockerfile: metric/Dockerfile.busybox
+    dockerfile: generator/Dockerfile.busybox
+    image_templates:
+      - "ghcr.io/kamontat/ftgenerator:amd64-busybox"
+      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64-busybox"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.title=ftgenerator"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.tag={{ .Tag }}"
+      - "--build-arg=FTH_SERVER__ARCH=amd64"
+      - "--platform=linux/amd64"
+    extra_files:
+      - generator/.env/.env.docker
+  - goos: linux
+    goarch: amd64
+    ids:
+      - ftgenerator
+    skip_push: false
+    dockerfile: generator/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:amd64"
       - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64"
@@ -47,7 +67,7 @@ dockers:
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
-      - "--build-arg=FTP_SERVER__ARCH=amd64"
+      - "--build-arg=FTH_SERVER__ARCH=amd64"
       - "--platform=linux/amd64"
     extra_files:
       - generator/.env/.env.docker
@@ -56,7 +76,27 @@ dockers:
     ids:
       - ftgenerator
     skip_push: false
-    dockerfile: metric/Dockerfile.busybox
+    dockerfile: generator/Dockerfile.busybox
+    image_templates:
+      - "ghcr.io/kamontat/ftgenerator:arm64-busybox"
+      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64-busybox"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.title=ftgenerator"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.tag={{ .Tag }}"
+      - "--build-arg=FTH_SERVER__ARCH=arm64"
+      - "--platform=linux/arm64"
+    extra_files:
+      - generator/.env/.env.docker
+  - goos: linux
+    goarch: arm64
+    ids:
+      - ftgenerator
+    skip_push: false
+    dockerfile: generator/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:arm64"
       - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64"
@@ -67,7 +107,7 @@ dockers:
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
-      - "--build-arg=FTP_SERVER__ARCH=arm64"
+      - "--build-arg=FTH_SERVER__ARCH=arm64"
       - "--platform=linux/arm64"
     extra_files:
       - generator/.env/.env.docker
@@ -79,6 +119,26 @@ dockers:
     skip_push: false
     dockerfile: metric/Dockerfile.busybox
     image_templates:
+      - "ghcr.io/kamontat/ftmetric:amd64-busybox"
+      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64-busybox"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.title=ftmetric"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.tag={{ .Tag }}"
+      - "--build-arg=FTH_SERVER__ARCH=amd64"
+      - "--platform=linux/amd64"
+    extra_files:
+      - metric/configs
+  - goos: linux
+    goarch: amd64
+    ids:
+      - ftmetric
+    skip_push: false
+    dockerfile: metric/Dockerfile.stratch
+    image_templates:
       - "ghcr.io/kamontat/ftmetric:amd64"
       - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64"
     build_flag_templates:
@@ -88,7 +148,7 @@ dockers:
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
-      - "--build-arg=FTP_SERVER__ARCH=amd64"
+      - "--build-arg=FTH_SERVER__ARCH=amd64"
       - "--platform=linux/amd64"
     extra_files:
       - metric/configs
@@ -99,6 +159,26 @@ dockers:
     skip_push: false
     dockerfile: metric/Dockerfile.busybox
     image_templates:
+      - "ghcr.io/kamontat/ftmetric:arm64-busybox"
+      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64-busybox"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.title=ftmetric"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.tag={{ .Tag }}"
+      - "--build-arg=FTH_SERVER__ARCH=arm64"
+      - "--platform=linux/arm64"
+    extra_files:
+      - metric/configs
+  - goos: linux
+    goarch: arm64
+    ids:
+      - ftmetric
+    skip_push: false
+    dockerfile: metric/Dockerfile.stratch
+    image_templates:
       - "ghcr.io/kamontat/ftmetric:arm64"
       - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64"
     build_flag_templates:
@@ -108,7 +188,7 @@ dockers:
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
-      - "--build-arg=FTP_SERVER__ARCH=arm64"
+      - "--build-arg=FTH_SERVER__ARCH=arm64"
       - "--platform=linux/arm64"
     extra_files:
       - metric/configs
