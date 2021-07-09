@@ -1,4 +1,4 @@
-module github.com/kamontat/fthelper/generator
+module github.com/kamontat/fthelper/generator/v4
 
 go 1.16
 
