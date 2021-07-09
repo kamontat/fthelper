@@ -8,3 +8,5 @@ This is simple server for expose [freqtrade](https://freqtrade.io) to prometheus
 2. Minor change on option. More detail will be on CHANGELOG
 3. Some option is changed. More detail on --help command
 4. All metric with `ftpersonal_` name, changed to `fthelper_`
+5. Docker image now been published to Github packages instead
+    - change image name from `kamontat/ftmetric` to `ghcr.io/kamontat/ftmetric`
