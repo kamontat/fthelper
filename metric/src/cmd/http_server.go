@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/kamontat/fthelper/metric/src/collectors"
-	"github.com/kamontat/fthelper/metric/src/freqtrade"
-	"github.com/kamontat/fthelper/metric/src/metrics"
+	"github.com/kamontat/fthelper/metric/v4/src/collectors"
+	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
+	"github.com/kamontat/fthelper/metric/v4/src/metrics"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"

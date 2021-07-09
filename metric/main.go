@@ -4,8 +4,8 @@ import (
 	"context"
 	"os"
 
-	"github.com/kamontat/fthelper/metric/src/cmd"
-	"github.com/kamontat/fthelper/metric/src/freqtrade"
+	"github.com/kamontat/fthelper/metric/v4/src/cmd"
+	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
 	"github.com/kamontat/fthelper/shared/caches"
 	"github.com/kamontat/fthelper/shared/commandline"
 	"github.com/kamontat/fthelper/shared/commandline/commands"

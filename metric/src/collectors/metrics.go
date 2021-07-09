@@ -1,7 +1,7 @@
 package collectors
 
 import (
-	"github.com/kamontat/fthelper/metric/src/connection"
+	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 	"github.com/prometheus/client_golang/prometheus"
 )

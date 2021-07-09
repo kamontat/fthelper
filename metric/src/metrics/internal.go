@@ -1,9 +1,9 @@
 package metrics
 
 import (
-	"github.com/kamontat/fthelper/metric/src/collectors"
-	"github.com/kamontat/fthelper/metric/src/connection"
-	"github.com/kamontat/fthelper/metric/src/constants"
+	"github.com/kamontat/fthelper/metric/v4/src/collectors"
+	"github.com/kamontat/fthelper/metric/v4/src/connection"
+	"github.com/kamontat/fthelper/metric/v4/src/constants"
 	"github.com/kamontat/fthelper/shared/caches"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 	"github.com/prometheus/client_golang/prometheus"

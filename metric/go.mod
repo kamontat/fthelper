@@ -1,4 +1,4 @@
-module github.com/kamontat/fthelper/metric
+module github.com/kamontat/fthelper/metric/v4
 
 go 1.16
 
