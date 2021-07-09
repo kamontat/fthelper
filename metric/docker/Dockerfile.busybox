@@ -1,0 +1,12 @@
+FROM busybox:1.33.1
+
+WORKDIR /fth
+# copy compiled script
+COPY ftmetric /fth
+# copy config and environment file
+COPY metric /fth
+
+ENTRYPOINT [ \
+  "/fth/ftmetric", \
+  "--pwd", "/fth", \
+  "--envs", "/fth/.env.docker"]

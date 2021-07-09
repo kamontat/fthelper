@@ -1,6 +1,0 @@
-FROM busybox:1.33.1
-
-WORKDIR /fth
-COPY ftmetric /fth
-
-ENTRYPOINT ["/fth/ftmetric", "--pwd", "/fth"]

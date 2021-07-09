@@ -1,0 +1,12 @@
+FROM scratch
+
+WORKDIR /fth
+# copy compiled script
+COPY ftgenerator /fth
+# copy config and environment file
+COPY generator /fth
+
+ENTRYPOINT [ \
+  "/fth/ftgenerator", \
+  "--pwd", "/fth", \
+  "--envs", "/fth/.env.docker"]

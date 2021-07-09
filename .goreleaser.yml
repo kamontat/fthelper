@@ -37,7 +37,7 @@ dockers:
       - ftgenerator
     skip_push: false
     use: buildx
-    dockerfile: generator/Dockerfile.busybox
+    dockerfile: generator/docker/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:amd64-busybox"
       - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64-busybox"
@@ -51,14 +51,15 @@ dockers:
       - "--build-arg=FTH_SERVER__ARCH=amd64"
       - "--platform=linux/amd64"
     extra_files:
-      - generator/.env/.env.docker
+      - generator/.env.docker
+      - generator/configs
   - goos: linux
     goarch: amd64
     ids:
       - ftgenerator
     skip_push: false
     use: buildx
-    dockerfile: generator/Dockerfile.stratch
+    dockerfile: generator/docker/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:amd64"
       - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64"
@@ -72,14 +73,15 @@ dockers:
       - "--build-arg=FTH_SERVER__ARCH=amd64"
       - "--platform=linux/amd64"
     extra_files:
-      - generator/.env/.env.docker
+      - generator/.env.docker
+      - generator/configs
   - goos: linux
     goarch: arm64
     ids:
       - ftgenerator
     skip_push: false
     use: buildx
-    dockerfile: generator/Dockerfile.busybox
+    dockerfile: generator/docker/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:arm64-busybox"
       - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64-busybox"
@@ -93,14 +95,15 @@ dockers:
       - "--build-arg=FTH_SERVER__ARCH=arm64"
       - "--platform=linux/arm64"
     extra_files:
-      - generator/.env/.env.docker
+      - generator/.env.docker
+      - generator/configs
   - goos: linux
     goarch: arm64
     ids:
       - ftgenerator
     skip_push: false
     use: buildx
-    dockerfile: generator/Dockerfile.stratch
+    dockerfile: generator/docker/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftgenerator:arm64"
       - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64"
@@ -114,7 +117,8 @@ dockers:
       - "--build-arg=FTH_SERVER__ARCH=arm64"
       - "--platform=linux/arm64"
     extra_files:
-      - generator/.env/.env.docker
+      - generator/.env.docker
+      - generator/configs
 
   - goos: linux
     goarch: amd64
@@ -122,7 +126,7 @@ dockers:
       - ftmetric
     skip_push: false
     use: buildx
-    dockerfile: metric/Dockerfile.busybox
+    dockerfile: metric/docker/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftmetric:amd64-busybox"
       - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64-busybox"
@@ -136,6 +140,7 @@ dockers:
       - "--build-arg=FTH_SERVER__ARCH=amd64"
       - "--platform=linux/amd64"
     extra_files:
+      - metric/.env.docker
       - metric/configs
   - goos: linux
     goarch: amd64
@@ -143,7 +148,7 @@ dockers:
       - ftmetric
     skip_push: false
     use: buildx
-    dockerfile: metric/Dockerfile.stratch
+    dockerfile: metric/docker/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftmetric:amd64"
       - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64"
@@ -157,6 +162,7 @@ dockers:
       - "--build-arg=FTH_SERVER__ARCH=amd64"
       - "--platform=linux/amd64"
     extra_files:
+      - metric/.env.docker
       - metric/configs
   - goos: linux
     goarch: arm64
@@ -164,7 +170,7 @@ dockers:
       - ftmetric
     skip_push: false
     use: buildx
-    dockerfile: metric/Dockerfile.busybox
+    dockerfile: metric/docker/Dockerfile.busybox
     image_templates:
       - "ghcr.io/kamontat/ftmetric:arm64-busybox"
       - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64-busybox"
@@ -178,6 +184,7 @@ dockers:
       - "--build-arg=FTH_SERVER__ARCH=arm64"
       - "--platform=linux/arm64"
     extra_files:
+      - metric/.env.docker
       - metric/configs
   - goos: linux
     goarch: arm64
@@ -185,7 +192,7 @@ dockers:
       - ftmetric
     skip_push: false
     use: buildx
-    dockerfile: metric/Dockerfile.stratch
+    dockerfile: metric/docker/Dockerfile.stratch
     image_templates:
       - "ghcr.io/kamontat/ftmetric:arm64"
       - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64"
@@ -199,6 +206,7 @@ dockers:
       - "--build-arg=FTH_SERVER__ARCH=arm64"
       - "--platform=linux/arm64"
     extra_files:
+      - metric/.env.docker
       - metric/configs
 
 docker_manifests:

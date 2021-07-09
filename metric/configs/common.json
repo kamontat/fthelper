@@ -1,0 +1,34 @@
+{
+  "freqtrade": {
+    "url": "http://localhost:8080",
+    "apiver": "v1",
+    "username": "admin",
+    "password": "",
+    "cluster": "1A",
+    "query": {
+      "logs": {
+        "limit": 100
+      }
+    },
+    "cache": {
+      "ping": "1s",
+      "version": "10m",
+      "balance": "3m",
+      "count": "1m",
+      "show_config": "1m",
+      "profit": "5m",
+      "locks": "5m",
+      "whitelist": "15m",
+      "performance": "1m",
+      "logs": "1m"
+    }
+  },
+  "server": {
+    "port": 8090,
+    "metrics-path": "/metrics"
+  },
+  "warmup": {
+    "enabled": true,
+    "interval": "30s"
+  }
+}

@@ -1,6 +1,0 @@
-FROM scratch
-
-WORKDIR /fth
-COPY ftmetric /fth
-
-ENTRYPOINT ["/fth/ftmetric", "--pwd", "/fth"]
