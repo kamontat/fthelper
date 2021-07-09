@@ -30,6 +30,16 @@ builds:
       - amd64
       - arm64
 
+archives:
+  - id: ftgenerator
+    format: binary
+    builds:
+      - ftgenerator
+  - id: ftmetric
+    format: binary
+    builds:
+      - ftmetric
+
 dockers:
   - goos: linux
     goarch: amd64
@@ -39,8 +49,8 @@ dockers:
     use: buildx
     dockerfile: generator/docker/Dockerfile.busybox
     image_templates:
-      - "ghcr.io/kamontat/ftgenerator:amd64-busybox"
-      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64-busybox"
+      - "ghcr.io/kamontat/ftgenerator:amd64"
+      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.title=ftgenerator"
@@ -61,8 +71,8 @@ dockers:
     use: buildx
     dockerfile: generator/docker/Dockerfile.stratch
     image_templates:
-      - "ghcr.io/kamontat/ftgenerator:amd64"
-      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64"
+      - "ghcr.io/kamontat/ftgenerator:amd64-stratch"
+      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64-stratch"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.title=ftgenerator"
@@ -83,8 +93,8 @@ dockers:
     use: buildx
     dockerfile: generator/docker/Dockerfile.busybox
     image_templates:
-      - "ghcr.io/kamontat/ftgenerator:arm64-busybox"
-      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64-busybox"
+      - "ghcr.io/kamontat/ftgenerator:arm64"
+      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.title=ftgenerator"
@@ -105,8 +115,8 @@ dockers:
     use: buildx
     dockerfile: generator/docker/Dockerfile.stratch
     image_templates:
-      - "ghcr.io/kamontat/ftgenerator:arm64"
-      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64"
+      - "ghcr.io/kamontat/ftgenerator:arm64-stratch"
+      - "ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64-stratch"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.title=ftgenerator"
@@ -128,8 +138,8 @@ dockers:
     use: buildx
     dockerfile: metric/docker/Dockerfile.busybox
     image_templates:
-      - "ghcr.io/kamontat/ftmetric:amd64-busybox"
-      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64-busybox"
+      - "ghcr.io/kamontat/ftmetric:amd64"
+      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.title=ftmetric"
@@ -150,8 +160,8 @@ dockers:
     use: buildx
     dockerfile: metric/docker/Dockerfile.stratch
     image_templates:
-      - "ghcr.io/kamontat/ftmetric:amd64"
-      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64"
+      - "ghcr.io/kamontat/ftmetric:amd64-stratch"
+      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64-stratch"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.title=ftmetric"
@@ -172,8 +182,8 @@ dockers:
     use: buildx
     dockerfile: metric/docker/Dockerfile.busybox
     image_templates:
-      - "ghcr.io/kamontat/ftmetric:arm64-busybox"
-      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64-busybox"
+      - "ghcr.io/kamontat/ftmetric:arm64"
+      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.title=ftmetric"
@@ -194,8 +204,8 @@ dockers:
     use: buildx
     dockerfile: metric/docker/Dockerfile.stratch
     image_templates:
-      - "ghcr.io/kamontat/ftmetric:arm64"
-      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64"
+      - "ghcr.io/kamontat/ftmetric:arm64-stratch"
+      - "ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64-stratch"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.title=ftmetric"
@@ -218,14 +228,14 @@ docker_manifests:
     image_templates:
       - ghcr.io/kamontat/ftgenerator:amd64
       - ghcr.io/kamontat/ftgenerator:arm64
-  - name_template: ghcr.io/kamontat/ftgenerator:{{ .Tag }}-busybox
+  - name_template: ghcr.io/kamontat/ftgenerator:{{ .Tag }}-stratch
     image_templates:
-      - ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64-busybox
-      - ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64-busybox
-  - name_template: ghcr.io/kamontat/ftgenerator:busybox
+      - ghcr.io/kamontat/ftgenerator:{{ .Tag }}-amd64-stratch
+      - ghcr.io/kamontat/ftgenerator:{{ .Tag }}-arm64-stratch
+  - name_template: ghcr.io/kamontat/ftgenerator:stratch
     image_templates:
-      - ghcr.io/kamontat/ftgenerator:amd64-busybox
-      - ghcr.io/kamontat/ftgenerator:arm64-busybox
+      - ghcr.io/kamontat/ftgenerator:amd64-stratch
+      - ghcr.io/kamontat/ftgenerator:arm64-stratch
 
   - name_template: ghcr.io/kamontat/ftmetric:{{ .Tag }}
     image_templates:
@@ -235,14 +245,14 @@ docker_manifests:
     image_templates:
       - ghcr.io/kamontat/ftmetric:amd64
       - ghcr.io/kamontat/ftmetric:arm64
-  - name_template: ghcr.io/kamontat/ftmetric:{{ .Tag }}-busybox
+  - name_template: ghcr.io/kamontat/ftmetric:{{ .Tag }}-stratch
     image_templates:
-      - ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64-busybox
-      - ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64-busybox
-  - name_template: ghcr.io/kamontat/ftmetric:busybox
+      - ghcr.io/kamontat/ftmetric:{{ .Tag }}-amd64-stratch
+      - ghcr.io/kamontat/ftmetric:{{ .Tag }}-arm64-stratch
+  - name_template: ghcr.io/kamontat/ftmetric:stratch
     image_templates:
-      - ghcr.io/kamontat/ftmetric:amd64-busybox
-      - ghcr.io/kamontat/ftmetric:arm64-busybox
+      - ghcr.io/kamontat/ftmetric:amd64-stratch
+      - ghcr.io/kamontat/ftmetric:arm64-stratch
 
 release:
   draft: false
