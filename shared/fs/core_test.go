@@ -9,7 +9,7 @@ import (
 
 func TestCore(t *testing.T) {
 	var v, err = fs.Build("hello", maps.Mapper{
-		"variable": maps.Mapper{
+		"variables": maps.Mapper{
 			"a": "/etc/freqtrade",
 		},
 		"hello": maps.Mapper{

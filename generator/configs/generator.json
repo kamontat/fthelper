@@ -9,6 +9,23 @@
       "merger": {
         "internal": 1
       }
+    },
+    {
+      "display": "create-dir",
+      "type": "create",
+      "output": "test-dir"
+    },
+    {
+      "display": "hello file copy",
+      "type": "copy",
+      "input": "copy-file-in",
+      "output": "copy-file-out"
+    },
+    {
+      "display": "hello directory copy",
+      "type": "copy",
+      "input": "copy-dir-in",
+      "output": "copy-dir-out"
     }
   ]
 }

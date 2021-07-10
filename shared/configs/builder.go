@@ -83,7 +83,7 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	}
 
 	// 1. load config from directories and files
-	fromFile, err := LoadConfigFromFileSystem(configs.Multiple(), result.Mi("fs").Mi("variable"), b.strategy)
+	fromFile, err := LoadConfigFromFileSystem(configs.Multiple(), result.Mi("fs").Mi("variables"), b.strategy)
 	if err != nil {
 		return result, err
 	}

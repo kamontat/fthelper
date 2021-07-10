@@ -1,6 +1,8 @@
 package configs
 
 import (
+	"fmt"
+
 	"github.com/kamontat/fthelper/shared/fs"
 	"github.com/kamontat/fthelper/shared/maps"
 	"github.com/kamontat/fthelper/shared/xtemplates"
@@ -37,6 +39,7 @@ func LoadConfigFromFileSystem(files []fs.FileSystem, fsVariable maps.Mapper, str
 			// convert content to mapper
 			output, err := maps.FromJson([]byte(parsedContent))
 			if err != nil {
+				fmt.Println(parsedContent)
 				return result, err
 			}
 

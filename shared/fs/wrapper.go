@@ -21,6 +21,11 @@ func (w *wrapper) Multiple() []FileSystem {
 	return w.fs
 }
 
+// All will return every file system in wrapper without validation
+func (w *wrapper) All() []FileSystem {
+	return w.fs
+}
+
 func newWrapper(mode Mode, fs []FileSystem) *wrapper {
 	return &wrapper{
 		Mode: mode,

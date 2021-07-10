@@ -23,7 +23,7 @@ func SupportConfig(p *PluginParameter) error {
 		Default: wd,
 		Usage:   "current directory",
 		Action: func(data string) maps.Mapper {
-			return maps.New().Set("fs.variable.current", data)
+			return maps.New().Set("fs.variables.current", data)
 		},
 	})
 

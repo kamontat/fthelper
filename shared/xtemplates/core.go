@@ -10,6 +10,7 @@ import (
 func New(name string) *template.Template {
 	return template.New(name).
 		Funcs(stringFuncs).
+		Funcs(jsonFuncs).
 		Option("missingkey=error")
 }
 

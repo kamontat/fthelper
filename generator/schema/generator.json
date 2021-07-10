@@ -46,11 +46,50 @@
                 }
               }
             },
-            "required": ["type", "templates", "output"]
+            "required": ["type", "templates", "output"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "create"
+              },
+              "display": {
+                "type": "string",
+                "description": "name to display in summary log"
+              },
+              "output": {
+                "type": "string"
+              }
+            },
+            "required": ["type", "output"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "copy"
+              },
+              "display": {
+                "type": "string",
+                "description": "name to display in summary log"
+              },
+              "input": {
+                "type": "string"
+              },
+              "output": {
+                "type": "string"
+              }
+            },
+            "required": ["type", "input", "output"],
+            "additionalProperties": false
           }
         ]
-      },
-      "additionalItems": true
+      }
     }
   },
   "additionalProperties": true

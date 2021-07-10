@@ -1,14 +1,58 @@
 {
   "fs": {
+    "variables": {
+      "test": "test"
+    },
     "default-freqtrade-config": {
       "type": "file",
       "mode": "multiple",
-      "fullpath": ["{{ .current }}/.templates/configs/test.json", "{{ .current }}/.templates/configs/test-2.json"]
+      "fullpath": [
+        "{{ .current }}/.templates/configs/{{ .test }}.json",
+        "{{ .current }}/.templates/configs/test-2.json"
+      ]
     },
     "config-json": {
       "type": "file",
       "mode": "single",
-      "fullpath": "{{ .current }}/.freqtrade/user_data/config.json"
+      "paths": ["{{ .current }}", ".freqtrade", "user_data", "config.json"]
+    },
+    "test-dir": {
+      "type": "directory",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.freqtrade/dirs/test"
+    },
+    "copy-file-in": {
+      "type": "file",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.templates/test-copy/files.txt"
+    },
+    "copy-file-out": {
+      "type": "file",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.freqtrade/copied.txt"
+    },
+    "copy-dir-in": {
+      "type": "directory",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.templates/test-copy/nested"
+    },
+    "copy-dir-out": {
+      "type": "directory",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.freqtrade/copied"
+    },
+    "test-multiple-fullpath": {
+      "type": "file",
+      "mode": "multiple",
+      "fullpath": ["/etc/freqtrade", "/etc/test"]
+    },
+    "test-multiple-paths": {
+      "type": "file",
+      "mode": "multiple",
+      "paths": [
+        ["/etc", "freqtrade"],
+        ["/freqtrade", "hello"]
+      ]
     }
   }
 }

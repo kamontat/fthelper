@@ -72,7 +72,10 @@ func (f *file) Build() error {
 
 	// normalize path array
 	f.paths = toPaths(path.Clean(f.Abs()))
-	return nil
+
+	// create empty file (touch)
+	_, err = f.Writer()
+	return err
 }
 
 func (f *file) ReadDir() ([]FileSystem, error) {

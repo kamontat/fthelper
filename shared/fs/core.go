@@ -8,7 +8,7 @@ import (
 
 // {
 //   "fs": {
-//     "variable": {
+//     "variables": {
 //       "current": "/etc",
 //       "a": "/go/to/a"
 //     },
@@ -50,16 +50,16 @@ import (
 // 1. Try to get `fullpath` if any
 // 2. Try to build fullpath with `paths`
 func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
-	var variable = fsMapper.Mi("variable")
+	var variable = fsMapper.Mi("variables")
 	var m = fsMapper.Mi(name)
 
 	ty, ok := ToType(m.Si("type"))
 	if !ok {
-		return nil, fmt.Errorf("cannot get type of file-system, (%v)", m)
+		return nil, fmt.Errorf("cannot get type of '%s' file-system, (%v)", name, m)
 	}
 	mode, ok := ToMode(m.Si("mode"))
 	if !ok {
-		return nil, fmt.Errorf("cannot get mode of file-system, (%v)", m)
+		return nil, fmt.Errorf("cannot get mode of '%s' file-system, (%v)", name, m)
 	}
 
 	switch mode {
@@ -90,4 +90,12 @@ func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
 	}
 
 	return nil, fmt.Errorf("cannot found builder of following data (type=%s, mode=%s)", ty, mode)
+}
+
+func Next(fs FileSystem, next ...string) []string {
+	var extra = fs.Paths()
+	for _, n := range next {
+		extra = append(extra, toPaths(n)...)
+	}
+	return extra
 }

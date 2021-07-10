@@ -1,6 +1,7 @@
 package errors
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 )
@@ -51,8 +52,15 @@ func (h *Handler) String() string {
 	return str.String()
 }
 
+func (h *Handler) Error() error {
+	if h.HasError() {
+		return errors.New(h.String())
+	}
+	return nil
+}
+
 func (h *Handler) Panic() {
 	if h.HasError() {
-		panic(h.First())
+		panic(h.Error())
 	}
 }

@@ -15,7 +15,7 @@ func Parse(config maps.Mapper) (*runners.Collection, error) {
 			log.Warn("generator %v is not map", i)
 		}
 
-		var runner, err = GetRunner(mapper, config.Mi("fs"))
+		var runner, err = GetRunner(mapper, config)
 		if err != nil {
 			return collection, err
 		}
