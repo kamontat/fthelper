@@ -70,7 +70,7 @@ func (b *Builder) updateResult(t string, base, input maps.Mapper) {
 }
 
 func (b *Builder) Build() (maps.Mapper, error) {
-	var result = maps.Merger(maps.New()).SetConfig(b.strategy).Add(b.config).Merge()
+	var result = maps.Merger(maps.New()).Add(b.config).SetConfig(b.strategy).Merge()
 	var args = make([]string, 0)
 	for _, v := range result.Mi("internal").Ai("args") {
 		args = append(args, v.(string))
@@ -83,7 +83,7 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	}
 
 	// 1. load config from directories and files
-	fromFile, err := LoadConfigFromFileSystem(configs.Multiple(), result.Mi("fs").Mi("variables"), b.strategy)
+	fromFile, err := LoadConfigFromFileSystem(configs.Multiple(), maps.New(), b.strategy) // create empty data to not pass template yet
 	if err != nil {
 		return result, err
 	}

@@ -1,14 +1,12 @@
 package configs
 
 import (
-	"fmt"
-
 	"github.com/kamontat/fthelper/shared/fs"
 	"github.com/kamontat/fthelper/shared/maps"
 	"github.com/kamontat/fthelper/shared/xtemplates"
 )
 
-func LoadConfigFromFileSystem(files []fs.FileSystem, fsVariable maps.Mapper, strategy maps.Mapper) (maps.Mapper, error) {
+func LoadConfigFromFileSystem(files []fs.FileSystem, data maps.Mapper, strategy maps.Mapper) (maps.Mapper, error) {
 	var result = maps.New()
 	for _, file := range files {
 		if file.IsDir() {
@@ -17,7 +15,7 @@ func LoadConfigFromFileSystem(files []fs.FileSystem, fsVariable maps.Mapper, str
 				return result, err
 			}
 
-			output, err := LoadConfigFromFileSystem(files, fsVariable, strategy)
+			output, err := LoadConfigFromFileSystem(files, data, strategy)
 			if err != nil {
 				return result, err
 			}
@@ -30,16 +28,19 @@ func LoadConfigFromFileSystem(files []fs.FileSystem, fsVariable maps.Mapper, str
 				return result, err
 			}
 
-			// compile template data
-			parsedContent, err := xtemplates.Text(string(content), fsVariable)
-			if err != nil {
-				return result, err
+			// compile template data only if data is not empty
+			// If data is empty, then no point to parse templates
+			if !data.IsEmpty() {
+				str, err := xtemplates.Text(string(content), data)
+				if err != nil {
+					return result, err
+				}
+				content = []byte(str)
 			}
 
 			// convert content to mapper
-			output, err := maps.FromJson([]byte(parsedContent))
+			output, err := maps.FromJson(content)
 			if err != nil {
-				fmt.Println(parsedContent)
 				return result, err
 			}
 
