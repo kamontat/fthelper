@@ -1,0 +1,45 @@
+{
+  "fs": {
+    "variable": {
+      "template": "{{ .current }}/templates",
+      "freqtrade": "{{ .current }}/freqtrade"
+    },
+    "configs": {
+      "type": "file",
+      "mode": "multiple",
+      "fullpath": ["{{ .template }}/configs/base.json"]
+    },
+    "userdata": {
+      "type": "directory",
+      "mode": "single",
+      "fullpath": ["{{ .template }}/configs/base.json"]
+    }
+  },
+  "freqtrade": {
+    "configs": [
+      {
+        "name": "abc",
+        "templates": "configs",
+        "output": "userdata"
+      }
+    ],
+    "dockercompose": {
+      "freqtrade": [
+        {
+          "cluster": "1A",
+          "configs": ["abc"]
+        }
+      ],
+      "ftmetric": true,
+      "postgres": {
+        "enabled": true,
+        "version": "v2.28.1"
+      },
+      "prometheus": true,
+      "grafana": true
+    },
+    "strategy": {
+
+    }
+  }
+}

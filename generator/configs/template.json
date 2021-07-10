@@ -1,9 +1,0 @@
-{
-  "templates": [
-    {
-      "type": "json",
-      "templates": "template.test",
-      "output": "freqtrade.userdata"
-    }
-  ]
-}
