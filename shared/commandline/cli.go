@@ -82,7 +82,8 @@ func (c *cli) Start(args []string) error {
 	if err = c.hooks.Start(hooks.BEFORE_COMMAND, config); err != nil {
 		return err
 	}
-	return cmd.Start(&commands.ExecutorParameter{
+
+	var cmderr = cmd.Start(&commands.ExecutorParameter{
 		Name:   cmd.Name,
 		Meta:   c.Metadata,
 		Args:   final,
@@ -91,4 +92,11 @@ func (c *cli) Start(args []string) error {
 		Cache:  c.cache,
 		Logger: loggers.Get("command", cmd.Name),
 	})
+
+	config.Set("internal.error", cmderr)
+	if err = c.hooks.Start(hooks.AFTER_COMMAND, config); err != nil {
+		return err
+	}
+
+	return cmderr
 }
