@@ -216,5 +216,9 @@ func (m Mapper) Keys() []string {
 }
 
 func (m Mapper) String() string {
-	return ToJson(m)
+	var json, err = ToJson(m)
+	if err != nil {
+		return err.Error()
+	}
+	return string(json)
 }

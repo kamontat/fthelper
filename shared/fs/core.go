@@ -66,7 +66,7 @@ func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
 	case SINGLE:
 		var paths, err = parseSinglePaths(m, variable)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("%s: %v", name, err)
 		}
 
 		switch ty {
@@ -78,7 +78,7 @@ func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
 	case MULTIPLE:
 		var paths, err = parseMultiplePaths(m, variable)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("%s: %v", name, err)
 		}
 
 		switch ty {

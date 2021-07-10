@@ -1,0 +1,7 @@
+{
+  "test": true,
+  "hello": "1",
+  "internal": {
+    "this": "should be disappear"
+  }
+}

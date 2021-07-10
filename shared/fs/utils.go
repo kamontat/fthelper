@@ -11,30 +11,39 @@ import (
 
 func parseSinglePaths(m, variable maps.Mapper) ([]string, error) {
 	var paths = make([]string, 0)
-	if fullpath, ok := m.S("fullpath"); ok && fullpath != "" {
-		var data, err = xtemplates.Text(fullpath, variable)
-		if err != nil {
-			return paths, err
-		}
-
-		paths = toPaths(data)
-	} else if arr, ok := m.A("paths"); ok {
-		var strings = make([]string, 0)
-		for _, tpl := range arr {
-			var data, err = xtemplates.Text(tpl.(string), variable)
+	if m.Has("fullpath") {
+		if fullpath, ok := m.S("fullpath"); ok && fullpath != "" {
+			var data, err = xtemplates.Text(fullpath, variable)
 			if err != nil {
 				return paths, err
 			}
 
-			strings = append(strings, data)
+			paths = toPaths(data)
+		} else {
+			var raw, _ = m.Get("fullpath")
+			return paths, fmt.Errorf("we expected fullpath to be 'string' not '%T'", raw)
 		}
+	} else if m.Has("paths") {
+		if arr, ok := m.A("paths"); ok {
+			var strings = make([]string, 0)
+			for _, tpl := range arr {
+				var data, err = xtemplates.Text(tpl.(string), variable)
+				if err != nil {
+					return paths, err
+				}
 
-		var p = path.Join(strings...)
-		paths = toPaths(p)
+				strings = append(strings, data)
+			}
+			var p = path.Join(strings...)
+			paths = toPaths(p)
+		} else {
+			var raw, _ = m.Get("paths")
+			return paths, fmt.Errorf("we expected paths to be '[]string' not '%T'", raw)
+		}
 	}
 
 	if len(paths) < 1 {
-		return paths, fmt.Errorf("cannot found path from input map (%v)", m)
+		return paths, fmt.Errorf("either fullpath or paths key must be exist at %v", m)
 	}
 	return paths, nil
 }

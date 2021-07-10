@@ -62,6 +62,25 @@ func Copy(m map[string]interface{}) Mapper {
 	return copied
 }
 
+// Normalize will remove key listed in removed.
+// warning: input will be mutation to remove data
+// if you don't want that, copy first.
+func Normalize(input Mapper, removed []string) Mapper {
+	for key, value := range input {
+		for _, remove := range removed {
+			if key == remove {
+				// fmt.Printf("removing key=%s in %v\n", key, input)
+				delete(input, key)
+				continue
+			}
+		}
+		if output, ok := ToMapper(value); ok {
+			Normalize(output, removed)
+		}
+	}
+	return input
+}
+
 func ForEach(m map[string]interface{}, fn ForEachFn) {
 	forEach(m, []string{}, fn)
 }
@@ -86,13 +105,12 @@ func ToMapper(d interface{}) (Mapper, bool) {
 	return make(Mapper), false
 }
 
-func ToJson(m map[string]interface{}) string {
-	var j, err = json.Marshal(m)
-	if err != nil {
-		return err.Error()
-	} else {
-		return string(j)
-	}
+func ToJson(m map[string]interface{}) ([]byte, error) {
+	return json.Marshal(m)
+}
+
+func ToFormatJson(m map[string]interface{}) ([]byte, error) {
+	return json.MarshalIndent(m, "", "  ")
 }
 
 func FromJson(content []byte) (Mapper, error) {

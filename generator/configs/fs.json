@@ -1,0 +1,14 @@
+{
+  "fs": {
+    "default-freqtrade-config": {
+      "type": "file",
+      "mode": "multiple",
+      "fullpath": ["{{ .current }}/.templates/configs/test.json", "{{ .current }}/.templates/configs/test-2.json"]
+    },
+    "config-json": {
+      "type": "file",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.freqtrade/user_data/config.json"
+    }
+  }
+}

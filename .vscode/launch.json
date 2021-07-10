@@ -10,7 +10,15 @@
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}/generator",
-      "args": ["--debug", "test.t=true"]
+      "args": ["--debug"]
+    },
+    {
+      "name": "Metrics",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}/metric",
+      "args": ["--debug"]
     }
   ]
 }

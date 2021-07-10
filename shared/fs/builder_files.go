@@ -5,5 +5,5 @@ func NewFiles(paths [][]string) (*wrapper, error) {
 	for _, path := range paths {
 		result = append(result, newFile(path))
 	}
-	return newWrapper(result), nil
+	return newWrapper(MULTIPLE, result), nil
 }

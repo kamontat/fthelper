@@ -81,7 +81,7 @@ func (i *MultipleInfo) String() string {
 func (i *MultipleInfo) SString(d time.Time) string {
 	var total = i.TotalCount()
 	var success = i.SuccessCount()
-	return fmt.Sprintf("%s: %s ( %0d/%02d - %.2f%%) | %s (%s)",
+	return fmt.Sprintf("%s: %s ( %02d/%02d - %.2f%%) | %s (%s)",
 		strings.ToTitle(i.Name()),
 		i.Status(),
 		success,

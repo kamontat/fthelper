@@ -112,5 +112,9 @@ func (s *Service) String() string {
 		m[key] = value
 	}
 
-	return maps.ToJson(m)
+	var json, err = maps.ToJson(m)
+	if err != nil {
+		return err.Error()
+	}
+	return string(json)
 }

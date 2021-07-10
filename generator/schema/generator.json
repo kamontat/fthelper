@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com/kamontat/fthelper/main/metric/schema/generator.json",
+  "type": "object",
+  "title": "configuration",
+  "description": "root configuration for generators",
+  "required": ["generators"],
+  "properties": {
+    "generators": {
+      "type": "array",
+      "title": "The generators schema",
+      "description": "list of generators for generate data",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "json"
+              },
+              "display": {
+                "type": "string",
+                "description": "name to display in summary log"
+              },
+              "templates": {
+                "type": "string"
+              },
+              "output": {
+                "type": "string"
+              },
+              "merger": {
+                "$id": "#/merger",
+                "type": "object",
+                "additionalProperties": {
+                  "oneOf": [
+                    {
+                      "type": "number",
+                      "enum": [0, 1]
+                    },
+                    {
+                      "type": "object",
+                      "$ref": "#/merger"
+                    }
+                  ]
+                }
+              }
+            },
+            "required": ["type", "templates", "output"]
+          }
+        ]
+      },
+      "additionalItems": true
+    }
+  },
+  "additionalProperties": true
+}

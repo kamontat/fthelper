@@ -1,1 +1,5 @@
-dist/
+.freqtrade/*
+!.freqtrade/.gitkeep
+
+.template/*
+!.template/.gitkeep

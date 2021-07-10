@@ -1,10 +1,12 @@
 package maps
 
 import (
-	"strings"
+	"fmt"
 
 	"github.com/kamontat/fthelper/shared/utils"
 )
+
+var avoid = []string{"$schema", "#comment#"}
 
 // Merge will merge 'a' and 'b'. with optional strategy mapper
 // a will be modifiy to be the result
@@ -14,7 +16,7 @@ func Merge(a, b map[string]interface{}, strategy Mapper) map[string]interface{} 
 		var replaced = false
 		if bData, ok := ToMapper(value); ok {
 			if aData, ok := ToMapper(a[key]); ok {
-				if exist, ok := strategy.Z(key); ok && exist == MERGER_OVERRIDE {
+				if exist, ok := strategy.Z(key); ok && fmt.Sprint(exist) == fmt.Sprint(MERGER_OVERRIDE) {
 					a[key] = bData
 					replaced = true
 				} else {
@@ -35,13 +37,9 @@ func Merge(a, b map[string]interface{}, strategy Mapper) map[string]interface{} 
 		}
 
 		if !replaced {
-			// delete comment if key prefix and suffix with # { "#foo#": "this is comment" }
-			if strings.HasPrefix(key, "#") && strings.HasSuffix(key, "#") {
-				delete(a, key)
-			} else {
-				a[key] = value
-			}
+			a[key] = value
 		}
 	}
-	return a
+
+	return Normalize(a, avoid)
 }

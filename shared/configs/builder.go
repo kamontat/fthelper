@@ -26,7 +26,7 @@ func (b *Builder) Strategy(strategy maps.Mapper) *Builder {
 func (b *Builder) OverrideStrings(strings []string) *Builder {
 	var m = maps.New()
 	for _, str := range strings {
-		if k, v, ok := parseOverride(str); ok {
+		if k, v, ok := ParseOverride(str); ok {
 			m.Set(k, v)
 		}
 	}
@@ -70,20 +70,20 @@ func (b *Builder) updateResult(t string, base, input maps.Mapper) {
 }
 
 func (b *Builder) Build() (maps.Mapper, error) {
+	var result = maps.Merger(maps.New()).SetConfig(b.strategy).Add(b.config).Merge()
 	var args = make([]string, 0)
-	for _, v := range b.config.Mi("internal").Ai("args") {
+	for _, v := range result.Mi("internal").Ai("args") {
 		args = append(args, v.(string))
 	}
 	b.OverrideStrings(args)
 
-	var result = maps.New()
-	configs, err := fs.Build(b.name, b.config.Mi("fs"))
+	configs, err := fs.Build(b.name, result.Mi("fs"))
 	if err != nil {
 		return result, err
 	}
 
 	// 1. load config from directories and files
-	fromFile, err := LoadConfigFromFileSystem(configs.Multiple(), b.strategy)
+	fromFile, err := LoadConfigFromFileSystem(configs.Multiple(), result.Mi("fs").Mi("variable"), b.strategy)
 	if err != nil {
 		return result, err
 	}
@@ -92,7 +92,7 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	})
 
 	// 2. override it with environment
-	fromEnv, err := LoadConfigFromEnv(result)
+	fromEnv, err := LoadConfigFromEnv()
 	if err != nil {
 		return result, err
 	}

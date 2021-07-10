@@ -7,10 +7,10 @@ import (
 )
 
 // Return map of string, client will decide how to parse string data
-func LoadConfigFromEnv(base maps.Mapper) (maps.Mapper, error) {
+func LoadConfigFromEnv() (maps.Mapper, error) {
 	var result = maps.New()
 	for _, env := range os.Environ() {
-		if k, v, ok := parseOverride(env); ok {
+		if k, v, ok := ParseOverride(env); ok {
 			if key, ok := EnvToKey(k); ok {
 				result.Set(key, v)
 			}

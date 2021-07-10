@@ -5,5 +5,5 @@ func NewDirectories(paths [][]string) (*wrapper, error) {
 	for _, path := range paths {
 		result = append(result, newDirectory(path))
 	}
-	return newWrapper(result), nil
+	return newWrapper(MULTIPLE, result), nil
 }
