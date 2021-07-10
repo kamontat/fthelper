@@ -11,6 +11,7 @@ func LoadConfigFromEnv() (maps.Mapper, error) {
 	var result = maps.New()
 	for _, env := range os.Environ() {
 		if k, v, ok := ParseOverride(env); ok {
+			// fmt.Printf("%s\n", env)
 			if key, ok := EnvToKey(k); ok {
 				result.Set(key, v)
 			}
