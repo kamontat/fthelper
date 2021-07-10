@@ -10,7 +10,8 @@ import (
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
-// Support is example how we can implement plugins support
+// SupportConfig will load configuration from configs directory
+// It also add --pwd for current directory, --config-dirs for custom config directory
 func SupportConfig(p *PluginParameter) error {
 	var wd, err = os.Getwd()
 	if err != nil {
@@ -27,7 +28,7 @@ func SupportConfig(p *PluginParameter) error {
 	})
 
 	p.NewFlags(flags.Array{
-		Name:    "configs",
+		Name:    "config-dirs",
 		Default: []string{path.Join(wd, "configs")},
 		Usage:   "configuration directory, must contains only json files",
 		Action: func(data []string) maps.Mapper {
