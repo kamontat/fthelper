@@ -1,6 +1,8 @@
 package datatype
 
-import "strconv"
+import (
+	"strconv"
+)
 
 // convert string to different datatype base on input type
 func ConvertStringTo(s string, t interface{}) interface{} {
@@ -19,6 +21,11 @@ func ConvertStringTo(s string, t interface{}) interface{} {
 		i, e := strconv.ParseBool(s)
 		if e == nil {
 			return i
+		}
+	case []interface{}, []string:
+		a, ok := ForceArray(s)
+		if ok {
+			return a
 		}
 	}
 
