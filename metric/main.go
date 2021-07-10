@@ -33,8 +33,8 @@ func main() {
 	}).Plugin(plugins.SupportLogLevel).
 		Plugin(plugins.SupportVersion).
 		Plugin(plugins.SupportListConfig).
-		Plugin(plugins.SupportConfig).
 		Plugin(plugins.SupportDotEnv).
+		Plugin(plugins.SupportConfig).
 		Command(&commands.Command{
 			Name: commands.DEFAULT,
 			Executor: func(p *commands.ExecutorParameter) error {
