@@ -10,9 +10,9 @@ import (
 
 func Json(data maps.Mapper, config maps.Mapper) runners.Runner {
 	return runner.New(data, config, func(p *runner.ExecutorParameter) error {
-		templates, err := fs.Build(p.Data.Si("templates"), p.FsConfig)
+		templates, err := fs.Build(p.Data.Si("inputs"), p.FsConfig)
 		if err != nil {
-			p.Logger.Error("cannot get template information")
+			p.Logger.Error("cannot get inputs information")
 			return err
 		}
 
