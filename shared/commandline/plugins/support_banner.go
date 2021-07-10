@@ -6,7 +6,7 @@ import (
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
-// Support is example how we can implement plugins support
+// SupportBanner will create application info banner
 func SupportBanner(p *PluginParameter) error {
 	p.NewHook(hooks.BEFORE_COMMAND, func(m maps.Mapper) error {
 		if loggers.IsDebug() {

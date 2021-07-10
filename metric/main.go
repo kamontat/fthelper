@@ -34,7 +34,7 @@ func main() {
 		Plugin(plugins.SupportVersion).
 		Plugin(plugins.SupportListConfig).
 		Plugin(plugins.SupportConfig).
-		Plugin(plugins.SupportEnv).
+		Plugin(plugins.SupportDotEnv).
 		Command(&commands.Command{
 			Name: commands.DEFAULT,
 			Executor: func(p *commands.ExecutorParameter) error {

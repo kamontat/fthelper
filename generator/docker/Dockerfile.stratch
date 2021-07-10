@@ -9,4 +9,4 @@ COPY generator /fth
 ENTRYPOINT [ \
   "/fth/ftgenerator", \
   "--pwd", "/fth", \
-  "--envs", "/fth/.env.docker"]
+  "--env-files", "/fth/.env.docker"]
