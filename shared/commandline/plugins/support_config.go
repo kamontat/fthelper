@@ -39,7 +39,7 @@ func SupportConfig(p *PluginParameter) error {
 		},
 	})
 
-	p.NewHook(hooks.AFTER_FLAG, func(config maps.Mapper) error {
+	p.NewHook(hooks.BEFORE_COMMAND, func(config maps.Mapper) error {
 		var addition, err = configs.New("config", config).Build()
 		if err != nil {
 			return err
