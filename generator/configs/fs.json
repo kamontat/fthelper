@@ -21,6 +21,11 @@
       "mode": "single",
       "fullpath": "{{ .current }}/.freqtrade/dirs/test"
     },
+    "test-file": {
+      "type": "file",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.freqtrade/example-creator.txt"
+    },
     "copy-file-in": {
       "type": "file",
       "mode": "single",
@@ -40,6 +45,16 @@
       "type": "directory",
       "mode": "single",
       "fullpath": "{{ .current }}/.freqtrade/copied"
+    },
+    "template-in": {
+      "type": "file",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.templates/template.tpl"
+    },
+    "template-out": {
+      "type": "file",
+      "mode": "single",
+      "fullpath": "{{ .current }}/.freqtrade/template.txt"
     },
     "test-multiple-fullpath": {
       "type": "file",

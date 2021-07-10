@@ -23,7 +23,7 @@
                 "type": "string",
                 "description": "name to display in summary log"
               },
-              "templates": {
+              "inputs": {
                 "type": "string"
               },
               "output": {
@@ -46,7 +46,7 @@
                 }
               }
             },
-            "required": ["type", "templates", "output"],
+            "required": ["type", "inputs", "output"],
             "additionalProperties": false
           },
           {
@@ -73,6 +73,27 @@
               "type": {
                 "type": "string",
                 "const": "copy"
+              },
+              "display": {
+                "type": "string",
+                "description": "name to display in summary log"
+              },
+              "input": {
+                "type": "string"
+              },
+              "output": {
+                "type": "string"
+              }
+            },
+            "required": ["type", "input", "output"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "template"
               },
               "display": {
                 "type": "string",

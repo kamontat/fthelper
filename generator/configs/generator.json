@@ -2,30 +2,41 @@
   "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/metric/schema/generator.json",
   "generators": [
     {
-      "display": "test",
+      "display": "json-ex",
       "type": "json",
-      "templates": "default-freqtrade-config",
+      "inputs": "default-freqtrade-config",
       "output": "config-json",
       "merger": {
         "internal": 1
       }
     },
     {
-      "display": "create-dir",
+      "display": "crdir",
       "type": "create",
       "output": "test-dir"
     },
     {
-      "display": "hello file copy",
+      "display": "crfile",
+      "type": "create",
+      "output": "test-file"
+    },
+    {
+      "display": "cpfile",
       "type": "copy",
       "input": "copy-file-in",
       "output": "copy-file-out"
     },
     {
-      "display": "hello directory copy",
+      "display": "cpdir",
       "type": "copy",
       "input": "copy-dir-in",
       "output": "copy-dir-out"
+    },
+    {
+      "display": "tpl-ex",
+      "type": "template",
+      "input": "template-in",
+      "output": "template-out"
     }
   ]
 }
