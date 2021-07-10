@@ -1,5 +1,10 @@
 package fs
 
+import (
+	"fmt"
+	"strings"
+)
+
 type wrapper struct {
 	Mode Mode
 	fs   []FileSystem
@@ -24,6 +29,18 @@ func (w *wrapper) Multiple() []FileSystem {
 // All will return every file system in wrapper without validation
 func (w *wrapper) All() []FileSystem {
 	return w.fs
+}
+
+func (w *wrapper) String() string {
+	var str strings.Builder
+	for i, fs := range w.fs {
+		if i > 1 {
+			str.WriteString(",")
+		}
+		str.WriteString(fs.Abs())
+	}
+
+	return fmt.Sprintf("wrapper of '%s': [%s]", w.Mode, str.String())
 }
 
 func newWrapper(mode Mode, fs []FileSystem) *wrapper {

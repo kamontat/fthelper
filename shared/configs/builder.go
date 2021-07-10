@@ -71,6 +71,8 @@ func (b *Builder) updateResult(t string, base, input maps.Mapper) {
 
 func (b *Builder) Build() (maps.Mapper, error) {
 	var result = maps.Merger(maps.New()).Add(b.config).SetConfig(b.strategy).Merge()
+	b.logger.Debug("base configuration is %v", result)
+
 	var args = make([]string, 0)
 	for _, v := range result.Mi("internal").Ai("args") {
 		args = append(args, v.(string))
@@ -83,6 +85,7 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	}
 
 	// 1. load config from directories and files
+	b.logger.Debug("loading config from %v", configs.String())
 	fromFile, err := LoadConfigFromFileSystem(configs.Multiple(), maps.New(), b.strategy) // create empty data to not pass template yet
 	if err != nil {
 		return result, err
@@ -96,6 +99,7 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	if err != nil {
 		return result, err
 	}
+	b.logger.Debug("loaded data from env: %v", fromEnv)
 	b.updateResult("env", result, fromEnv)
 
 	// 3. override it will override map
