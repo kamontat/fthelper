@@ -49,7 +49,7 @@ func SupportListConfig(p *PluginParameter) error {
 
 			var headers = []string{"Key", "Environment"}
 			if withData {
-				headers = append(headers, "Value")
+				headers = append(headers, "Type", "Value")
 			}
 
 			var table = loggers.Get().Table(uint(len(headers)))
@@ -68,7 +68,8 @@ func SupportListConfig(p *PluginParameter) error {
 				var row = []string{key, env}
 				if withData {
 					var value, _ = p.Config.Get(key)
-					row = append(row, fmt.Sprintf("%v", value))
+					var t = fmt.Sprintf("%T", value)
+					row = append(row, t, fmt.Sprintf("%v", value))
 				}
 
 				table.Row(row...)
