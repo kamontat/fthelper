@@ -3,7 +3,7 @@ package generators
 import (
 	"fmt"
 
-	"github.com/kamontat/fthelper/generator/v4/src/generators/plugins"
+	"github.com/kamontat/fthelper/generator/v4/src/plugins"
 	"github.com/kamontat/fthelper/shared/maps"
 	"github.com/kamontat/fthelper/shared/runners"
 )

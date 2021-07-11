@@ -1,7 +1,7 @@
 package plugins
 
 import (
-	"github.com/kamontat/fthelper/generator/v4/src/generators/runner"
+	"github.com/kamontat/fthelper/generator/v4/src/runner"
 	"github.com/kamontat/fthelper/shared/configs"
 	"github.com/kamontat/fthelper/shared/fs"
 	"github.com/kamontat/fthelper/shared/maps"
