@@ -7,8 +7,8 @@ import (
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
-func byEnv(config maps.Mapper, envname string, configpath string) (interface{}, error) {
-	var path = fmt.Sprintf("_.%s.%s", envname, configpath)
+func byEnv(config maps.Mapper, clusterName string, configPath string) (interface{}, error) {
+	var path = fmt.Sprintf("_.%s.%s", clusterName, configPath)
 	return config.Get(path)
 }
 

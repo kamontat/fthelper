@@ -155,7 +155,7 @@
               },
               "suffix": {
                 "type": "string",
-                "description": "suffix string to config name (e.g. config-test.json). enabled will 'withCluster' will result to suffix before envname (e.g. config-test-live.json)",
+                "description": "suffix string to config name (e.g. config-test.json). enabled will 'withCluster' will result to suffix before cluster (e.g. config-test-live.json)",
                 "default": ""
               },
               "input": {
