@@ -1,7 +1,7 @@
 package plugins
 
 import (
-	"fmt"
+	"strings"
 
 	"github.com/kamontat/fthelper/generator/v4/src/generators/runner"
 	"github.com/kamontat/fthelper/shared/configs"
@@ -18,18 +18,44 @@ func CConfig(data maps.Mapper, fsConfig maps.Mapper) runners.Runner {
 			p.Logger.Error("cannot get input information")
 			return err
 		}
-		config, err := fs.NewDirectory(fs.Next(input.Single(), p.FsConfig.Mi("variables").So("config", "configs")))
+		directory, err := fs.NewDirectory(fs.Next(input.Single(), p.FsConfig.Mi("variables").Si("config")))
 		if err != nil {
 			p.Logger.Error("cannot get find freqtrade configs template directory")
 			return err
 		}
-		template, err := configs.LoadConfigFromFileSystem([]fs.FileSystem{config}, p.Config, p.Data.Mi("merger"))
+		content, err := configs.LoadConfigFromFileSystem([]fs.FileSystem{directory}, p.Config, p.Data.Mi("merger"))
 		if err != nil {
 			p.Logger.Error("cannot load template data")
 			return err
 		}
+		json, err := maps.ToFormatJson(content)
+		if err != nil {
+			p.Logger.Error("cannot format config to json")
+			return err
+		}
 
-		fmt.Print(template)
-		return nil
+		var filename strings.Builder
+		filename.WriteString("config")
+		if p.Data.Bo("withEnv", false) {
+			filename.WriteString(p.Config.Mi("internal").Si("environment"))
+		}
+		filename.WriteString(".json")
+		output, err := fs.Build(p.Data.So("output", "freqtrade"), p.FsConfig)
+		if err != nil {
+			p.Logger.Error("cannot get output information")
+			return err
+		}
+		file, err := fs.NewFile(fs.Next(output.Single(), p.FsConfig.Mi("variables").Si("userdata"), filename.String()))
+		if err != nil {
+			p.Logger.Error("cannot get find freqtrade configs directory")
+			return err
+		}
+
+		err = file.Build()
+		if err != nil {
+			p.Logger.Error("cannot build output directory")
+			return err
+		}
+		return file.Write(json)
 	})
 }
