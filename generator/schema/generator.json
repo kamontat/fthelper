@@ -148,14 +148,14 @@
                 "type": "string",
                 "description": "name to display in summary log"
               },
-              "withEnv": {
+              "withCluster": {
                 "type": "boolean",
-                "description": "enabled this will add envname as latest suffix",
+                "description": "enabled this will add cluster as latest suffix",
                 "default": false
               },
               "suffix": {
                 "type": "string",
-                "description": "suffix string to config name (e.g. config-test.json). enabled will 'withEnv' will result to suffix before envname (e.g. config-test-live.json)",
+                "description": "suffix string to config name (e.g. config-test.json). enabled will 'withCluster' will result to suffix before envname (e.g. config-test-live.json)",
                 "default": ""
               },
               "input": {
@@ -208,6 +208,10 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "ftmetric": {
+                "type": "boolean",
+                "description": "add support ftmetric on each freqtrade cluster"
               },
               "input": {
                 "type": "string",

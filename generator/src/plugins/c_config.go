@@ -47,9 +47,9 @@ func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
 		if p.Data.Si("suffix") != "" {
 			filename.WriteString("-" + p.Data.Si("suffix"))
 		}
-		var envname = p.Config.Mi("internal").Si("environment")
-		if p.Data.Bo("withEnv", false) && envname != "" {
-			filename.WriteString("-" + envname)
+		var cluster = p.Config.Mi("internal").Si("cluster")
+		if p.Data.Bo("withCluster", false) && cluster != "" {
+			filename.WriteString("-" + cluster)
 		}
 		filename.WriteString(".json")
 		output, err := fs.Build(p.Data.So("output", "freqtrade"), p.FsConfig)
