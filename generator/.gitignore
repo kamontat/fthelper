@@ -1,5 +1,5 @@
 .freqtrade/*
 !.freqtrade/.gitkeep
 
-templates/strategies/*
-!templates/strategies/.gitkeep
+templates/*
+!templates/.gitkeep

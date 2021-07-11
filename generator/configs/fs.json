@@ -3,10 +3,11 @@
   "fs": {
     "variables": {
       "freqtrade": ".freqtrade",
-      "template": "templates",
+      "template": ".templates",
       "config": "configs",
       "userdata": "user_data",
-      "strategy": "strategies"
+      "strategy": "strategies",
+      "docker": "dockers"
     },
     "template": {
       "type": "directory",

@@ -11,8 +11,8 @@ import (
 )
 
 // CConfig is custom plugins for and only for freqtrade config
-func CConfig(data maps.Mapper, fsConfig maps.Mapper) runners.Runner {
-	return runner.New(data, fsConfig, func(p *runner.ExecutorParameter) error {
+func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
+	return runner.New(data, config, func(p *runner.ExecutorParameter) error {
 		input, err := fs.Build(p.Data.So("input", "template"), p.FsConfig)
 		if err != nil {
 			p.Logger.Error("cannot get input information")

@@ -9,8 +9,8 @@ import (
 )
 
 // TODO: support load files from directory
-func Template(data maps.Mapper, fsConfig maps.Mapper) runners.Runner {
-	return runner.New(data, fsConfig, func(p *runner.ExecutorParameter) error {
+func Template(data maps.Mapper, config maps.Mapper) runners.Runner {
+	return runner.New(data, config, func(p *runner.ExecutorParameter) error {
 		input, err := fs.Build(p.Data.Si("input"), p.FsConfig)
 		if err != nil {
 			p.Logger.Error("cannot get input information")
