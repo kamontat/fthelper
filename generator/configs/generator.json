@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/metric/schema/generator.json",
+  "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/generator.json",
   "generators": [
     {
       "display": "json-ex",

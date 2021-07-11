@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "https://raw.githubusercontent.com/kamontat/fthelper/main/metric/schema/fs.json",
+  "$id": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/fs.json",
   "type": "object",
   "title": "configuration",
   "description": "root configuration for fs",
@@ -8,6 +8,21 @@
   "properties": {
     "fs": {
       "type": "object",
+      "properties": {
+        "variable": {
+          "$id": "#/variable",
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "$ref": "#/variable"
+              }
+            ]
+          }
+        }
+      },
       "additionalProperties": {
         "type": "object",
         "properties": {
