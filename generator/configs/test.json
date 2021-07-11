@@ -1,5 +1,8 @@
 {
-  "test": {
-    "array": ["hello"]
+  "freqtrade": {
+    "config": {},
+    "strategy": {
+      "current": "NostalgiaForInfinityV7"
+    }
   }
 }

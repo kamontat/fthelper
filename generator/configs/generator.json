@@ -2,41 +2,9 @@
   "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/generator.json",
   "generators": [
     {
-      "display": "json-ex",
-      "type": "json",
-      "inputs": "default-freqtrade-config",
-      "output": "config-json",
-      "merger": {
-        "internal": 1
-      }
-    },
-    {
-      "display": "crdir",
-      "type": "create",
-      "output": "test-dir"
-    },
-    {
-      "display": "crfile",
-      "type": "create",
-      "output": "test-file"
-    },
-    {
-      "display": "cpfile",
-      "type": "copy",
-      "input": "copy-file-in",
-      "output": "copy-file-out"
-    },
-    {
-      "display": "cpdir",
-      "type": "copy",
-      "input": "copy-dir-in",
-      "output": "copy-dir-out"
-    },
-    {
-      "display": "tpl-ex",
-      "type": "template",
-      "input": "template-in",
-      "output": "template-out"
+      "display": "abc-strategy",
+      "type": "strategy",
+      "name": "NostalgiaForInfinityV7.py"
     }
   ]
 }
