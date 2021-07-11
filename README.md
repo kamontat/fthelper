@@ -9,3 +9,7 @@ Freqtrade Helper function
 ## Release process
 
 > Due to limitation of Goreleaser, I cannot release each monorepo independently. So some of version might not having any code changes.
+
+The release note and latest version is available in [Github Release][gh-release]
+
+[gh-release]: https://github.com/kamontat/fthelper/releases
