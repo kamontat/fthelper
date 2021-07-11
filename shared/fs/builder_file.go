@@ -1,5 +1,5 @@
 package fs
 
-func NewFile(paths []string) (*wrapper, error) {
-	return newWrapper(SINGLE, []FileSystem{newFile(paths)}), nil
+func NewFile(paths []string) (FileSystem, error) {
+	return newFile(paths), nil
 }

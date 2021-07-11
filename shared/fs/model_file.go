@@ -28,7 +28,12 @@ func (f *file) Abs() string {
 		return f.abs
 	}
 
-	f.abs = string(Separator) + path.Join(f.paths...) // update cache
+	var abs = string(Separator) + path.Join(f.paths...)
+	f.abs = toNormalize(abs) // update cache
+	if abs != f.abs {
+		f.paths = toPaths(f.abs) // if abs did some normalize, update paths as well
+	}
+
 	return f.abs
 }
 
@@ -69,9 +74,6 @@ func (f *file) Build() error {
 	if err != nil {
 		return err
 	}
-
-	// normalize path array
-	f.paths = toPaths(path.Clean(f.Abs()))
 
 	// create empty file (touch)
 	_, err = f.Writer()

@@ -24,7 +24,12 @@ func (f *directory) Abs() string {
 		return f.abs
 	}
 
-	f.abs = string(Separator) + path.Join(f.paths...) // update cache
+	var abs = string(Separator) + path.Join(f.paths...)
+	f.abs = toNormalize(abs) // update cache
+	if abs != f.abs {
+		f.paths = toPaths(f.abs) // if abs did some normalize, update paths as well
+	}
+
 	return f.abs
 }
 
@@ -66,8 +71,6 @@ func (f *directory) Build() error {
 		return err
 	}
 
-	// normalize path array
-	f.paths = toPaths(path.Clean(f.Abs()))
 	return nil
 }
 
@@ -91,19 +94,19 @@ func (f *directory) ReadDir() ([]FileSystem, error) {
 				return result, err
 			}
 
-			files, err := dir.Single().ReadDir()
+			files, err := dir.ReadDir()
 			if err != nil {
 				return result, err
 			}
 
 			result = append(result, files...)
 		} else {
-			wrapper, err := NewFile(paths)
+			file, err := NewFile(paths)
 			if err != nil {
 				return result, err
 			}
 
-			result = append(result, wrapper.Single())
+			result = append(result, file)
 		}
 	}
 

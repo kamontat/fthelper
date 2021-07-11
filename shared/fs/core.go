@@ -71,9 +71,11 @@ func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
 
 		switch ty {
 		case FILE:
-			return NewFile(paths)
+			f, e := NewFile(paths)
+			return newWrapper(mode, []FileSystem{f}), e
 		case DIRECTORY:
-			return NewDirectory(paths)
+			f, e := NewDirectory(paths)
+			return newWrapper(mode, []FileSystem{f}), e
 		}
 	case MULTIPLE:
 		var paths, err = parseMultiplePaths(m, variable)
@@ -83,9 +85,11 @@ func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
 
 		switch ty {
 		case FILE:
-			return NewFiles(paths)
+			f, e := NewFiles(paths)
+			return newWrapper(mode, f), e
 		case DIRECTORY:
-			return NewDirectories(paths)
+			f, e := NewDirectories(paths)
+			return newWrapper(mode, f), e
 		}
 	}
 

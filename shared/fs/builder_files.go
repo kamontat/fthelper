@@ -1,9 +1,9 @@
 package fs
 
-func NewFiles(paths [][]string) (*wrapper, error) {
+func NewFiles(paths [][]string) ([]FileSystem, error) {
 	var result = []FileSystem{}
 	for _, path := range paths {
 		result = append(result, newFile(path))
 	}
-	return newWrapper(MULTIPLE, result), nil
+	return result, nil
 }

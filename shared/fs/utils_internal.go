@@ -2,6 +2,7 @@ package fs
 
 import (
 	"fmt"
+	"io"
 	"path"
 	"strings"
 
@@ -34,6 +35,56 @@ func toName(paths []string) string {
 // find relative path of a from b
 func toRelative(a, b FileSystem) string {
 	return strings.Replace(a.Abs(), b.Abs(), "", 1)[1:]
+}
+
+func toNormalize(s string) string {
+	return path.Clean(s)
+}
+
+func copyDir(a, b FileSystem) error {
+	var afiles, err = a.ReadDir()
+	if err != nil {
+		return err
+	}
+
+	for _, afile := range afiles {
+		relative := afile.Relative(a)
+
+		out := newFile(Next(b, relative))
+		return copyFile(afile, out)
+	}
+
+	return nil
+}
+
+func copyDirFiles(a []FileSystem, b FileSystem) error {
+	for _, file := range a {
+		var out = newFile(Next(b, file.Basename()))
+		var err = copyFile(file, out)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func copyFile(a, b FileSystem) error {
+	reader, err := a.Reader()
+	if err != nil {
+		return err
+	}
+
+	err = b.Build()
+	if err != nil {
+		return err
+	}
+	writer, err := b.Writer()
+	if err != nil {
+		return err
+	}
+
+	_, err = io.Copy(writer, reader)
+	return err
 }
 
 func parseSinglePaths(m, variable maps.Mapper) ([]string, error) {
