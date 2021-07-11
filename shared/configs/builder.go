@@ -52,6 +52,10 @@ func (b *Builder) log(t string, key, value interface{}, def interface{}) {
 }
 
 func (b *Builder) updateResult(t string, base, input maps.Mapper) {
+	if !input.IsEmpty() {
+		b.logger.Debug("found some config in %s", t)
+	}
+
 	input.ForEach(func(key string, value interface{}) {
 		var old, err = base.Get(key) // try to get old data
 		var result = value
@@ -99,7 +103,6 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	if err != nil {
 		return result, err
 	}
-	b.logger.Debug("loaded data from env: %v", fromEnv)
 	b.updateResult("env", result, fromEnv)
 
 	// 3. override it will override map
