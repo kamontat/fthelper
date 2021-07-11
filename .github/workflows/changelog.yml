@@ -19,11 +19,24 @@ jobs:
           go-version: 1.16
       - name: Install git-chglog
         run: go get -u github.com/git-chglog/git-chglog/cmd/git-chglog
+      - name: Install Github cli
+        run: go get -u github.com/cli/cli/cmd/gh
+      - name: Version
+        run: |
+          gh --version
+          git-chglog --version
+      - name: Login to Github
+        run: |
+          gh auth login
+          gh auth status
       - name: Generate changelog
         run: git-chglog --output CHANGELOG.md
-      - name: Commit report
+      - name: Setup git
         run: |
           git config --global user.name 'Github Action Generator'
           git config --global user.email 'personal@kamontat.net'
-          git commit -am "chore: build changelog"
-          git push
+      - name: Commit and create PR
+        run: |
+          git checkout -b "release/$(date +'%y%m%d')"
+          git commit -am "chore: auto generate changelog [skip-ci]"
+          gh pr create --title "chore: release note ($(date +'%y%m%d'))" --label "release-note" --fill
