@@ -3,7 +3,7 @@ name: UnitTest
 on:
   push:
     branches:
-      - '**'
+      - "**"
 
 jobs:
   shared:
