@@ -48,7 +48,7 @@ func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
 			filename.WriteString("-" + p.Data.Si("suffix"))
 		}
 		var cluster = p.Config.Mi("internal").Si("cluster")
-		if p.Data.Bo("withCluster", false) && cluster != "" {
+		if p.Data.Bo("clusterSuffix", false) && cluster != "" {
 			filename.WriteString("-" + cluster)
 		}
 		filename.WriteString(".json")

@@ -2,6 +2,8 @@ package configs
 
 import (
 	"strings"
+
+	"github.com/kamontat/fthelper/shared/maps"
 )
 
 func ParseOverride(str string) (key, value string, ok bool) {
@@ -15,4 +17,8 @@ func ParseOverride(str string) (key, value string, ok bool) {
 	key = arr[0]
 	value = arr[1]
 	return
+}
+
+func BuildClusterConfig(cluster string, config maps.Mapper) maps.Mapper {
+	return maps.Merger(config).Add(config.Mi("_").Mi(cluster)).Merge()
 }
