@@ -16,7 +16,7 @@ func CStrategy(data maps.Mapper, fsConfig maps.Mapper) runners.Runner {
 			p.Logger.Error("cannot get input information")
 			return err
 		}
-		strategy, err := fs.NewFile(fs.Next(input.Single(), p.FsConfig.Mi("variables").So("strategy", "strategies"), p.Data.Si("name")))
+		strategy, err := fs.NewFile(fs.Next(input.Single(), p.FsConfig.Mi("variables").Si("strategy"), p.Data.Si("name")))
 		if err != nil {
 			p.Logger.Error("cannot get find strategy template directory")
 			return err
@@ -32,7 +32,7 @@ func CStrategy(data maps.Mapper, fsConfig maps.Mapper) runners.Runner {
 			p.Logger.Error("cannot get output information")
 			return err
 		}
-		output, err := fs.NewFile(fs.Next(freqtrade.Single(), p.FsConfig.Mi("variables").So("userdata", "user_data"), p.FsConfig.Mi("variables").So("strategy", "strategies"), p.Data.Si("name")))
+		output, err := fs.NewFile(fs.Next(freqtrade.Single(), p.FsConfig.Mi("variables").Si("userdata"), p.FsConfig.Mi("variables").Si("strategy"), p.Data.Si("name")))
 		if err != nil {
 			p.Logger.Error("cannot get find strategy output directory")
 			return err
