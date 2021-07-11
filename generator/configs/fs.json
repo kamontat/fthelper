@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/fs.json",
   "fs": {
     "variables": {
-      "template": ".templates",
       "freqtrade": ".freqtrade",
+      "template": "templates",
       "config": "configs",
       "userdata": "user_data",
       "strategy": "strategies"
