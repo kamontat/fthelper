@@ -103,8 +103,15 @@ func (c *Connection) POST(name string, query url.Values, body io.Reader, target 
 }
 
 func (c *Connection) String() string {
+	var output = `
+Connection: %s
+  cache: %s
+  query: %s
+`
+
 	return fmt.Sprintf(
-		"\nConnection: \n  cache: %s\n  query: %s",
+		output,
+		c.base.String(),
 		c.Config.Cache.Json(),
 		c.Config.Query.Json(),
 	)
