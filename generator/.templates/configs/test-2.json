@@ -1,7 +1,0 @@
-{
-  "hello": "2",
-  "number": 2,
-  "internal": {
-    "hello": "net"
-  }
-}
