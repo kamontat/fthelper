@@ -5,14 +5,14 @@ import (
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
-// SupportEnv will create internal.environments when --env is exist
-func SupportEnv(p *PluginParameter) error {
+// SupportCluster will create internal.cluster when --cluster is exist
+func SupportCluster(p *PluginParameter) error {
 	p.NewFlags(flags.String{
-		Name:    "env",
+		Name:    "cluster",
 		Default: "",
-		Usage:   "setup output environment",
+		Usage:   "setup output cluster",
 		Action: func(data string) maps.Mapper {
-			return maps.New().Set("internal.environment", data)
+			return maps.New().Set("internal.cluster", data)
 		},
 	})
 
