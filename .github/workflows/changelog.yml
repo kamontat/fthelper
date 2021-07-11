@@ -27,8 +27,8 @@ jobs:
         run: git-chglog --output CHANGELOG.md
       - name: Setup git
         run: |
-          git config --global user.name 'Github Action Generator'
-          git config --global user.email 'personal@kamontat.net'
+          git config --global user.name 'kamontat [bot]'
+          git config --global user.email 'developer@kamontat.net'
       - name: Commit and push change
         run: |
           branch_name="release/$(date +'%y%m%d')"
