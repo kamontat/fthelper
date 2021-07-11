@@ -114,7 +114,7 @@
               "type": {
                 "type": "string",
                 "const": "strategy",
-                "description": "similar to templaet type but custom to support auto find path"
+                "description": "similar to 'template' type but custom to support auto find path"
               },
               "display": {
                 "type": "string",
@@ -134,6 +134,50 @@
               }
             },
             "required": ["type", "name"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "config",
+                "description": "similar to 'json' type but custom to support auto find path"
+              },
+              "display": {
+                "type": "string",
+                "description": "name to display in summary log"
+              },
+              "withEnv": {
+                "type": "boolean",
+                "description": "this will add env name as suffix of output filename",
+                "default": false
+              },
+              "input": {
+                "type": "string",
+                "default": "template"
+              },
+              "output": {
+                "type": "string",
+                "default": "freqtrade"
+              },
+              "merger": {
+                "type": "object",
+                "additionalProperties": {
+                  "oneOf": [
+                    {
+                      "type": "number",
+                      "enum": [0, 1]
+                    },
+                    {
+                      "type": "object",
+                      "$ref": "#/properties/generators/items/oneOf/5/properties/merger"
+                    }
+                  ]
+                }
+              }
+            },
+            "required": ["type"],
             "additionalProperties": false
           }
         ]
