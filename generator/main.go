@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/kamontat/fthelper/generator/v4/src/core"
+	"github.com/kamontat/fthelper/generator/v4/src/generators"
 	"github.com/kamontat/fthelper/shared/caches"
 	"github.com/kamontat/fthelper/shared/commandline"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
@@ -37,7 +37,7 @@ func main() {
 		Command(&commands.Command{
 			Name: commands.DEFAULT,
 			Executor: func(p *commands.ExecutorParameter) error {
-				return core.New(p.Cache, p.Config).Start()
+				return generators.New(p.Cache, p.Config).Start()
 			},
 		})
 

@@ -1,27 +1,33 @@
 package generators
 
 import (
+	"github.com/kamontat/fthelper/shared/caches"
 	"github.com/kamontat/fthelper/shared/loggers"
 	"github.com/kamontat/fthelper/shared/maps"
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
-func Parse(config maps.Mapper) (*runners.Collection, error) {
-	var log = loggers.Get("generator", "parser")
-	var collection = runners.NewCollection("default")
-	for _, i := range config.Ai("generators") {
-		var mapper, ok = maps.ToMapper(i)
-		if !ok {
-			log.Warn("generator %v is not map", i)
-		}
+type Generator struct {
+	config maps.Mapper
+	cache  *caches.Service
+	logger *loggers.Logger
+}
 
-		var runner, err = GetRunner(mapper, config)
-		if err != nil {
-			return collection, err
-		}
-
-		collection.Add(runner)
+func (g *Generator) Start() error {
+	var collection, err = Parse(g.config)
+	if err != nil {
+		return err
 	}
 
-	return collection, nil
+	var group = runners.NewGroup()
+	group.New(collection).Run(loggers.IsDebug()).Log(g.logger)
+	return nil
+}
+
+func New(cache *caches.Service, config maps.Mapper) *Generator {
+	return &Generator{
+		config: config,
+		cache:  cache,
+		logger: loggers.Get("generator"),
+	}
 }
