@@ -1,0 +1,38 @@
+# Configuration reference https://kodiakhq.com/docs/config-reference
+version = 1
+
+[merge]
+# By default, Kodiak will only act on PRs that have this label. You can disable
+# this requirement via `merge.require_automerge_label`.
+automerge_label = "" # default: "automerge"
+
+# Require that the automerge label (`merge.automerge_label`) be set for Kodiak
+# to merge a PR.
+#
+# When disabled, Kodiak will immediately attempt to merge any PR that passes all
+# GitHub branch protection requirements.
+require_automerge_label = false # default: true
+
+# Don't wait for in-progress status checks on a PR to finish before updating the
+# branch.
+optimistic_updates = false # default: true
+
+[update]
+# Update a PR whenever out of date with the base branch. The PR will be updated
+# regardless of merge requirements (e.g. failing status checks, missing reviews,
+# blacklist labels).
+#
+# Kodiak will only update PRs with the `merge.automerge_label` label or if
+# `update.require_automerge_label = false`.
+#
+# When enabled, _Kodiak will not be able to efficiently update PRs._ If you have
+# multiple PRs against a target like `master`, any time a commit is added to
+# `master` _all_ of those PRs against `master` will update. For `N` PRs against
+# a target you will see at least `N(N-1)/2` updates. If this configuration
+# option was disabled you would only see at least `N-1` updates.
+always = false # default: false
+
+# When enabled, Kodiak will only update PRs that have an automerge label
+# (configured via `merge.automerge_label`). When disable, Kodiak will update any
+# PR. This option only applies when `update.always = true`.
+require_automerge_label = true # default: true
