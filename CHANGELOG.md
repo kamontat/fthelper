@@ -2,17 +2,52 @@
 ## [Unreleased]
 
 ### Chore
-- add merge bot
-- update readme
-- add codeql to analysis
-- remove deprecated code
-- use same format for all workflow
-- separate unittest of each module
-- add dependabot
+- push to unknown branch is invalid
+- push change before create PR
+- forget to add github token
+- remove gh auth completely
+- remove login
+
+### Fix
+- **ci:** look like gh is already installed
+- **ci:** changelog generator fail because cannot push changes
+- **shared:** remove log that expose password set in env.
+
+
+<a name="v4.1.0-beta.4"></a>
+## [v4.1.0-beta.4] - 2021-07-11
+### Chore
+- **release:** published 'v4.1.0-beta.4'
+
+### Fix
+- **deps:** invalid platform name for armv6 and armv7
+- **gen:** ref in schema didn't works
+
+
+<a name="v4.1.0-beta.3"></a>
+## [v4.1.0-beta.3] - 2021-07-11
+### Chore
 - update json schema
+- add merge bot
+- separate unittest of each module
+- add test data to strategy
+- use same format for all workflow
+- remove deprecated code
+- auto generate changelog every week on monday
+- add codeql to analysis
+- update readme
+- add dependabot
+- **ci:** support manually trigger
+- **ci:** format code
 - **deps:** add chglog to changelog generator
 - **doc:** add goreleaser limitation
+- **gen:** named file correctly it
 - **generator:** remove demo templates
+- **release:** published 'v4.1.0-beta.3'
+- **shared:** move utils.ToArray to datatype.ToArray
+
+### Feat
+- **gen:** support new type 'strategy' for create strategy code to output
 
 ### Fix
 - **gen:** fs.variable is wrong name
@@ -20,6 +55,7 @@
 ### Perf
 - **deps:** add armv6 and armv7 for backward close [#1](https://github.com/kamontat/fthelper/issues/1)
 - **metric:** add freqtrade url in info log
+- **shared:** improve fs code and reduce wrapper
 
 
 <a name="v4.1.0-beta.2"></a>
@@ -192,7 +228,9 @@
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.2...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.4...HEAD
+[v4.1.0-beta.4]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.3...v4.1.0-beta.4
+[v4.1.0-beta.3]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.2...v4.1.0-beta.3
 [v4.1.0-beta.2]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.1...v4.1.0-beta.2
 [v4.1.0-beta.1]: https://github.com/kamontat/fthelper/compare/v4.0.0...v4.1.0-beta.1
 [v4.0.0]: https://github.com/kamontat/fthelper/compare/v4.0.0-beta.4...v4.0.0
