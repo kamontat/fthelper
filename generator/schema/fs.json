@@ -9,7 +9,7 @@
     "fs": {
       "type": "object",
       "properties": {
-        "variable": {
+        "variables": {
           "$id": "#/variable",
           "type": "object",
           "additionalProperties": {
