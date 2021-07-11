@@ -23,9 +23,6 @@ jobs:
         run: |
           gh --version
           git-chglog --version
-      - name: Login to Github
-        run: |
-          gh auth status
       - name: Generate changelog
         run: git-chglog --output CHANGELOG.md
       - name: Setup git
