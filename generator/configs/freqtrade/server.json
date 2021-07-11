@@ -21,14 +21,6 @@
           "openapi": true
         }
       }
-    },
-    "live-rest": {
-      "freqtrade": {
-        "server": {
-          "url": "ft.kchome.xyz",
-          "port": 443
-        }
-      }
     }
   }
 }
