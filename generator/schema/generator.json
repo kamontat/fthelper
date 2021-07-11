@@ -184,6 +184,42 @@
             },
             "required": ["type"],
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "docker",
+                "description": "create docker-compose from input data"
+              },
+              "display": {
+                "type": "string",
+                "description": "name to display in summary log"
+              },
+              "name": {
+                "type": "string",
+                "description": "template filename",
+                "default": "docker-compose.yml"
+              },
+              "freqtrades": {
+                "type": "array",
+                "description": "cluster name",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "input": {
+                "type": "string",
+                "default": "template"
+              },
+              "output": {
+                "type": "string",
+                "default": "freqtrade"
+              }
+            },
+            "required": ["type", "name"],
+            "additionalProperties": false
           }
         ]
       }
