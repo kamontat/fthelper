@@ -156,7 +156,7 @@ dockers:
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
       - "--build-arg=FTH_SERVER__ARCH=armv6"
-      - "--platform=linux/armv6"
+      - "--platform=linux/arm/v6"
     extra_files:
       - generator/.env.docker
       - generator/configs
@@ -179,7 +179,7 @@ dockers:
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
       - "--build-arg=FTH_SERVER__ARCH=armv6"
-      - "--platform=linux/armv6"
+      - "--platform=linux/arm/v6"
     extra_files:
       - generator/.env.docker
       - generator/configs
@@ -202,7 +202,7 @@ dockers:
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
       - "--build-arg=FTH_SERVER__ARCH=armv7"
-      - "--platform=linux/armv7"
+      - "--platform=linux/arm/v7"
     extra_files:
       - generator/.env.docker
       - generator/configs
@@ -225,7 +225,7 @@ dockers:
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
       - "--build-arg=FTH_SERVER__ARCH=armv7"
-      - "--platform=linux/armv7"
+      - "--platform=linux/arm/v7"
     extra_files:
       - generator/.env.docker
       - generator/configs
@@ -337,7 +337,7 @@ dockers:
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
       - "--build-arg=FTH_SERVER__ARCH=armv6"
-      - "--platform=linux/armv6"
+      - "--platform=linux/arm/v6"
     extra_files:
       - metric/.env.docker
       - metric/configs
@@ -360,7 +360,7 @@ dockers:
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
       - "--build-arg=FTH_SERVER__ARCH=armv6"
-      - "--platform=linux/armv6"
+      - "--platform=linux/arm/v6"
     extra_files:
       - metric/.env.docker
       - metric/configs
@@ -383,7 +383,7 @@ dockers:
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
       - "--build-arg=FTH_SERVER__ARCH=armv7"
-      - "--platform=linux/armv7"
+      - "--platform=linux/arm/v7"
     extra_files:
       - metric/.env.docker
       - metric/configs
@@ -406,7 +406,7 @@ dockers:
       - "--label=org.opencontainers.image.version={{ .Version }}"
       - "--label=org.opencontainers.image.tag={{ .Tag }}"
       - "--build-arg=FTH_SERVER__ARCH=armv7"
-      - "--platform=linux/armv7"
+      - "--platform=linux/arm/v7"
     extra_files:
       - metric/.env.docker
       - metric/configs
