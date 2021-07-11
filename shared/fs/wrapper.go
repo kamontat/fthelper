@@ -10,12 +10,20 @@ type wrapper struct {
 	fs   []FileSystem
 }
 
+func (w *wrapper) IsSingle() bool {
+	return w.Mode == SINGLE
+}
+
 func (w *wrapper) Single() FileSystem {
 	if w.Mode == MULTIPLE {
 		panic("Cannot get single file-system from multiple mode")
 	}
 
 	return w.fs[0]
+}
+
+func (w *wrapper) IsMultiple() bool {
+	return w.Mode == MULTIPLE
 }
 
 func (w *wrapper) Multiple() []FileSystem {

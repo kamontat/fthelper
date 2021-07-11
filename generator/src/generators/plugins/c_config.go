@@ -18,12 +18,20 @@ func CConfig(data maps.Mapper, fsConfig maps.Mapper) runners.Runner {
 			p.Logger.Error("cannot get input information")
 			return err
 		}
-		directory, err := fs.NewDirectory(fs.Next(input.Single(), p.FsConfig.Mi("variables").Si("config")))
-		if err != nil {
-			p.Logger.Error("cannot get find freqtrade configs template directory")
-			return err
+
+		var files = make([]fs.FileSystem, 0)
+		if input.IsSingle() {
+			directory, err := fs.NewDirectory(fs.Next(input.Single(), p.FsConfig.Mi("variables").Si("config")))
+			if err != nil {
+				p.Logger.Error("cannot get find freqtrade configs template directory")
+				return err
+			}
+			files = []fs.FileSystem{directory}
+		} else if input.IsMultiple() {
+			files = input.Multiple()
 		}
-		content, err := configs.LoadConfigFromFileSystem([]fs.FileSystem{directory}, p.Config, p.Data.Mi("merger"))
+
+		content, err := configs.LoadConfigFromFileSystem(files, p.Config, p.Data.Mi("merger"))
 		if err != nil {
 			p.Logger.Error("cannot load template data")
 			return err
