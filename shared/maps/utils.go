@@ -106,11 +106,11 @@ func ToMapper(d interface{}) (Mapper, bool) {
 	return make(Mapper), false
 }
 
-func ToJson(m map[string]interface{}) ([]byte, error) {
+func ToJson(m interface{}) ([]byte, error) {
 	return json.Marshal(m)
 }
 
-func ToFormatJson(m map[string]interface{}) ([]byte, error) {
+func ToFormatJson(m interface{}) ([]byte, error) {
 	return json.MarshalIndent(m, "", "  ")
 }
 

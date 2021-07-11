@@ -144,6 +144,35 @@ func (m Mapper) Ii(key string) int64 {
 	return m.Io(key, 0)
 }
 
+func (m Mapper) N(key string) (float64, bool) {
+	if f, ok := datatype.ToFloat(m[key]); ok {
+		return f, true
+	}
+	if i, ok := datatype.ToInt(m[key]); ok {
+		return float64(i), true
+	}
+	return -1, false
+}
+
+func (m Mapper) Ne(key string) (float64, error) {
+	if d, ok := m.N(key); ok {
+		return d, nil
+	}
+
+	return 0, convertError(m[key], "number")
+}
+
+func (m Mapper) No(key string, i float64) float64 {
+	if d, ok := m.N(key); ok {
+		return d
+	}
+	return i
+}
+
+func (m Mapper) Ni(key string) float64 {
+	return m.No(key, -1)
+}
+
 func (m Mapper) B(key string) (bool, bool) {
 	return datatype.ToBool(m[key])
 }
