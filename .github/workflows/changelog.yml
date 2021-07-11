@@ -25,7 +25,6 @@ jobs:
           git-chglog --version
       - name: Login to Github
         run: |
-          gh auth login
           gh auth status
       - name: Generate changelog
         run: git-chglog --output CHANGELOG.md
