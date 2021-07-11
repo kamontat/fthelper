@@ -1,4 +1,4 @@
-name: unittest
+name: UnitTest
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
       - '**'
 
 jobs:
-  unittest:
+  shared:
+    name: "Shared"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,11 +21,31 @@ jobs:
         run: |
           go mod tidy
           go test ./...
+  generator:
+    name: "Generator"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
       - name: unittest on generator
         working-directory: generator
         run: |
           go mod tidy
           go test ./...
+  metric:
+    name: "Metric"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
       - name: unittest on metric
         working-directory: metric
         run: |
