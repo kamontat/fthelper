@@ -6,11 +6,17 @@ import (
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
-func json(m maps.Mapper) (string, error) {
+func json(m interface{}) (string, error) {
 	var a, e = maps.ToJson(m)
 	return string(a), e
 }
 
+func indentJson(m interface{}) (string, error) {
+	var a, e = maps.ToFormatJson(m)
+	return string(a), e
+}
+
 var jsonFuncs template.FuncMap = map[string]interface{}{
-	"json": json,
+	"json":       json,
+	"indentJson": indentJson,
 }

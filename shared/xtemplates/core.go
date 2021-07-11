@@ -10,7 +10,9 @@ import (
 func New(name string) *template.Template {
 	return template.New(name).
 		Funcs(stringFuncs).
+		Funcs(numberFuncs).
 		Funcs(jsonFuncs).
+		Funcs(durationFuncs).
 		Option("missingkey=error")
 }
 
