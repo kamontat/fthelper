@@ -114,8 +114,8 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	// 3. override it will override map
 	b.updateResult("argument", result, b.override)
 
-	// 4. override data with environment value
-	var env = b.config.Mi("internal").So("environment", b.env)
+	// 4. override data with cluster value
+	var env = b.config.Mi("internal").So("cluster", b.env)
 	if env != "" {
 		b.logger.Debug("loading config from cluster %s", env)
 		b.updateResult("cluster", result, result.Mi("_").Mi(env))
