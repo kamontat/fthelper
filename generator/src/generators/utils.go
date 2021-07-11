@@ -19,6 +19,8 @@ func GetRunner(data maps.Mapper, config maps.Mapper) (runners.Runner, error) {
 		return plugins.Copy(data, config), nil
 	case "template":
 		return plugins.Template(data, config), nil
+	case "strategy":
+		return plugins.CStrategy(data, config), nil
 	}
 
 	return nil, fmt.Errorf("cannot found generator for type '%s'", name)

@@ -108,6 +108,34 @@
             },
             "required": ["type", "input", "output"],
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "strategy",
+                "description": "similar to templaet type but custom to support auto find path"
+              },
+              "display": {
+                "type": "string",
+                "description": "name to display in summary log"
+              },
+              "name": {
+                "type": "string",
+                "description": "strategy name with extension (e.g. Strategy.py)"
+              },
+              "input": {
+                "type": "string",
+                "default": "template"
+              },
+              "output": {
+                "type": "string",
+                "default": "freqtrade"
+              }
+            },
+            "required": ["type", "name"],
+            "additionalProperties": false
           }
         ]
       }
