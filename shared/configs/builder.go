@@ -12,6 +12,7 @@ import (
 
 type Builder struct {
 	name     string
+	env      string
 	config   maps.Mapper
 	override maps.Mapper
 	strategy maps.Mapper
@@ -20,6 +21,11 @@ type Builder struct {
 
 func (b *Builder) Strategy(strategy maps.Mapper) *Builder {
 	b.strategy = strategy
+	return b
+}
+
+func (b *Builder) Environment(name string) *Builder {
+	b.env = name
 	return b
 }
 
@@ -107,6 +113,12 @@ func (b *Builder) Build() (maps.Mapper, error) {
 
 	// 3. override it will override map
 	b.updateResult("argument", result, b.override)
+
+	// 4. override data with environment value
+	if b.env != "" {
+		b.logger.Debug("loading config from envname %s", b.env)
+		b.updateResult("envname", result, result.Mi("_").Mi(b.env))
+	}
 
 	return result, nil
 }

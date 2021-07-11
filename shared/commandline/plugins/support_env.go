@@ -7,12 +7,12 @@ import (
 
 // SupportEnv will create internal.environments when --env is exist
 func SupportEnv(p *PluginParameter) error {
-	p.NewFlags(flags.Array{
-		Name:    "envs",
-		Default: []string{},
-		Usage:   "setup output environment name",
-		Action: func(data []string) maps.Mapper {
-			return maps.New().Set("internal.environments", data)
+	p.NewFlags(flags.String{
+		Name:    "env",
+		Default: "",
+		Usage:   "setup output environment",
+		Action: func(data string) maps.Mapper {
+			return maps.New().Set("internal.environment", data)
 		},
 	})
 
