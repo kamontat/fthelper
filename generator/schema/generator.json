@@ -150,8 +150,13 @@
               },
               "withEnv": {
                 "type": "boolean",
-                "description": "this will add env name as suffix of output filename",
+                "description": "enabled this will add envname as latest suffix",
                 "default": false
+              },
+              "suffix": {
+                "type": "string",
+                "description": "suffix string to config name (e.g. config-test.json). enabled will 'withEnv' will result to suffix before envname (e.g. config-test-live.json)",
+                "default": ""
               },
               "input": {
                 "type": "string",

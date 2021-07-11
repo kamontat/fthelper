@@ -42,9 +42,12 @@ func CConfig(data maps.Mapper, fsConfig maps.Mapper) runners.Runner {
 			return err
 		}
 
-		var envname = p.Config.Mi("internal").Si("environment")
 		var filename strings.Builder
 		filename.WriteString("config")
+		if p.Data.Si("suffix") != "" {
+			filename.WriteString("-" + p.Data.Si("suffix"))
+		}
+		var envname = p.Config.Mi("internal").Si("environment")
 		if p.Data.Bo("withEnv", false) && envname != "" {
 			filename.WriteString("-" + envname)
 		}
