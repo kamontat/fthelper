@@ -1,6 +1,5 @@
 {
   "freqtrade": {
-    "config": {},
     "strategy": {
       "current": "NostalgiaForInfinityV7"
     }
