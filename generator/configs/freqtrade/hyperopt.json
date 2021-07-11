@@ -1,8 +1,0 @@
-{
-  "freqtrade": {
-    "hyperopt": {
-      "epochs": 700,
-      "spaces": ["all"]
-    }
-  }
-}
