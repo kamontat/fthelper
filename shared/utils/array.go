@@ -18,35 +18,3 @@ func CloneStringArray(a []string, extra ...string) []string {
 
 	return base
 }
-
-// ToArray will try to convert interface{} to array of interface{}
-func ToArray(a interface{}) ([]interface{}, bool) {
-	adata, ok := a.([]interface{})
-	if ok {
-		return adata, ok
-	}
-
-	// support string array
-	sdata, ok := a.([]string)
-	if ok {
-		s := make([]interface{}, len(sdata))
-		for i, v := range sdata {
-			s[i] = v
-		}
-
-		return s, ok
-	}
-
-	// support int array
-	idata, ok := a.([]int)
-	if ok {
-		s := make([]interface{}, len(idata))
-		for i, v := range idata {
-			s[i] = v
-		}
-
-		return s, ok
-	}
-
-	return make([]interface{}, 0), false
-}

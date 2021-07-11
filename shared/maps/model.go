@@ -2,7 +2,6 @@ package maps
 
 import (
 	"github.com/kamontat/fthelper/shared/datatype"
-	"github.com/kamontat/fthelper/shared/utils"
 )
 
 type Mapper map[string]interface{}
@@ -54,7 +53,7 @@ func (m Mapper) Mi(key string) Mapper {
 }
 
 func (m Mapper) A(key string) ([]interface{}, bool) {
-	return utils.ToArray(m[key])
+	return datatype.ToArray(m[key])
 }
 
 func (m Mapper) Ae(key string) ([]interface{}, error) {

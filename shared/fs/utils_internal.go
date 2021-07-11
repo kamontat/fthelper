@@ -6,8 +6,8 @@ import (
 	"path"
 	"strings"
 
+	"github.com/kamontat/fthelper/shared/datatype"
 	"github.com/kamontat/fthelper/shared/maps"
-	"github.com/kamontat/fthelper/shared/utils"
 	"github.com/kamontat/fthelper/shared/xtemplates"
 )
 
@@ -140,7 +140,7 @@ func parseMultiplePaths(m, variable maps.Mapper) ([][]string, error) {
 	} else if raws, ok := m.A("paths"); ok {
 		// raw should be [][]string
 		for _, raw := range raws {
-			if arr, ok := utils.ToArray(raw); ok {
+			if arr, ok := datatype.ToArray(raw); ok {
 				var strings = make([]string, 0)
 				for _, tpl := range arr {
 					var data, err = xtemplates.Text(tpl.(string), variable)

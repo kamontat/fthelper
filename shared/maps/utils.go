@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/kamontat/fthelper/shared/datatype"
 	"github.com/kamontat/fthelper/shared/utils"
 )
 
@@ -52,7 +53,7 @@ func Copy(m map[string]interface{}) Mapper {
 	for k, v := range m {
 		if mapper, ok := ToMapper(v); ok {
 			copied[k] = Copy(mapper)
-		} else if array, ok := utils.ToArray(v); ok {
+		} else if array, ok := datatype.ToArray(v); ok {
 			copied[k] = utils.CloneArray(array)
 		} else {
 			copied[k] = v

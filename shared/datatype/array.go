@@ -2,8 +2,6 @@ package datatype
 
 import (
 	"strings"
-
-	"github.com/kamontat/fthelper/shared/utils"
 )
 
 func parseArray(s string) (out []string, isArray bool) {
@@ -19,13 +17,37 @@ func parseArray(s string) (out []string, isArray bool) {
 	return
 }
 
-// TODO: move ToArray from utils to datatype
-func ToArray(i interface{}) ([]interface{}, bool) {
-	if a, ok := utils.ToArray(i); ok {
-		return a, ok
+// ToArray will try to convert interface{} to array of interface{}
+func ToArray(a interface{}) ([]interface{}, bool) {
+	adata, ok := a.([]interface{})
+	if ok {
+		return adata, ok
 	}
 
-	if s, ok := i.(string); ok {
+	// support string array
+	sdata, ok := a.([]string)
+	if ok {
+		s := make([]interface{}, len(sdata))
+		for i, v := range sdata {
+			s[i] = v
+		}
+
+		return s, ok
+	}
+
+	// support int array
+	idata, ok := a.([]int)
+	if ok {
+		s := make([]interface{}, len(idata))
+		for i, v := range idata {
+			s[i] = v
+		}
+
+		return s, ok
+	}
+
+	// support string with `a:1,2,3` format
+	if s, ok := a.(string); ok {
 		if v, ok := parseArray(s); ok {
 			var t = make([]interface{}, 0)
 			for _, d := range v {
@@ -39,7 +61,7 @@ func ToArray(i interface{}) ([]interface{}, bool) {
 }
 
 func ForceArray(i interface{}) ([]interface{}, bool) {
-	if a, ok := utils.ToArray(i); ok {
+	if a, ok := ToArray(i); ok {
 		return a, ok
 	}
 

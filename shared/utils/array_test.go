@@ -26,13 +26,3 @@ func TestCloneArray(t *testing.T) {
 		}
 	})
 }
-
-func TestToArray(t *testing.T) {
-	t.Run("Create array from interface{}", func(t *testing.T) {
-		var inf interface{} = []interface{}{"1", "2"}
-		var newArr, ok = utils.ToArray(inf)
-		if !ok || len(newArr) != 2 {
-			t.Errorf("Interface (%v) should be converted to array", inf)
-		}
-	})
-}

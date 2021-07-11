@@ -3,7 +3,7 @@ package maps
 import (
 	"fmt"
 
-	"github.com/kamontat/fthelper/shared/utils"
+	"github.com/kamontat/fthelper/shared/datatype"
 )
 
 var avoid = []string{"$schema", "#comment#"}
@@ -24,8 +24,8 @@ func Merge(a, b map[string]interface{}, strategy Mapper) map[string]interface{} 
 					replaced = true
 				}
 			}
-		} else if bData, ok := utils.ToArray(value); ok {
-			if aData, ok := utils.ToArray(a[key]); ok {
+		} else if bData, ok := datatype.ToArray(value); ok {
+			if aData, ok := datatype.ToArray(a[key]); ok {
 				if exist, ok := strategy.Z(key); ok && exist == MERGER_OVERRIDE {
 					a[key] = bData
 				} else {
