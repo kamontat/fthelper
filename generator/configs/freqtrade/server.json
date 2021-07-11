@@ -1,0 +1,34 @@
+{
+  "freqtrade": {
+    "server": {
+      "enabled": true,
+      "openapi": false,
+      "url": "0.0.0.0",
+      "port": 8080
+    }
+  },
+  "_": {
+    "dryrun": {
+      "freqtrade": {
+        "server": {
+          "openapi": true
+        }
+      }
+    },
+    "local": {
+      "freqtrade": {
+        "server": {
+          "openapi": true
+        }
+      }
+    },
+    "live-rest": {
+      "freqtrade": {
+        "server": {
+          "url": "ft.kchome.xyz",
+          "port": 443
+        }
+      }
+    }
+  }
+}

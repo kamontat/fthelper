@@ -2,9 +2,14 @@
   "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/generator.json",
   "generators": [
     {
-      "display": "abc-strategy",
+      "display": "NFIV7",
       "type": "strategy",
       "name": "NostalgiaForInfinityV7.py"
+    },
+    {
+      "display": "config",
+      "type": "config",
+      "withEnv": true
     }
   ]
 }

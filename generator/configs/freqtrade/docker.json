@@ -1,0 +1,8 @@
+{
+  "freqtrade": {
+    "image": {
+      "name": "freqtradeorg/freqtrade",
+      "tag": "develop_plot"
+    }
+  }
+}

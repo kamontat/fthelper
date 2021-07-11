@@ -1,0 +1,12 @@
+{
+  "server": {
+    "arch": "",
+    "domain": "",
+    "domains": {
+      "freqtrade": "",
+      "grafana": "",
+      "dbadmin": "",
+      "postgres": ""
+    }
+  }
+}

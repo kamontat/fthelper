@@ -1,0 +1,52 @@
+{
+  "freqtrade": {
+    "enabled": true,
+    "debug": false,
+    "name": "freqtrade",
+    "database": "sqlite",
+    "wallet": {
+      "currency": "USDT",
+      "fiat": "THB",
+      "amount": 1200,
+      "fee": 0.001
+    },
+    "trade": {
+      "max": 3,
+      "amount": "unlimited",
+      "orderbook": true,
+      "checkmarket": {
+        "enabled": false,
+        "delta": 0.95
+      }
+    }
+  },
+  "_": {
+    "live": {
+      "freqtrade": {
+        "config": {
+          "live": true
+        },
+        "database": "postgres"
+      }
+    },
+    "dryrun": {
+      "freqtrade": {
+        "database": "postgres"
+      }
+    },
+    "backtest": {
+      "freqtrade": {
+        "trade": {
+          "orderbook": false
+        }
+      }
+    },
+    "hyperopt": {
+      "freqtrade": {
+        "trade": {
+          "orderbook": false
+        }
+      }
+    }
+  }
+}

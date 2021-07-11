@@ -1,0 +1,26 @@
+{
+  "freqtrade": {
+    "config": {
+      "timeframe": {
+        "value": ""
+      },
+      "timerange": {
+        "start": "",
+        "end": ""
+      },
+      "live": false,
+      "formatter": "hdf5"
+    }
+  },
+  "_": {
+    "backtest": {
+      "freqtrade": {
+        "config": {
+          "timeframe": {
+            "value": "5m"
+          }
+        }
+      }
+    }
+  }
+}

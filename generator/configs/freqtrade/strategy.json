@@ -1,7 +1,17 @@
 {
   "freqtrade": {
     "strategy": {
+      "enabled": true,
       "current": "NostalgiaForInfinityV7"
+    }
+  },
+  "_": {
+    "hyperopt": {
+      "freqtrade": {
+        "strategy": {
+          "enabled": false
+        }
+      }
     }
   }
 }

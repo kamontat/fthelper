@@ -1,0 +1,11 @@
+{
+  "postgres": {
+    "name": "postgres",
+    "port": 5432,
+    "enabled": true,
+    "image": {
+      "name": "postgres",
+      "tag": "13-alpine"
+    }
+  }
+}

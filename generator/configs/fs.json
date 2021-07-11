@@ -2,18 +2,21 @@
   "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/fs.json",
   "fs": {
     "variables": {
-      "uesrdata": "user_data",
+      "template": ".templates",
+      "freqtrade": ".freqtrade",
+      "config": "configs",
+      "userdata": "user_data",
       "strategy": "strategies"
     },
     "template": {
       "type": "directory",
       "mode": "single",
-      "fullpath": "{{ .current }}/.templates"
+      "fullpath": "{{ .current }}/{{ .template }}"
     },
     "freqtrade": {
       "type": "directory",
       "mode": "single",
-      "fullpath": "{{ .current }}/.freqtrade"
+      "fullpath": "{{ .current }}/{{ .freqtrade }}"
     }
   }
 }
