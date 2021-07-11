@@ -10,14 +10,13 @@
       "type": "object",
       "properties": {
         "variables": {
-          "$id": "#/variable",
           "type": "object",
           "additionalProperties": {
             "oneOf": [
               { "type": "string" },
               {
                 "type": "object",
-                "$ref": "#/variable"
+                "$ref": "#/properties/fs/properties/variables"
               }
             ]
           }

@@ -30,7 +30,6 @@
                 "type": "string"
               },
               "merger": {
-                "$id": "#/merger",
                 "type": "object",
                 "additionalProperties": {
                   "oneOf": [
@@ -40,7 +39,7 @@
                     },
                     {
                       "type": "object",
-                      "$ref": "#/merger"
+                      "$ref": "#/properties/generators/items/oneOf/0/properties/merger"
                     }
                   ]
                 }
