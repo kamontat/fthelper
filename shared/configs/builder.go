@@ -115,9 +115,10 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	b.updateResult("argument", result, b.override)
 
 	// 4. override data with environment value
-	if b.env != "" {
-		b.logger.Debug("loading config from envname %s", b.env)
-		b.updateResult("envname", result, result.Mi("_").Mi(b.env))
+	var env = b.config.Mi("internal").So("environment", b.env)
+	if env != "" {
+		b.logger.Debug("loading config from envname %s", env)
+		b.updateResult("envname", result, result.Mi("_").Mi(env))
 	}
 
 	return result, nil
