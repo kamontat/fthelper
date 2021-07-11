@@ -1,6 +1,7 @@
 name: Generator
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 5 * * 1" # https://crontab.guru/#0_5_*_*_1
 
