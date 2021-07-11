@@ -13,6 +13,7 @@ func New(name string) *template.Template {
 		Funcs(numberFuncs).
 		Funcs(jsonFuncs).
 		Funcs(durationFuncs).
+		Funcs(envFuncs).
 		Option("missingkey=error")
 }
 
