@@ -19,8 +19,6 @@ jobs:
           go-version: 1.16
       - name: Install git-chglog
         run: go get -u github.com/git-chglog/git-chglog/cmd/git-chglog
-      - name: Install Github cli
-        run: go get -u github.com/cli/cli/cmd/gh
       - name: Version
         run: |
           gh --version
