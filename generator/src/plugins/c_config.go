@@ -42,10 +42,11 @@ func CConfig(data maps.Mapper, fsConfig maps.Mapper) runners.Runner {
 			return err
 		}
 
+		var envname = p.Config.Mi("internal").Si("environment")
 		var filename strings.Builder
 		filename.WriteString("config")
-		if p.Data.Bo("withEnv", false) {
-			filename.WriteString("-" + p.Config.Mi("internal").Si("environment"))
+		if p.Data.Bo("withEnv", false) && envname != "" {
+			filename.WriteString("-" + envname)
 		}
 		filename.WriteString(".json")
 		output, err := fs.Build(p.Data.So("output", "freqtrade"), p.FsConfig)
