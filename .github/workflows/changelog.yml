@@ -34,3 +34,5 @@ jobs:
           git checkout -b "release/$(date +'%y%m%d')"
           git commit -am "chore: auto generate changelog [skip-ci]"
           gh pr create --title "chore: release note ($(date +'%y%m%d'))" --label "release-note" --fill
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
