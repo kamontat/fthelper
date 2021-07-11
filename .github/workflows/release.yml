@@ -1,4 +1,4 @@
-name: goreleaser
+name: GoReleaser
 
 on:
   push:
@@ -9,7 +9,8 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  goreleaser:
+  release:
+    name: "Release"
     runs-on: ubuntu-latest
     permissions:
       contents: write
