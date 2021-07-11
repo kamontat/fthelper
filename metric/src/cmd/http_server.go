@@ -12,25 +12,25 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-func HttpServer(parameters *commands.ExecutorParameter, conn *freqtrade.Connection) error {
-	var serverPort = parameters.Config.Mi("server").Io("port", 8090)
-	var serverPath = parameters.Config.Mi("server").So("metric-path", "/metrics")
+func HttpServer(p *commands.ExecutorParameter, conn *freqtrade.Connection) error {
+	var serverPort = p.Config.Mi("server").No("port", 8090)
+	var serverPath = p.Config.Mi("server").So("metric-path", "/metrics")
 
 	prometheus.MustRegister(
-		collectors.New(parameters, conn, metrics.FT),
-		collectors.New(parameters, conn, metrics.FTTrade),
-		collectors.New(parameters, conn, metrics.FTPair),
-		collectors.New(parameters, conn, metrics.FTLock),
-		collectors.New(parameters, conn, metrics.FTLog),
-		collectors.New(parameters, conn, metrics.Info),
-		collectors.New(parameters, conn, metrics.FTInternal),
-		collectors.New(parameters, conn, metrics.Internal),
+		collectors.New(p, conn, metrics.FT),
+		collectors.New(p, conn, metrics.FTTrade),
+		collectors.New(p, conn, metrics.FTPair),
+		collectors.New(p, conn, metrics.FTLock),
+		collectors.New(p, conn, metrics.FTLog),
+		collectors.New(p, conn, metrics.Info),
+		collectors.New(p, conn, metrics.FTInternal),
+		collectors.New(p, conn, metrics.Internal),
 	)
 	http.Handle(serverPath, promhttp.Handler())
 	http.HandleFunc("/version", func(rw http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(rw, "%s: %s (%s)", parameters.Meta.Name, parameters.Meta.Version, parameters.Meta.Commit)
+		fmt.Fprintf(rw, "%s: %s (%s)", p.Meta.Name, p.Meta.Version, p.Meta.Commit)
 	})
 
-	parameters.Logger.Info("Start server at 0.0.0.0:%d", serverPort)
-	return http.ListenAndServe(fmt.Sprintf(":%d", serverPort), nil)
+	p.Logger.Info("Start server at 0.0.0.0:%.0f", serverPort)
+	return http.ListenAndServe(fmt.Sprintf(":%.0f", serverPort), nil)
 }
