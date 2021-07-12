@@ -7,7 +7,7 @@ import (
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
-func byEnv(config maps.Mapper, clusterName string, configPath string) (interface{}, error) {
+func byCluster(config maps.Mapper, clusterName string, configPath string) (interface{}, error) {
 	var path = fmt.Sprintf("_.%s.%s", clusterName, configPath)
 	if config.Has(path) {
 		return config.Get(path)
@@ -18,5 +18,5 @@ func byEnv(config maps.Mapper, clusterName string, configPath string) (interface
 }
 
 var envFuncs template.FuncMap = map[string]interface{}{
-	"byEnv": byEnv,
+	"byCluster": byCluster,
 }
