@@ -21,7 +21,13 @@ func New(data maps.Mapper, config maps.Mapper, executor Executor) runners.Runner
 			raws = append(raws, "") // add default empty cluster
 		}
 
-		if data.Bo("withCluster", true) {
+		var name = data.Si("type")
+		var defaultWithCluster = true
+		if name == "copy" {
+			defaultWithCluster = false
+		}
+
+		if data.Bo("withCluster", defaultWithCluster) {
 			for _, raw := range raws {
 				var cluster = raw.(string)
 
