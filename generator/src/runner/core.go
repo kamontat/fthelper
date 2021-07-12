@@ -42,6 +42,8 @@ func New(data maps.Mapper, config maps.Mapper, executor Executor) runners.Runner
 					return err
 				}
 			}
+			// finished
+			return nil
 		}
 
 		var clusters = make([]string, 0)
