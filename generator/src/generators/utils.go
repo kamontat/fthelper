@@ -23,8 +23,6 @@ func GetRunner(data maps.Mapper, config maps.Mapper) (runners.Runner, error) {
 		return plugins.CStrategy(data, config), nil
 	case "config":
 		return plugins.CConfig(data, config), nil
-	case "docker":
-		return plugins.CDockerCompose(data, config), nil
 	}
 
 	return nil, fmt.Errorf("cannot found generator for type '%s'", name)
