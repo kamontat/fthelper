@@ -17,6 +17,10 @@ func New(data maps.Mapper, config maps.Mapper, executor Executor) runners.Runner
 		// 2. 'withCluster=true' will run multiple execution with single cluster; this will add cluster as string
 		//    'withCluster=false' will run single execution with multiple cluster; this will add clusters as []string
 		var raws = config.Mi("internal").Ai("clusters")
+		if len(raws) < 1 {
+			raws = append(raws, "") // add default empty cluster
+		}
+
 		if data.Bo("withCluster", true) {
 			for _, raw := range raws {
 				var cluster = raw.(string)
