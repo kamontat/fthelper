@@ -21,7 +21,7 @@
               },
               "withCluster": {
                 "type": "boolean",
-                "description": "template data will be override with custom cluster override value",
+                "description": "enable this will make your generator run x times (where x is number of clusters)",
                 "default": true
               },
               "display": {
@@ -62,7 +62,7 @@
               },
               "withCluster": {
                 "type": "boolean",
-                "description": "template data will be override with custom cluster override value",
+                "description": "enable this will make your generator run x times (where x is number of clusters)",
                 "default": true
               },
               "display": {
@@ -85,7 +85,7 @@
               },
               "withCluster": {
                 "type": "boolean",
-                "description": "template data will be override with custom cluster override value",
+                "description": "enable this will make your generator run x times (where x is number of clusters)",
                 "default": true
               },
               "display": {
@@ -111,7 +111,7 @@
               },
               "withCluster": {
                 "type": "boolean",
-                "description": "template data will be override with custom cluster override value",
+                "description": "enable this will make your generator run x times (where x is number of clusters)",
                 "default": true
               },
               "display": {
@@ -138,7 +138,7 @@
               },
               "withCluster": {
                 "type": "boolean",
-                "description": "template data will be override with custom cluster override value",
+                "description": "enable this will make your generator run x times (where x is number of clusters)",
                 "default": true
               },
               "display": {
@@ -171,7 +171,7 @@
               },
               "withCluster": {
                 "type": "boolean",
-                "description": "template data will be override with custom cluster override value",
+                "description": "enable this will make your generator run x times (where x is number of clusters)",
                 "default": true
               },
               "display": {
@@ -225,7 +225,7 @@
               },
               "withCluster": {
                 "type": "boolean",
-                "description": "template data will be override with custom cluster override value",
+                "description": "enable this will make your generator run x times (where x is number of clusters)",
                 "default": true
               },
               "display": {
@@ -236,13 +236,6 @@
                 "type": "string",
                 "description": "template filename",
                 "default": "docker-compose.yml"
-              },
-              "freqtrades": {
-                "type": "array",
-                "description": "cluster name",
-                "items": {
-                  "type": "string"
-                }
               },
               "ftmetric": {
                 "type": "boolean",
