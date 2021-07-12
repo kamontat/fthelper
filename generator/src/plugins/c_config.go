@@ -47,7 +47,7 @@ func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
 		if p.Data.Si("suffix") != "" {
 			filename.WriteString("-" + p.Data.Si("suffix"))
 		}
-		var cluster = p.Config.Mi("internal").Si("cluster")
+		var cluster = p.Data.Si("cluster")
 		if p.Data.Bo("clusterSuffix", false) && cluster != "" {
 			filename.WriteString("-" + cluster)
 		}

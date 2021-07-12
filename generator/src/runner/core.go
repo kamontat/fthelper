@@ -14,19 +14,48 @@ func New(data maps.Mapper, config maps.Mapper, executor Executor) runners.Runner
 		var log = loggers.Get("generator", name)
 		var data = i.Input().(maps.Mapper)
 
-		// 1. add .data
-		var merger = maps.Merger(config).Add(maps.New().Set("data", data))
-
-		// 2. add override cluster if 'withCluster' is true
+		// 2. 'withCluster=true' will run multiple execution with single cluster; this will add cluster as string
+		//    'withCluster=false' will run single execution with multiple cluster; this will add clusters as []string
+		var raws = config.Mi("internal").Ai("clusters")
 		if data.Bo("withCluster", true) {
-			var cluster = config.Mi("internal").Si("cluster")
-			log.Debug("override data with cluster: %s", cluster) // this might be remove because cluster never changes
-			merger.Add(config.Mi("_").Mi(cluster))
+			for _, raw := range raws {
+				var cluster = raw.(string)
+
+				// 1. add cluster to .data
+				var newData = data.Copy().Set("cluster", cluster)
+
+				// 2. add data to config (.data)
+				var merger = maps.Merger(config).Add(maps.New().Set("data", newData))
+
+				log.Debug("override data with cluster: %s", cluster) // this might be remove because cluster never changes
+				merger.Add(config.Mi("_").Mi(cluster))
+
+				var err = executor(&ExecutorParameter{
+					Name:     name,
+					Data:     newData,
+					Config:   merger.Merge(),
+					FsConfig: config.Mi("fs"),
+					Logger:   log,
+				})
+
+				if err != nil {
+					return err
+				}
+			}
 		}
+
+		var clusters = make([]string, 0)
+		for _, raw := range raws {
+			clusters = append(clusters, raw.(string))
+		}
+
+		// 1. add clusters to .data
+		var newData = data.Copy().Set("clusters", clusters)
+		var merger = maps.Merger(config).Add(maps.New().Set("data", newData))
 
 		return executor(&ExecutorParameter{
 			Name:     name,
-			Data:     data,
+			Data:     newData,
 			Config:   merger.Merge(),
 			FsConfig: config.Mi("fs"),
 			Logger:   log,

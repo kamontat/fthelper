@@ -7,12 +7,12 @@ import (
 
 // SupportCluster will create internal.cluster when --cluster is exist
 func SupportCluster(p *PluginParameter) error {
-	p.NewFlags(flags.String{
-		Name:    "cluster",
-		Default: "",
-		Usage:   "setup output cluster",
-		Action: func(data string) maps.Mapper {
-			return maps.New().Set("internal.cluster", data)
+	p.NewFlags(flags.Array{
+		Name:    "clusters",
+		Default: []string{},
+		Usage:   "setup output clusters",
+		Action: func(data []string) maps.Mapper {
+			return maps.New().Set("internal.clusters", data)
 		},
 	})
 

@@ -28,8 +28,8 @@ func CDockerCompose(data maps.Mapper, config maps.Mapper) runners.Runner {
 		}
 
 		// validate parameters
-		if !p.Config.Has("data.freqtrades") {
-			p.Config.Set("data.freqtrades", []string{""})
+		if !p.Config.Has("data.clusters") {
+			p.Config.Set("data.clusters", []string{""})
 		}
 
 		// write to output
