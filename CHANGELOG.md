@@ -1,6 +1,24 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### 1. Features
+- **gen:** add config withCluster, meaning it will overide value that define on underscore fields by cluster
+- **gen:** config also support multiple files/directories
+- **gen:** remove all configs and template to use privately
+
+### 2. Performance Improvements
+- **gen:** add suffix in generator 'config' type
+- **gen:** add new type 'docker' for generator freqtrade docker-compsoe
+- **gen:** now you can access data from generator parameters within .data map
+- **shared:** byEnv will fallback to get default value of cluster override is not exist
+- **shared:** migrate envname to cluster to be the same with ftmetric
+- **shared:** add byEnv for get information base on envname (cluster)
+- **shared:** remove default override value by cluster name
+
+### 3. Bug Fixes
+- **gen:** some place didn't been migrated to cluster
+- **gen:** config not create correct file with suffix
+
 
 <a name="v4.1.0-beta.5"></a>
 ## [v4.1.0-beta.5] - 2021-07-11
