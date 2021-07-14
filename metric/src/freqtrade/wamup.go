@@ -2,18 +2,10 @@ package freqtrade
 
 import "time"
 
-func Warmup(conn *Connection) time.Duration {
+func Warmup(conn *Connection) (time.Duration, error) {
 	var start = time.Now()
 
-	NewStatus(conn)
-	NewVersion(conn)
-	NewCount(conn)
-	NewBalance(conn)
-	NewProfit(conn)
-	NewLocks(conn)
-	NewWhitelist(conn)
-	NewPerformance(conn)
-	NewLogs(conn)
+	var err = conn.cache.FetchAll()
 
-	return time.Since(start)
+	return time.Since(start), err
 }
