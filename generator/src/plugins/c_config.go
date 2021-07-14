@@ -31,7 +31,7 @@ func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
 			files = input.Multiple()
 		}
 
-		var config = maps.Merger(config)
+		var config = maps.Merger(p.Config)
 		if key := p.Data.Si("withEnv"); key != "" {
 			config.Add(p.Config.Mi("_").Mi(key))
 		}
