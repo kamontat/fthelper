@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/kamontat/fthelper/shared/errors"
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
@@ -17,9 +18,9 @@ func (s *Service) Size() int {
 }
 
 func (s *Service) Has(key string) bool {
-	s.mutex.Lock()
+	s.mutex.RLock()
 	d, ok := s.caches[key]
-	s.mutex.Unlock()
+	s.mutex.RUnlock()
 
 	return ok && d.IsExist()
 }
@@ -104,6 +105,18 @@ func (s *Service) Fetch(key string, updater Updater, expireAt string) error {
 
 	_, err := s.Get(key).Fetch()
 	return err
+}
+
+func (s *Service) FetchAll() error {
+	var errs = errors.New()
+	s.mutex.RLock()
+	for _, data := range s.caches {
+		_, err := data.Fetch()
+		errs.And(err)
+	}
+	s.mutex.RUnlock()
+
+	return errs.Error()
 }
 
 func (s *Service) String() string {
