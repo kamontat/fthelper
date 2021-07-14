@@ -1,6 +1,7 @@
 package constants
 
 const (
+	WARMUP_ERROR     = "warmup.errors"
 	WARMUP_DURATIONS = "warmup.durations"
 
 	FTCONN_CACHE_TOTAL  = "ftconn.cache.total"
