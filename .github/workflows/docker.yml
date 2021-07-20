@@ -43,8 +43,8 @@ jobs:
         with:
           images: ghcr.io/kamontat/freqtrade
           tags: |
-            type=ref,prefix=,suffix=,event=branch
-            type=schedule,pattern={{date 'YYYYMMDD'}}
+            type=ref,prefix=,suffix=_pg,event=branch
+            type=schedule,suffix=_pg,pattern={{date 'YYYYMMDD'}}
           flavor: |
             latest=false
       - name: Build Docker image with Postgres
