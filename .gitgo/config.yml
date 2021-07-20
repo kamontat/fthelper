@@ -36,6 +36,8 @@ settings:
               text: Generator repository
             - key: metric
               text: Metric repository
+            - key: docker
+              text: Docker repository
             - key: scripts
               text: Helpers scripts
             - key: deps
