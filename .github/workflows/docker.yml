@@ -43,9 +43,8 @@ jobs:
         with:
           images: ghcr.io/kamontat/freqtrade
           tags: |
+            type=ref,prefix=,suffix=,event=branch
             type=schedule,pattern={{date 'YYYYMMDD'}}
-            type=ref,event=branch
-            type=sha
           flavor: |
             latest=false
       - name: Build Docker image with Postgres
@@ -55,6 +54,7 @@ jobs:
           file: dockers/Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: ${{ steps.data.outputs.docker_image }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha
