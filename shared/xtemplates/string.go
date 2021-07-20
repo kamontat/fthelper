@@ -1,6 +1,7 @@
 package xtemplates
 
 import (
+	"strings"
 	"text/template"
 
 	"github.com/kamontat/fthelper/shared/datatype"
@@ -17,5 +18,8 @@ func join(input ...interface{}) string {
 }
 
 var stringFuncs template.FuncMap = map[string]interface{}{
-	"join": join,
+	"join":    join,
+	"toLower": strings.ToLower,
+	"toUpper": strings.ToUpper,
+	"toTitle": strings.ToTitle,
 }
