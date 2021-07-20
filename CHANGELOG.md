@@ -1,23 +1,54 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v4.1.0-beta.9"></a>
+## [v4.1.0-beta.9] - 2021-07-14
+
+<a name="v4.1.0-beta.8"></a>
+## [v4.1.0-beta.8] - 2021-07-14
+### 2. Performance Improvements
+- **gen:** remove default settings
+
+
+<a name="v4.1.0-beta.7"></a>
+## [v4.1.0-beta.7] - 2021-07-14
+### 3. Bug Fixes
+- **gen:** use wrong config mapper
+
+
+<a name="v4.1.0-beta.6"></a>
+## [v4.1.0-beta.6] - 2021-07-14
 ### 1. Features
+- **gen:** remove 'docker' type because it do nothing different from 'template' type
+- **gen:** support generator multiple files base on input clusters
 - **gen:** add config withCluster, meaning it will overide value that define on underscore fields by cluster
 - **gen:** config also support multiple files/directories
 - **gen:** remove all configs and template to use privately
+- **metric:** add new metric for monitor warmup fails
 
 ### 2. Performance Improvements
 - **gen:** add suffix in generator 'config' type
-- **gen:** add new type 'docker' for generator freqtrade docker-compsoe
+- **gen:** support override ftconfig from custom environment with specify key
+- **gen:** disable withCluster in copy by default
+- **gen:** remove support freqtrades in docker due to support clusters actively
+- **gen:** change byEnv to byCluster in go template
 - **gen:** now you can access data from generator parameters within .data map
+- **gen:** add new type 'docker' for generator freqtrade docker-compsoe
+- **metric:** use instead fetch expired caches instead
 - **shared:** byEnv will fallback to get default value of cluster override is not exist
 - **shared:** migrate envname to cluster to be the same with ftmetric
+- **shared:** add new internal.meta fields in configuration
+- **shared:** join function in template is support interface{} data type
 - **shared:** add byEnv for get information base on envname (cluster)
 - **shared:** remove default override value by cluster name
 
 ### 3. Bug Fixes
+- **gen:** add default empty cluster name
+- **gen:** enable 'withCluster' didn't end as expected
 - **gen:** some place didn't been migrated to cluster
 - **gen:** config not create correct file with suffix
+- **metric:** sometimes metric return unhandler exception due to reading same data from different thread
 
 
 <a name="v4.1.0-beta.5"></a>
@@ -154,7 +185,11 @@
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.5...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.9...HEAD
+[v4.1.0-beta.9]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.8...v4.1.0-beta.9
+[v4.1.0-beta.8]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.7...v4.1.0-beta.8
+[v4.1.0-beta.7]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.6...v4.1.0-beta.7
+[v4.1.0-beta.6]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.5...v4.1.0-beta.6
 [v4.1.0-beta.5]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.4...v4.1.0-beta.5
 [v4.1.0-beta.4]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.3...v4.1.0-beta.4
 [v4.1.0-beta.3]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.2...v4.1.0-beta.3
