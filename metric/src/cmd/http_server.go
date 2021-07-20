@@ -18,6 +18,7 @@ func HttpServer(p *commands.ExecutorParameter, conn *freqtrade.Connection) error
 
 	prometheus.MustRegister(
 		collectors.New(p, conn, metrics.FT),
+		collectors.New(p, conn, metrics.FTBalance),
 		collectors.New(p, conn, metrics.FTTrade),
 		collectors.New(p, conn, metrics.FTPair),
 		collectors.New(p, conn, metrics.FTLock),

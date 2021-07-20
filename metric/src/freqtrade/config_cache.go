@@ -16,6 +16,7 @@ var defaultValues map[string]string = map[string]string{
 	"version":   "10m",
 	"profit":    "5m",
 	"whitelist": "15m",
+	"stats":     "5m",
 }
 
 func (c *CacheConfig) GetOrElse(key string, def string) string {

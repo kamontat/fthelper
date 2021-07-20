@@ -20,7 +20,8 @@
       "locks": "5m",
       "whitelist": "15m",
       "performance": "1m",
-      "logs": "1m"
+      "logs": "1m",
+      "stats": "5m"
     }
   },
   "server": {

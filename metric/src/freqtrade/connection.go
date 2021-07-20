@@ -84,10 +84,7 @@ func (c *Connection) GET(name string, query url.Values, target interface{}) erro
 		return err
 	}
 
-	err = toJson(resp, target)
-	c.logger.Debug("response body: %v", target)
-
-	return err
+	return toJson(resp, target)
 }
 
 func (c *Connection) POST(name string, query url.Values, body io.Reader, target interface{}) error {
@@ -96,10 +93,7 @@ func (c *Connection) POST(name string, query url.Values, body io.Reader, target 
 		return err
 	}
 
-	err = toJson(resp, target)
-	c.logger.Debug("response body: %v", target)
-
-	return err
+	return toJson(resp, target)
 }
 
 func (c *Connection) String() string {

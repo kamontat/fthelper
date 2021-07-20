@@ -8,7 +8,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-var FT = collectors.NewMetrics(
+var FTBalance = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "crypto", "balance"),
 		"Current crypto balance in exchange",

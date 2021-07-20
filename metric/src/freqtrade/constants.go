@@ -3,6 +3,7 @@ package freqtrade
 const (
 	API_BALANCE   = "balance"
 	API_COUNT     = "count"
+	API_STAT      = "stats"
 	API_LOCK      = "locks"
 	API_LOG       = "logs"
 	API_PERF      = "performance"
