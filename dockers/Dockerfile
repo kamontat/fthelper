@@ -1,4 +1,4 @@
-FROM freqtradeorg/freqtrade:develop
+FROM freqtradeorg/freqtrade:develop_plot
 
 # Install postgres compiler support
 USER root
