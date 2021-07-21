@@ -8,6 +8,9 @@ func ToString(i interface{}) (string, bool) {
 }
 
 func ForceString(i interface{}) string {
-	s, _ := i.(string)
-	return fmt.Sprintf("%v", s)
+	if s, ok := i.(string); ok {
+		return s
+	}
+
+	return fmt.Sprintf("%v", i)
 }
