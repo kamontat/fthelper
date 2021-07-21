@@ -39,6 +39,8 @@ func NewRunner(data maps.Mapper, mapper maps.Mapper, executor Executor, setting 
 		return nil
 	}, func(i *runners.SingleInfo) error {
 		var param = i.Input().(*ExecutorParameter)
+
+		param.Logger.Info("Start generate %s (%s) with data: %v", param.Name, param.Type, param.Data)
 		if param.Data.Bo("withCluster", setting.DefaultWithCluster) {
 			for _, raw := range param.Data.Ai("clusters") {
 				var cluster = raw.(string)
