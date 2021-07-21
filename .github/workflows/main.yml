@@ -67,9 +67,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Download artifacts
         uses: actions/download-artifact@v2
-      - name: Prepare data
-        run: |
-          ls -Rla
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
