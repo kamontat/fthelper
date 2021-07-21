@@ -1,6 +1,7 @@
 package xtests
 
 import (
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
@@ -30,6 +31,15 @@ func (a *Assertion) WithActual(v interface{}) *Assertion {
 func (a *Assertion) WithActualAndError(v interface{}, err error) *Assertion {
 	a.actual = v
 	a.err = err
+	return a
+}
+
+func (a *Assertion) WithActualAndBool(v interface{}, ok bool) *Assertion {
+	if ok {
+		a.actual = v
+	} else {
+		a.err = fmt.Errorf("result (%v) is not ok", v)
+	}
 	return a
 }
 
