@@ -1,0 +1,7 @@
+dist
+reports
+
+.chglog
+.gitgo
+.github
+.vscode
