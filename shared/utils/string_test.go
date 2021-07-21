@@ -4,30 +4,24 @@ import (
 	"testing"
 
 	"github.com/kamontat/fthelper/shared/utils"
+	"github.com/kamontat/fthelper/shared/xtests"
 )
 
 func TestString(t *testing.T) {
-	t.Run("join partial empty", func(t *testing.T) {
-		var expected = "a-b"
-		var out = utils.JoinString("-", "a", "", "b")
-		if out != expected {
-			t.Errorf("%s != %s", out, expected)
-		}
-	})
+	var assertion = xtests.New(t)
 
-	t.Run("join empty", func(t *testing.T) {
-		var expected = ""
-		var out = utils.JoinString("-", "", "", "")
-		if out != expected {
-			t.Errorf("%s != %s", out, expected)
-		}
-	})
+	assertion.NewName("joining string").
+		WithExpected("a.b.c").
+		WithActual(utils.JoinString(".", "a", "b", "c")).
+		MustEqual()
 
-	t.Run("join string", func(t *testing.T) {
-		var expected = "test.hello.world"
-		var out = utils.JoinString(".", "test", "hello", "world")
-		if out != expected {
-			t.Errorf("%s != %s", out, expected)
-		}
-	})
+	assertion.NewName("joining partial empty string").
+		WithExpected("a-c").
+		WithActual(utils.JoinString("-", "a", "", "c")).
+		MustEqual()
+
+	assertion.NewName("joining empty string").
+		WithExpected("").
+		WithActual(utils.JoinString("-", "", "", "")).
+		MustEqual()
 }
