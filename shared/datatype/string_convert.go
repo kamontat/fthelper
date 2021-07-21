@@ -23,10 +23,8 @@ func ConvertStringTo(s string, t interface{}) interface{} {
 			return i
 		}
 	case []interface{}, []string:
-		a, ok := ForceArray(s)
-		if ok {
-			return a
-		}
+		a := ForceArray(s)
+		return a
 	}
 
 	return s

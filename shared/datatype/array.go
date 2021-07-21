@@ -60,9 +60,9 @@ func ToArray(a interface{}) ([]interface{}, bool) {
 	return make([]interface{}, 0), false
 }
 
-func ForceArray(i interface{}) ([]interface{}, bool) {
+func ForceArray(i interface{}) []interface{} {
 	if a, ok := ToArray(i); ok {
-		return a, ok
+		return a
 	}
 
 	if s, ok := i.(string); ok {
@@ -71,8 +71,9 @@ func ForceArray(i interface{}) ([]interface{}, bool) {
 		for _, d := range v {
 			t = append(t, d)
 		}
-		return t, ok
+		return t
 	}
 
-	return make([]interface{}, 0), false
+	// return 1 element array
+	return []interface{}{i}
 }
