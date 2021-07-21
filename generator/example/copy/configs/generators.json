@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/generator.json",
+  "generators": [
+    {
+      "type": "copy",
+      "input": "adir",
+      "output": "bdir"
+    }
+  ]
+}

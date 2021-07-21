@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/fs.json",
+  "fs": {
+    "variables": {},
+    "adir": {
+      "type": "directory",
+      "mode": "single",
+      "fullpath": "{{ .current }}/A"
+    },
+    "bdir": {
+      "type": "directory",
+      "mode": "single",
+      "fullpath": "{{ .current }}/B"
+    }
+  }
+}
