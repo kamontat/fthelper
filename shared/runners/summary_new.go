@@ -13,8 +13,8 @@ func NewSummary(startTime time.Time) *Summary {
 func RunSummary(r Runner) *Summary {
 	startTime := time.Now()
 
-	r.Validate()
-	r.Run()
+        _ = r.Validate()
+	_ = r.Run()
 
 	return NewSummary(startTime).A(r.Information())
 }

@@ -49,7 +49,7 @@ func (s *Summary) Log(logger *loggers.Logger) {
 			info.Duration().String(),
 		)
 	}
-	table.End()
+	_ = table.End()
 	logger.Line()
 
 	var aggregator = NewMultipleNamedInfo("summary", informations...)
