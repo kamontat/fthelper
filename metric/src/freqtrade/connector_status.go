@@ -10,7 +10,7 @@ type Status struct {
 }
 
 func (s *Status) StateStr() string {
-	if s.MaxOpenTrades == 0 {
+	if s.MaxOpenTrades == 0 && s.State != "unknown" {
 		return "stop_buy"
 	}
 	return s.State
