@@ -48,13 +48,13 @@ jobs:
         env:
           MODULE_NAME: ${{ matrix.directory }}
         run: |
-          go test -coverprofile=../reports/coverage-$MODULE_NAME.out -json > ../reports/test-report-$MODULE_NAME.out ./...
+          go test -coverprofile=../reports/coverage.out -json > ../reports/test.out ./...
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.directory }}-reports
           path: |
-            reports
+            reports/*.out
 
   analysis:
     needs:
@@ -69,7 +69,7 @@ jobs:
         uses: actions/download-artifact@v2
       - name: Prepare data
         run: |
-          ls -la
+          ls -Rla
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
