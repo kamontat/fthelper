@@ -16,7 +16,7 @@ func Get(m map[string]interface{}, key string) (interface{}, error) {
 func Gets(m map[string]interface{}, keys ...string) (interface{}, error) {
 	for _, key := range keys {
 		var v, err = getByKey(m, ToKeys(key))
-		if err == nil {
+		if err == nil && v != nil {
 			return v, nil
 		}
 	}

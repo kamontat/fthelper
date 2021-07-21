@@ -37,7 +37,6 @@ func (s *Scheduler) process(ctx context.Context, j Job, interval time.Duration) 
 			s.wg.Done()
 			return
 		}
-
 	}
 }
 
