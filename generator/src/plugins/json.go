@@ -1,7 +1,7 @@
 package plugins
 
 import (
-	"github.com/kamontat/fthelper/generator/v4/src/runner"
+	"github.com/kamontat/fthelper/generator/v4/src/clusters"
 	"github.com/kamontat/fthelper/shared/configs"
 	"github.com/kamontat/fthelper/shared/fs"
 	"github.com/kamontat/fthelper/shared/maps"
@@ -9,7 +9,7 @@ import (
 )
 
 func Json(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return runner.New(data, config, func(p *runner.ExecutorParameter) error {
+	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
 		templates, err := fs.Build(p.Data.Si("inputs"), p.FsConfig)
 		if err != nil {
 			p.Logger.Error("cannot get inputs information")
@@ -46,5 +46,7 @@ func Json(data maps.Mapper, config maps.Mapper) runners.Runner {
 		}
 
 		return outfile.Write(json)
+	}, &clusters.Settings{
+		DefaultWithCluster: true,
 	})
 }

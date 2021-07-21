@@ -3,16 +3,17 @@ package plugins
 import (
 	"strings"
 
-	"github.com/kamontat/fthelper/generator/v4/src/runner"
+	"github.com/kamontat/fthelper/generator/v4/src/clusters"
 	"github.com/kamontat/fthelper/shared/configs"
 	"github.com/kamontat/fthelper/shared/fs"
 	"github.com/kamontat/fthelper/shared/maps"
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
+// TODO: support override config from environment variable
 // CConfig is custom plugins for and only for freqtrade config
 func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return runner.New(data, config, func(p *runner.ExecutorParameter) error {
+	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
 		input, err := fs.Build(p.Data.So("input", "template"), p.FsConfig)
 		if err != nil {
 			p.Logger.Error("cannot get input information")
@@ -74,5 +75,7 @@ func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
 			return err
 		}
 		return file.Write(json)
+	}, &clusters.Settings{
+		DefaultWithCluster: true,
 	})
 }

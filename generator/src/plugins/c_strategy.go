@@ -1,7 +1,7 @@
 package plugins
 
 import (
-	"github.com/kamontat/fthelper/generator/v4/src/runner"
+	"github.com/kamontat/fthelper/generator/v4/src/clusters"
 	"github.com/kamontat/fthelper/shared/fs"
 	"github.com/kamontat/fthelper/shared/maps"
 	"github.com/kamontat/fthelper/shared/runners"
@@ -10,7 +10,7 @@ import (
 
 // CStrategy is custom plugins for and only for freqtrade strategy
 func CStrategy(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return runner.New(data, config, func(p *runner.ExecutorParameter) error {
+	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
 		input, err := fs.Build(p.Data.So("input", "template"), p.FsConfig)
 		if err != nil {
 			p.Logger.Error("cannot get input information")
@@ -49,5 +49,7 @@ func CStrategy(data maps.Mapper, config maps.Mapper) runners.Runner {
 		}
 
 		return template.Execute(writer, p.Config)
+	}, &clusters.Settings{
+		DefaultWithCluster: true,
 	})
 }
