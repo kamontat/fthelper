@@ -75,15 +75,15 @@ func (s *Service) UpdateFn(key string, updater Updater, expireAt string) error {
 	return err
 }
 
-func (s *Service) Update(key string, value interface{}, expireAt string) error {
-	return s.UpdateFn(key, func(o interface{}) (interface{}, error) {
+func (s *Service) Update(key string, value interface{}, expireAt string) {
+	_ = s.UpdateFn(key, func(o interface{}) (interface{}, error) {
 		return value, nil
 	}, expireAt)
 }
 
 // Increase is shorted method for increase number everytime it's called by n
-func (s *Service) IncreaseN(key string, increase int) error {
-	return s.UpdateFn(key, func(o interface{}) (interface{}, error) {
+func (s *Service) IncreaseN(key string, increase int) {
+	_ = s.UpdateFn(key, func(o interface{}) (interface{}, error) {
 		if o == nil {
 			return increase, nil
 		}
@@ -92,8 +92,8 @@ func (s *Service) IncreaseN(key string, increase int) error {
 }
 
 // Increase is shorted method for increase number everytime it's called by 1
-func (s *Service) Increase(key string) error {
-	return s.IncreaseN(key, 1)
+func (s *Service) Increase(key string) {
+	s.IncreaseN(key, 1)
 }
 
 func (s *Service) Fetch(key string, updater Updater, expireAt string) error {

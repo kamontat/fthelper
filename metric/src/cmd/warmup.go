@@ -28,7 +28,7 @@ func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, conn *freqtra
 			if err != nil {
 				p.Cache.Increase(constants.WARMUP_ERROR)
 			} else {
-				p.Cache.UpdateFn(constants.WARMUP_DURATIONS, func(o interface{}) (interface{}, error) {
+				_ = p.Cache.UpdateFn(constants.WARMUP_DURATIONS, func(o interface{}) (interface{}, error) {
 					var ms = duration.Milliseconds()
 					if o == nil {
 						return []int64{ms}, nil

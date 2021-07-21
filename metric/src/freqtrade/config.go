@@ -9,7 +9,7 @@ type Config struct {
 
 func newConfig(config maps.Mapper) *Config {
 	var cache = &CacheConfig{data: make(maps.Mapper)}
-	config.Mi("cache").Struct(&cache.data) // load cache data
+	_ = config.Mi("cache").Struct(&cache.data) // load cache data
 
 	return &Config{
 		Cache: cache,
