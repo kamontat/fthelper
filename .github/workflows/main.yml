@@ -1,0 +1,77 @@
+name: Main
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  linting:
+    strategy:
+      matrix:
+        directory:
+          - shared
+          - generator
+          - metric
+    name: Linting ${{ matrix.directory }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Linting with golangci
+        uses: golangci/golangci-lint-action@v2
+        with:
+          working-directory: ${{ matrix.directory }}
+  testing:
+    strategy:
+      matrix:
+        directory:
+          - shared
+          - generator
+          - metric
+    name: Testing ${{ matrix.directory }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+      - name: Tidy go module
+        working-directory: ${{ matrix.directory }}
+        run: |
+          go mod tidy
+      - name: Testing with go test
+        working-directory: ${{ matrix.directory }}
+        env:
+          MODULE_NAME: ${{ matrix.directory }}
+        run: |
+          go test -coverprofile=../reports/coverage-$MODULE_NAME.out -json > ../reports/test-report-$MODULE_NAME.out ./...
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.directory }}-reports
+          path: |
+            reports
+
+  analysis:
+    needs:
+      - linting
+      - testing
+    name: Analysis result
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+      - name: Prepare data
+        run: |
+          ls -la
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
