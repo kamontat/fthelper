@@ -3,6 +3,8 @@ package xtests
 type MustChecker string
 
 const (
+	MUST_BE_NIL         = "nil"
+	MUST_NOT_BE_NIL     = "!nil"
 	MUST_ERROR          = "error"
 	MUST_NOT_ERROR      = "!error"
 	MUST_EQUAL          = "equal"

@@ -12,11 +12,17 @@ import (
 
 type Assertion struct {
 	name     string
+	desc     string
 	actual   interface{}
 	expected interface{}
 	err      error
 
 	T *testing.T
+}
+
+func (a *Assertion) WithDesc(s string) *Assertion {
+	a.desc = s
+	return a
 }
 
 func (a *Assertion) WithExpected(e interface{}) *Assertion {
@@ -49,13 +55,21 @@ func (a *Assertion) WithError(err error) *Assertion {
 	return a
 }
 
+func (a *Assertion) wrapper(ok bool) bool {
+	if !ok && a.desc != "" {
+		a.T.Log(a.desc)
+	}
+
+	return ok
+}
+
 func (a *Assertion) must(fn func(t *testing.T) bool) bool {
 	if a.name != "" {
 		return a.T.Run(a.name, func(t *testing.T) {
-			fn(t)
+			a.wrapper(fn(t))
 		})
 	}
-	return fn(a.T)
+	return a.wrapper(fn(a.T))
 }
 func (a *Assertion) mustBoolean(valid bool, msg string, param ...interface{}) bool {
 	return a.must(func(t *testing.T) bool {
@@ -64,6 +78,14 @@ func (a *Assertion) mustBoolean(valid bool, msg string, param ...interface{}) bo
 		}
 		return valid
 	})
+}
+
+func (a *Assertion) MustBeNil() bool {
+	return a.mustBoolean(a.actual == nil, "we expected '%v' to be <nil>", a.actual)
+}
+
+func (a *Assertion) MustNotBeNil() bool {
+	return a.mustBoolean(a.actual != nil, "we expected '%v' to not be <nil>", a.actual)
 }
 
 func (a *Assertion) MustNotError() bool {
@@ -112,6 +134,8 @@ func (a *Assertion) MustContainError() bool {
 func (a *Assertion) Must(checker ...MustChecker) bool {
 	var mapper map[MustChecker]func() bool = make(map[MustChecker]func() bool)
 
+	mapper[MUST_BE_NIL] = a.MustBeNil
+	mapper[MUST_NOT_BE_NIL] = a.MustNotBeNil
 	mapper[MUST_ERROR] = a.MustError
 	mapper[MUST_NOT_ERROR] = a.MustNotError
 	mapper[MUST_EQUAL] = a.MustEqual
