@@ -12,4 +12,4 @@ Only require data is json configs file that contains `generators` field.
 ## Examples
 
 1. [Copy](./example/copy) - Copy file/directory to output location
-1. [Json](./example/json) - Generate Json file with single/multiple json inputs
+2. [Docker](./example/docker) - Generate docker-compose from configuration
