@@ -2,6 +2,7 @@ package xtests
 
 import (
 	"fmt"
+	"math"
 	"reflect"
 	"strings"
 	"testing"
@@ -74,7 +75,15 @@ func (a *Assertion) MustError() bool {
 }
 
 func (a *Assertion) MustEqual() bool {
-	return a.mustBoolean(a.actual == a.expected, "we expected '%v', but got '%v' instead", a.expected, a.actual)
+	return a.mustBoolean(a.actual == a.expected, "we expected '%v' (%T), but got '%v' (%T) instead", a.expected, a.expected, a.actual, a.actual)
+}
+
+func (a *Assertion) MustEqualFloat() bool {
+	var threshold = 1e-6
+	var actual, _ = datatype.ForceFloat(a.actual)
+	var expected, _ = datatype.ForceFloat(a.expected)
+
+	return a.mustBoolean(math.Abs(actual-expected) <= threshold, "we expected '%v' +- '%f', but got '%v' instead", expected, threshold, actual)
 }
 
 func (a *Assertion) MustDeepEqual() bool {
@@ -110,6 +119,7 @@ func (a *Assertion) Must(checker ...MustChecker) bool {
 	mapper[MUST_EQUAL_STRING] = a.MustEqualString
 	mapper[MUST_NOT_EQUAL] = a.MustNotEqual
 	mapper[MUST_EQUAL_ERROR] = a.MustEqualError
+	mapper[MUST_EQUAL_FLOAT] = a.MustEqualFloat
 	mapper[MUST_CONTAINS_ERROR] = a.MustContainError
 
 	for _, c := range checker {
