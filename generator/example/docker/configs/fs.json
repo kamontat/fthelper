@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/fs.json",
+  "fs": {
+    "variables": {},
+    "docker-compose-template": {
+      "type": "file",
+      "mode": "single",
+      "fullpath": "{{ .current }}/templates/docker-compose.yml.tpl"
+    },
+    "docker-compose-output": {
+      "type": "file",
+      "mode": "single",
+      "fullpath": "{{ .current }}/output/docker-compose.yml"
+    }
+  }
+}

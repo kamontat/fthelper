@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/generator.json",
+  "generators": [
+    {
+      "type": "template",
+      "display": "docker compose",
+      "withCluster": false,
+      "input": "docker-compose-template",
+      "output": "docker-compose-output"
+    }
+  ]
+}

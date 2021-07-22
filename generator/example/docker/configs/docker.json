@@ -1,0 +1,56 @@
+{
+  "docker": {
+    "freqtrade": {
+      "name": "freqtrade",
+      "port": 8080,
+      "image": {
+        "name": "freqtradeorg/freqtrade",
+        "tag": "develop_plot"
+      }
+    },
+    "ftmetric": {
+      "enabled": true,
+      "name": "ftmetric",
+      "port": 8090,
+      "image": {
+        "name": "ghcr.io/kamontat/ftmetric",
+        "tag": ""
+      }
+    },
+    "grafana": {
+      "enabled": true,
+      "name": "grafana"
+    },
+    "prometheus": {
+      "enabled": true,
+      "name": "prometheus"
+    },
+    "postgres": {
+      "enabled": true,
+      "name": "postgres"
+    }
+  },
+  "_": {
+    "1A": {
+      "docker": {
+        "freqtrade": {
+          "port": 8080
+        }
+      }
+    },
+    "2A": {
+      "docker": {
+        "freqtrade": {
+          "port": 8081
+        }
+      }
+    },
+    "3A": {
+      "docker": {
+        "freqtrade": {
+          "port": 8082
+        }
+      }
+    }
+  }
+}
