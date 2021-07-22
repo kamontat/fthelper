@@ -18,10 +18,9 @@ func SupportListConfig(p *PluginParameter) error {
 		Default: false,
 		Usage:   "list all configuration",
 		Action: func(data bool) maps.Mapper {
-			p.Logger.Warn("option '--list-config' is deprecated (v4.x.x), please use 'config' command instead.")
-
 			var m = maps.New()
 			if data {
+				p.Logger.Warn("option '--list-config' is deprecated (v4.x.x), please use 'config' command instead.")
 				return m.Set("internal.command", "config")
 			}
 			return m
