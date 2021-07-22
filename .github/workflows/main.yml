@@ -48,7 +48,7 @@ jobs:
         env:
           MODULE_NAME: ${{ matrix.directory }}
         run: |
-          go test -coverprofile=../reports/coverage.out -json > ../reports/test.out ./...
+          go test -test.v -coverprofile=../reports/coverage.out -json > ../reports/test.out ./...
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
