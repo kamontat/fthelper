@@ -77,6 +77,6 @@ func SData(key string, data interface{}) *Data {
 		return data, nil
 	}, -1)
 
-	d.Fetch()
+	_, _ = d.Fetch()
 	return d
 }
