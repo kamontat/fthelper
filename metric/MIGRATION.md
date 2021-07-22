@@ -8,4 +8,3 @@
 - Change docker registry from DockerHub to Github Packages
 - Update image name from `kamontat/ftmetric` to `ghcr.io/kamontat/ftmetric`
 - @deprecated --list-config, use `ftmetric config` instead
-- @deprecated --version, use `ftmetric version` instead
