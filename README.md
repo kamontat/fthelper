@@ -16,7 +16,7 @@
     <img src="https://img.shields.io/badge/commit-gitgo-6DC1E8.svg?style=flat-square&cacheSeconds=2592000" alt="Commit management" />
   </a>
   <a href="https://github.com/freqtrade/freqtrade">
-    <img src="https://img.shields.io/badge/for-freqtrade-FFFFFF.svg?style=flat-square&cacheSeconds=2592000" alt="For freqtrade" />
+    <img src="https://img.shields.io/badge/for-freqtrade-DDDDDD.svg?style=flat-square&cacheSeconds=2592000" alt="For freqtrade" />
   </a>
 </p>
 
