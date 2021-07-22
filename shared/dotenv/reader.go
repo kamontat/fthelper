@@ -17,14 +17,20 @@ import (
 //		godotenv.Load("fileone", "filetwo")
 //
 // It's important to note that it WILL NOT OVERRIDE an env variable that already exists - consider the .env file to set dev vars or sensible defaults
-func Load(files ...fs.FileSystem) (err error) {
-	for _, file := range files {
+func Load(files ...fs.FileSystem) error {
+	var resolveFiles, err = ResolveFiles(files)
+	if err != nil {
+		return err
+	}
+
+	for _, file := range resolveFiles {
 		err = loadFile(file, false)
 		if err != nil {
-			return // return early on a spazout
+			return err
 		}
 	}
-	return
+
+	return nil
 }
 
 // Overload will read your env file(s) and load them into ENV for this process.
@@ -38,14 +44,20 @@ func Load(files ...fs.FileSystem) (err error) {
 //		godotenv.Overload("fileone", "filetwo")
 //
 // It's important to note this WILL OVERRIDE an env variable that already exists - consider the .env file to forcefilly set all vars.
-func Overload(files ...fs.FileSystem) (err error) {
-	for _, file := range files {
+func Overload(files ...fs.FileSystem) error {
+	var resolveFiles, err = ResolveFiles(files)
+	if err != nil {
+		return err
+	}
+
+	for _, file := range resolveFiles {
 		err = loadFile(file, true)
 		if err != nil {
-			return // return early on a spazout
+			return err
 		}
 	}
-	return
+
+	return nil
 }
 
 // Read all env (with same file loading semantics as Load) but return values as
