@@ -9,6 +9,7 @@ type Assertions struct {
 func (a *Assertions) New() *Assertion {
 	return &Assertion{
 		name:     "",
+		desc:     "",
 		actual:   nil,
 		expected: nil,
 		err:      nil,
@@ -19,6 +20,7 @@ func (a *Assertions) New() *Assertion {
 func (a *Assertions) NewName(name string) *Assertion {
 	return &Assertion{
 		name:     name,
+		desc:     "",
 		actual:   nil,
 		expected: nil,
 		err:      nil,
