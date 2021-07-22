@@ -25,7 +25,7 @@ func (d *Data) UpdateAt() time.Time {
 }
 
 func (d *Data) IsExist() bool {
-	return d.Data != nil
+	return d.Error == nil && d.Data != nil
 }
 func (d *Data) IsExpired() bool {
 	if d.expireAt <= 0 {
@@ -73,7 +73,10 @@ func NewData(key string, updater Updater, expireAt time.Duration) *Data {
 
 // SData is constants data
 func SData(key string, data interface{}) *Data {
-	return NewData(key, func(o interface{}) (interface{}, error) {
+	var d = NewData(key, func(o interface{}) (interface{}, error) {
 		return data, nil
 	}, -1)
+
+	d.Fetch()
+	return d
 }
