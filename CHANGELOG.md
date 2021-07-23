@@ -2,6 +2,74 @@
 ## [Unreleased]
 
 
+<a name="v4.3.0"></a>
+## [v4.3.0] - 2021-07-23
+### 1. Features
+- **gen:** add example for generate docker-compose files
+- **shared:** loading .env support both files and directory
+
+### 2. Performance Improvements
+- **docs:** update example in generator readme
+- **shared:** caches.SData will updated data before return value, and IsExist return false if error is exist
+- **shared:** add support description log when run with `-test.v` option
+- **shared:** check for nil value in xtests
+- **shared:** datatype.ToInt will support all int bits
+- **shared:** datatype convert will support all kind of int
+- **shared:** add equal float number in xtests
+- **shared:** add warning when using --list-config option
+- **shared:** ForceArray will always return array even input is not
+- **shared:** add new support for actual and bool
+- **shared:** add testing helpers
+- **shared:** remove version.go
+
+### 3. Bug Fixes
+- **gen:** docker type has been remove long time ago, use template instead
+- **metric:** not checking error at some place
+- **shared:** list-config deprecated should not always log
+- **shared:** lint complaining
+- **shared:** ForceString didn't return correct string when value is not string
+- **shared:** linter warning
+- **shared:** map shouldn't return null value if Gets still has value left
+
+
+<a name="v4.2.0"></a>
+## [v4.2.0] - 2021-07-21
+### 2. Performance Improvements
+- **gen:** add new info log when generators is executing
+
+
+<a name="v4.2.0-beta.1"></a>
+## [v4.2.0-beta.1] - 2021-07-21
+### 2. Performance Improvements
+- **gen:** add example code for copy type
+- **gen:** refactor code and clustering runners
+
+### 3. Bug Fixes
+- **metric:** stop_buy shouldn't be default value if data is not exist
+
+
+<a name="v4.1.1"></a>
+## [v4.1.1] - 2021-07-20
+### 2. Performance Improvements
+- **docker:** cleanup do nothing, remove it
+- **docker:** change base image for pg to develop_plot
+- **shared:** add new function on template (toLower, toUpper, and toTitle)
+
+
+<a name="v4.1.0"></a>
+## [v4.1.0] - 2021-07-20
+### 1. Features
+- add 3 metrics at `freqtrade_stat` namespace.
+- **docker:** add new buildflow for docker image with postgres support
+
+### 2. Performance Improvements
+- support build freqtrade image with postgres
+- **docker:** add suffix in docker image tag name _pg
+- **docker:** do some cleanup
+- **docker:** instead libpg-dev for postgres usage
+- **docker:** use psycopg2 instead of binary package
+
+
 <a name="v4.1.0-beta.9"></a>
 ## [v4.1.0-beta.9] - 2021-07-14
 
@@ -185,7 +253,12 @@
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.9...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.3.0...HEAD
+[v4.3.0]: https://github.com/kamontat/fthelper/compare/v4.2.0...v4.3.0
+[v4.2.0]: https://github.com/kamontat/fthelper/compare/v4.2.0-beta.1...v4.2.0
+[v4.2.0-beta.1]: https://github.com/kamontat/fthelper/compare/v4.1.1...v4.2.0-beta.1
+[v4.1.1]: https://github.com/kamontat/fthelper/compare/v4.1.0...v4.1.1
+[v4.1.0]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.9...v4.1.0
 [v4.1.0-beta.9]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.8...v4.1.0-beta.9
 [v4.1.0-beta.8]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.7...v4.1.0-beta.8
 [v4.1.0-beta.7]: https://github.com/kamontat/fthelper/compare/v4.1.0-beta.6...v4.1.0-beta.7
