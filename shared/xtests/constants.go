@@ -13,5 +13,6 @@ const (
 	MUST_EQUAL_STRING   = "equal-string"
 	MUST_EQUAL_ERROR    = "equal-error"
 	MUST_EQUAL_FLOAT    = "equal-float"
+	MUST_CONTAINS       = "contain"
 	MUST_CONTAINS_ERROR = "contain-error"
 )

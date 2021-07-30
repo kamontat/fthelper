@@ -122,6 +122,12 @@ func (a *Assertion) MustNotEqual() bool {
 	return a.mustBoolean(a.actual != a.expected, "we expected '%v' and '%v' to be different", a.expected, a.actual)
 }
 
+func (a *Assertion) MustContain() bool {
+	var actual = datatype.ForceString(a.actual)
+	var expected = datatype.ForceString(a.expected)
+	return a.mustBoolean(strings.Contains(actual, expected), "we expected '%v' to contains '%v'", actual, expected)
+}
+
 func (a *Assertion) MustEqualError() bool {
 	return a.mustBoolean(a.err.Error() == a.expected, "we expected '%v' error, but got '%v' error instead", a.expected, a.err)
 }
@@ -142,6 +148,7 @@ func (a *Assertion) Must(checker ...MustChecker) bool {
 	mapper[MUST_DEEP_EQUAL] = a.MustDeepEqual
 	mapper[MUST_EQUAL_STRING] = a.MustEqualString
 	mapper[MUST_NOT_EQUAL] = a.MustNotEqual
+	mapper[MUST_CONTAINS] = a.MustContain
 	mapper[MUST_EQUAL_ERROR] = a.MustEqualError
 	mapper[MUST_EQUAL_FLOAT] = a.MustEqualFloat
 	mapper[MUST_CONTAINS_ERROR] = a.MustContainError
