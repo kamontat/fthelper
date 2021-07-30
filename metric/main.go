@@ -24,7 +24,7 @@ var (
 func main() {
 	// start warmup
 	ctx := context.Background()
-	var cmd = commandline.New(caches.Global, &models.Metadata{
+	var cmd = commandline.New(caches.New(), &models.Metadata{
 		Name:    name,
 		Version: version,
 		Commit:  commit,
