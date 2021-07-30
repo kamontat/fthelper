@@ -20,7 +20,8 @@ func (l *Logger) IsPrintable(lvl LoggerLevel) bool {
 }
 
 func (l *Logger) format(lvl, format string, msg ...interface{}) string {
-	var datetime = time.Now().Format("15:04:05") // log only time: `02-01-2006 15:04:05`
+	// format syntax datetime: `02-01-2006 15:04:05`
+	var datetime = time.Now().Format("15:04:05")
 
 	var arr = make([]interface{}, 3)
 	arr[0] = datetime
