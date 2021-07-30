@@ -24,6 +24,10 @@ func (h *Handler) And(errs ...error) *Handler {
 	return h
 }
 
+func (h *Handler) AddD(_ interface{}, err error) *Handler {
+	return h.And(err)
+}
+
 func (h *Handler) Merge(nh *Handler) *Handler {
 	h.errors = append(h.errors, nh.errors...)
 	return h
