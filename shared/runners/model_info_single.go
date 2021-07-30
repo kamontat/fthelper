@@ -87,7 +87,7 @@ func NewSingleInfo(name string) *SingleInfo {
 		name:     name,
 		status:   INITIAL,
 		duration: 0,
-		err:      errors.New(name),
+		err:      errors.New(),
 		input:    nil,
 		output:   nil,
 	}

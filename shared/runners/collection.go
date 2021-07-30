@@ -25,7 +25,7 @@ func (c *Collection) Merge(cc *Collection) *Collection {
 }
 
 func (c *Collection) Run() *errors.Handler {
-	var errs = errors.New("runner", "collection")
+	var errs = errors.New()
 	for _, runner := range c.runners {
 		if err := runner.Validate(); err != nil {
 			errs.And(err)

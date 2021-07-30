@@ -7,8 +7,11 @@ import (
 )
 
 type Handler struct {
-	Name   string
 	errors []error
+}
+
+func (h *Handler) Length() int {
+	return len(h.errors)
 }
 
 func (h *Handler) And(errs ...error) *Handler {
@@ -41,12 +44,12 @@ func (h *Handler) String() string {
 	var str strings.Builder
 
 	if h.HasError() {
-		str.WriteString("\n")
+		str.WriteString(fmt.Sprintf("found '%d' errors\n", len(h.errors)))
 		for _, err := range h.errors {
-			str.WriteString(fmt.Sprintf("%s\n", err.Error()))
+			str.WriteString(fmt.Sprintf("- %s\n", err.Error()))
 		}
 	} else {
-		str.WriteString("no errors")
+		str.WriteString("not found any errors")
 	}
 
 	return str.String()

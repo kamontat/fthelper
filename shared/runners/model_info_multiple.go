@@ -93,7 +93,7 @@ func (i *MultipleInfo) SString(d time.Time) string {
 }
 
 func NewMultipleNamedInfo(name string, info ...Information) *MultipleInfo {
-	var errBase = errors.New("informations", name)
+	var errBase = errors.New()
 	var baseDuration time.Duration = 0
 
 	var total = 0

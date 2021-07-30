@@ -16,7 +16,7 @@ func Create(data maps.Mapper, config maps.Mapper) runners.Runner {
 			return err
 		}
 
-		var errs = errors.New(p.Logger.Name)
+		var errs = errors.New()
 		for _, f := range output.All() {
 			errs.And(f.Build())
 		}
