@@ -51,19 +51,24 @@ func TestDynamicCacheData(t *testing.T) {
 
 	assertion.NewName("after fetch").
 		WithDesc("fetch will update if data is missing").
-		WithExpected(0).
+		WithExpected(true).
 		WithActualAndError(data.Fetch()).
 		Must(xtests.MUST_NOT_ERROR, xtests.MUST_EQUAL)
 
 	assertion.NewName("after 2nd fetch").
 		WithDesc("fetch will not update if data is not expired").
 		WithExpected(0).
-		WithActualAndError(data.Fetch()).
+		WithActualAndError(data.FetchData()).
 		MustEqual()
 
 	assertion.NewName("after update").
 		WithDesc("update should increase value no matter what data is expire or not").
 		WithExpected(1).
-		WithActualAndError(data.Update()).
+		WithActualAndError(data.UpdateData()).
 		MustEqual()
+
+	assertion.NewName("string should contains datetime").
+		WithExpected("key: 1 (<nil>)").
+		WithActual(data.String()).
+		MustContain()
 }
