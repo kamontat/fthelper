@@ -30,7 +30,7 @@ var FTPair = collectors.NewMetrics(
 	),
 	collectors.NewMetric(
 		prometheus.NewDesc(
-			prometheus.BuildFQName("freqtrade", "pair", "perf_profit_pct"),
+			prometheus.BuildFQName("freqtrade", "pair", "profit_pct"),
 			"Total percent profit per pair.",
 			append(freqtrade.SummaryLabel(), "pair"),
 			nil,
@@ -53,7 +53,7 @@ var FTPair = collectors.NewMetrics(
 	),
 	collectors.NewMetric(
 		prometheus.NewDesc(
-			prometheus.BuildFQName("freqtrade", "pair", "perf_profit_abs"),
+			prometheus.BuildFQName("freqtrade", "pair", "profit_abs"),
 			"Total profit per pair (as crypto currency).",
 			append(freqtrade.SummaryLabel(), "pair"),
 			nil,
