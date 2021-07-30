@@ -11,7 +11,6 @@ func Warmup(conn *Connection) (time.Duration, error) {
 
 	var err error = nil
 	var start = time.Now()
-	logger.Info("initial freqtrade connection")
 
 	NewBalance(conn)
 	NewCount(conn)
