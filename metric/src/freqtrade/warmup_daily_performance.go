@@ -16,8 +16,8 @@ func warmupDailyPerformance(start time.Time, conn *Connection, logger *loggers.L
 	var expireAt = 24 * time.Hour
 
 	var data *caches.Data = nil
-	if conn.cache.Has(CACHE_DAILY_PERFORMANCE_BALANCE) {
-		data = conn.cache.Get(CACHE_DAILY_PERFORMANCE_BALANCE)
+	if caches.Global.Has(CACHE_DAILY_PERFORMANCE_BALANCE) {
+		data = caches.Global.Get(CACHE_DAILY_PERFORMANCE_BALANCE)
 	} else if start.Hour() == midnight {
 		logger.Info("initial daily performance balance")
 
@@ -25,7 +25,7 @@ func warmupDailyPerformance(start time.Time, conn *Connection, logger *loggers.L
 			return NewBalance(conn), nil
 		}, expireAt)
 
-		conn.cache.SetData(data) // add data to cache service
+		caches.Global.SetData(data) // add data to cache service
 	}
 
 	if data != nil {
