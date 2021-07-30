@@ -5,12 +5,15 @@ import (
 	"sync"
 
 	"github.com/kamontat/fthelper/shared/errors"
+	"github.com/kamontat/fthelper/shared/loggers"
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
 type Service struct {
 	caches map[string]*Data
 	mutex  sync.RWMutex
+
+	logger *loggers.Logger
 }
 
 func (s *Service) Size() int {
@@ -33,27 +36,33 @@ func (s *Service) Get(key string) *Data {
 		return d
 	}
 
+	s.logger.Debug("cannot get data key: %s", key)
 	return SData(key, nil)
 }
 
-func (s *Service) SetFn(key string, creator Creator, expireAt string) error {
-	if s.Has(key) {
+func (s *Service) SetData(data *Data) error {
+	if s.Has(data.Key) {
 		return fmt.Errorf("cannot set data with existing data, use Update() instead")
 	}
 
-	var data = NewData(key, func(o interface{}) (interface{}, error) {
-		return creator()
-	}, parseDuration(expireAt))
-
-	_, err := data.Update()
+	err := data.Update()
 	if err != nil {
 		return err
 	}
 
+	s.logger.Debug("creating '%s' data", data.Key)
 	s.mutex.Lock()
-	s.caches[key] = data
+	s.caches[data.Key] = data
 	s.mutex.Unlock()
 	return nil
+}
+
+func (s *Service) SetFn(key string, creator Creator, expireAt string) error {
+	var data = NewData(key, func(o interface{}) (interface{}, error) {
+		return creator()
+	}, parseDuration(expireAt))
+
+	return s.SetData(data)
 }
 
 func (s *Service) Set(key string, value interface{}, expireAt string) error {
@@ -69,10 +78,10 @@ func (s *Service) UpdateFn(key string, updater Updater, expireAt string) error {
 		}, expireAt)
 	}
 
+	s.logger.Debug("updating '%s' data", key)
 	var data = s.Get(key)
 	data.updater = updater
-	_, err := data.Update()
-	return err
+	return data.Update()
 }
 
 func (s *Service) Update(key string, value interface{}, expireAt string) {
@@ -103,7 +112,11 @@ func (s *Service) Fetch(key string, updater Updater, expireAt string) error {
 		}, expireAt)
 	}
 
-	_, err := s.Get(key).Fetch()
+	fetch, err := s.Get(key).Fetch()
+	if fetch {
+		s.logger.Debug("fetching '%s' data", key)
+	}
+
 	return err
 }
 
