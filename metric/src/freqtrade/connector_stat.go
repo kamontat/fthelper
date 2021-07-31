@@ -58,14 +58,25 @@ func EmptyStat() *Stat {
 }
 
 func NewStat(conn *Connection) *Stat {
-	var name, expireAt, query = Connector(conn, API_STAT)
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = new(Stat)
-		err := conn.GET(name, query, &target)
-		return target, err
-	}); err == nil && data != nil {
-		return data.(*Stat)
+	if stat, err := FetchStat(conn); err == nil {
+		return stat
 	}
-
 	return EmptyStat()
+}
+
+func FetchStat(conn *Connection) (*Stat, error) {
+	var name = API_STAT
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetStat(conn)
+	}); err == nil {
+		return data.(*Stat), nil
+	} else {
+		return nil, err
+	}
+}
+
+func GetStat(conn *Connection) (*Stat, error) {
+	var target = new(Stat)
+	var err = GetConnector(conn, API_STAT, &target)
+	return target, err
 }

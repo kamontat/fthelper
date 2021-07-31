@@ -12,14 +12,25 @@ func EmptyPerformance() []*Performance {
 }
 
 func NewPerformance(conn *Connection) []*Performance {
-	var name, expireAt, query = Connector(conn, API_PERF)
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = make([]*Performance, 0)
-		err := conn.GET(name, query, &target)
-		return target, err
-	}); err == nil && data != nil {
-		return data.([]*Performance)
+	if perf, err := FetchPerformance(conn); err == nil {
+		return perf
 	}
-
 	return EmptyPerformance()
+}
+
+func FetchPerformance(conn *Connection) ([]*Performance, error) {
+	var name = API_PERF
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetLogs(conn)
+	}); err == nil {
+		return data.([]*Performance), nil
+	} else {
+		return nil, err
+	}
+}
+
+func GetPerformance(conn *Connection) ([]*Performance, error) {
+	var target = make([]*Performance, 0)
+	var err = GetConnector(conn, API_PERF, &target)
+	return target, err
 }

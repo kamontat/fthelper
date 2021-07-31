@@ -46,14 +46,25 @@ func EmptyProfit() *Profit {
 }
 
 func NewProfit(conn *Connection) *Profit {
-	var name, expireAt, query = Connector(conn, API_PROFIT)
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = new(Profit)
-		err := conn.GET(name, query, &target)
-		return target, err
-	}); err == nil && data != nil {
-		return data.(*Profit)
+	if profit, err := FetchProfit(conn); err == nil {
+		return profit
 	}
-
 	return EmptyProfit()
+}
+
+func FetchProfit(conn *Connection) (*Profit, error) {
+	var name = API_PROFIT
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetProfit(conn)
+	}); err == nil {
+		return data.(*Profit), nil
+	} else {
+		return nil, err
+	}
+}
+
+func GetProfit(conn *Connection) (*Profit, error) {
+	var target = new(Profit)
+	var err = GetConnector(conn, API_PROFIT, &target)
+	return target, err
 }

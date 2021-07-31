@@ -22,14 +22,25 @@ func EmptyLocks() *Locks {
 }
 
 func NewLocks(conn *Connection) *Locks {
-	var name, expireAt, query = Connector(conn, API_LOCK)
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = new(Locks)
-		err := conn.GET(name, query, &target)
-		return target, err
-	}); err == nil && data != nil {
-		return data.(*Locks)
+	if locks, err := FetchLocks(conn); err == nil {
+		return locks
 	}
-
 	return EmptyLocks()
+}
+
+func FetchLocks(conn *Connection) (*Locks, error) {
+	var name = API_LOCK
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetLocks(conn)
+	}); err == nil {
+		return data.(*Locks), nil
+	} else {
+		return nil, err
+	}
+}
+
+func GetLocks(conn *Connection) (*Locks, error) {
+	var target = new(Locks)
+	var err = GetConnector(conn, API_LOCK, &target)
+	return target, err
 }

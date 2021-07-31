@@ -15,14 +15,15 @@ func Warmup(conn *Connection) (time.Duration, *errors.Handler) {
 
 	err.AndD(FetchBalance(conn))
 	err.AndD(FetchCount(conn))
-	NewLocks(conn)
-	NewLogs(conn)
-	NewPerformance(conn)
-	NewProfit(conn)
-	NewStatus(conn)
-	NewVersion(conn)
-	NewWhitelist(conn)
-	NewStat(conn)
+	err.AndD(FetchCount(conn))
+	err.AndD(FetchLocks(conn))
+	err.AndD(FetchLogs(conn))
+	err.AndD(FetchPerformance(conn))
+	err.AndD(FetchProfit(conn))
+	err.AndD(FetchStat(conn))
+	err.AndD(FetchStatus(conn))
+	err.AndD(FetchVersion(conn))
+	err.AndD(FetchWhitelist(conn))
 
 	err.And(warmupDailyPerformance(start, conn, logger))
 

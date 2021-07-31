@@ -50,14 +50,25 @@ func EmptyStatus() *Status {
 }
 
 func NewStatus(conn *Connection) *Status {
-	var name, expireAt, query = Connector(conn, API_STATUS)
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = new(Status)
-		err := conn.GET(name, query, &target)
-		return target, err
-	}); err == nil && data != nil {
-		return data.(*Status)
+	if status, err := FetchStatus(conn); err == nil {
+		return status
 	}
-
 	return EmptyStatus()
+}
+
+func FetchStatus(conn *Connection) (*Status, error) {
+	var name = API_STATUS
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetStatus(conn)
+	}); err == nil {
+		return data.(*Status), nil
+	} else {
+		return nil, err
+	}
+}
+
+func GetStatus(conn *Connection) (*Status, error) {
+	var target = new(Status)
+	var err = GetConnector(conn, API_STATUS, &target)
+	return target, err
 }

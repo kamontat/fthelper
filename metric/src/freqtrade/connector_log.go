@@ -68,16 +68,25 @@ func buildLogs(mapper maps.Mapper, log *loggers.Logger) *Logs {
 }
 
 func NewLogs(conn *Connection) *Logs {
-	var name, logger = ConnectorLog(API_LOG)
-	var _, expireAt, query = Connector(conn, name)
-
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = make(maps.Mapper)
-		err := conn.GET(name, query, &target)
-		return buildLogs(target, logger), err
-	}); err == nil && data != nil {
-		return data.(*Logs)
+	if logs, err := FetchLogs(conn); err == nil {
+		return logs
 	}
-
 	return EmptyLogs()
+}
+
+func FetchLogs(conn *Connection) (*Logs, error) {
+	var name = API_LOG
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetLogs(conn)
+	}); err == nil {
+		return data.(*Logs), nil
+	} else {
+		return nil, err
+	}
+}
+
+func GetLogs(conn *Connection) (*Logs, error) {
+	var target = make(maps.Mapper)
+	var err = GetConnector(conn, API_LOG, &target)
+	return buildLogs(target, conn.logger), err
 }

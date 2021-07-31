@@ -11,14 +11,25 @@ func EmptyWhitelist() *Whitelist {
 }
 
 func NewWhitelist(conn *Connection) *Whitelist {
-	var name, expireAt, query = Connector(conn, API_WHITELIST)
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = new(Whitelist)
-		err := conn.GET(name, query, &target)
-		return target, err
-	}); err == nil && data != nil {
-		return data.(*Whitelist)
+	if whitelist, err := FetchWhitelist(conn); err == nil {
+		return whitelist
 	}
-
 	return EmptyWhitelist()
+}
+
+func FetchWhitelist(conn *Connection) (*Whitelist, error) {
+	var name = API_WHITELIST
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetWhitelist(conn)
+	}); err == nil {
+		return data.(*Whitelist), nil
+	} else {
+		return nil, err
+	}
+}
+
+func GetWhitelist(conn *Connection) (*Whitelist, error) {
+	var target = new(Whitelist)
+	var err = GetConnector(conn, API_WHITELIST, &target)
+	return target, err
 }
