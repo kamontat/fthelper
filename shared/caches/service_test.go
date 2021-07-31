@@ -31,23 +31,25 @@ func TestNewCacheService(t *testing.T) {
 		MustEqual()
 
 	var a = caches.New()
-	a.Set("test", true, caches.Persistent)
+	var err = a.Set("test", true, caches.Persistent)
 	assertion.NewName("to string").
 		WithExpected(`{"test":{"Data":true}}`).
+		WithError(err).
 		WithActual(a.String()).
-		MustEqual()
+		Must(xtests.MUST_NOT_ERROR, xtests.MUST_EQUAL)
 }
 
 func TestCacheService(t *testing.T) {
 	var assertion = xtests.New(t)
 
 	var a = caches.New()
-	a.Set("hello", "world", "1s")
+	var err = a.Set("hello", "world", "1s")
 
 	assertion.NewName("get size").
 		WithExpected(1).
+		WithError(err).
 		WithActual(a.Size()).
-		MustEqual()
+		Must(xtests.MUST_NOT_ERROR, xtests.MUST_EQUAL)
 
 	assertion.NewName("error when empty key data").
 		WithExpected("cannot be empty string").
