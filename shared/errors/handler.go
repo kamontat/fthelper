@@ -7,7 +7,13 @@ import (
 )
 
 type Handler struct {
+	// number of total error that check on this handlers. including error that is nil
+	total  int
 	errors []error
+}
+
+func (h *Handler) Total() int {
+	return h.total
 }
 
 func (h *Handler) Length() int {
@@ -18,18 +24,21 @@ func (h *Handler) And(errs ...error) *Handler {
 	for _, err := range errs {
 		if err != nil {
 			h.errors = append(h.errors, err)
+		} else {
+			h.total += 1
 		}
 	}
 
 	return h
 }
 
-func (h *Handler) AddD(_ interface{}, err error) *Handler {
+func (h *Handler) AndD(_ interface{}, err error) *Handler {
 	return h.And(err)
 }
 
 func (h *Handler) Merge(nh *Handler) *Handler {
 	h.errors = append(h.errors, nh.errors...)
+	h.total += nh.total
 	return h
 }
 
@@ -48,7 +57,7 @@ func (h *Handler) String() string {
 	var str strings.Builder
 
 	if h.HasError() {
-		str.WriteString(fmt.Sprintf("found '%d' errors\n", len(h.errors)))
+		str.WriteString(fmt.Sprintf("found '%d' errors (%d)\n", h.Length(), h.Total()))
 		for _, err := range h.errors {
 			str.WriteString(fmt.Sprintf("- %s\n", err.Error()))
 		}
