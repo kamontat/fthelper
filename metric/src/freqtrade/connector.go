@@ -17,3 +17,7 @@ func Connector(conn *Connection, name string) (string, string, url.Values) {
 func ConnectorLog(name string) (string, *loggers.Logger) {
 	return name, loggers.Get("connector", name)
 }
+
+func GetConnector(conn *Connection, name string, target interface{}) error {
+	return conn.GET(name, conn.QueryValues(name), target)
+}

@@ -38,16 +38,18 @@ func NewBalance(conn *Connection) *Balance {
 // Fetch balance to local cache
 func FetchBalance(conn *Connection) (*Balance, error) {
 	var name = API_BALANCE
-	data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
 		return GetBalance(conn)
-	})
-	return data.(*Balance), err
+	}); err == nil {
+		return data.(*Balance), nil
+	} else {
+		return nil, err
+	}
 }
 
 // Get balance without cache
 func GetBalance(conn *Connection) (*Balance, error) {
-	var name = API_BALANCE
 	var target = new(Balance)
-	var err = conn.GET(name, conn.QueryValues(name), &target)
+	var err = GetConnector(conn, API_BALANCE, &target)
 	return target, err
 }
