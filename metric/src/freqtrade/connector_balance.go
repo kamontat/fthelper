@@ -27,15 +27,27 @@ func EmptyBalance() *Balance {
 	}
 }
 
+// Create new balance
 func NewBalance(conn *Connection) *Balance {
-	var name, expireAt, query = Connector(conn, API_BALANCE)
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = new(Balance)
-		err := conn.GET(name, query, &target)
-		return target, err
-	}); err == nil && data != nil {
-		return data.(*Balance)
+	if balance, err := FetchBalance(conn); err == nil {
+		return balance
 	}
-
 	return EmptyBalance()
+}
+
+// Fetch balance to local cache
+func FetchBalance(conn *Connection) (*Balance, error) {
+	var name = API_BALANCE
+	data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetBalance(conn)
+	})
+	return data.(*Balance), err
+}
+
+// Get balance without cache
+func GetBalance(conn *Connection) (*Balance, error) {
+	var name = API_BALANCE
+	var target = new(Balance)
+	var err = conn.GET(name, conn.QueryValues(name), &target)
+	return target, err
 }
