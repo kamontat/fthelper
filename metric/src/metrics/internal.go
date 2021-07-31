@@ -68,7 +68,7 @@ var Internal = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("fthelper", "internal", "cache_size"),
 			"Total keys we store on cache service, including expired ones",
-			nil,
+			[]string{"type"},
 			nil,
 		),
 		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
@@ -76,6 +76,12 @@ var Internal = collectors.NewMetrics(
 				desc,
 				prometheus.CounterValue,
 				float64(param.Cache.Size()),
+				"local",
+			), prometheus.MustNewConstMetric(
+				desc,
+				prometheus.CounterValue,
+				float64(caches.Global.Size()),
+				"global",
 			)}
 		},
 	),
