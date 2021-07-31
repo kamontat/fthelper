@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/kamontat/fthelper/metric/v4/src/aggregators"
 	"github.com/kamontat/fthelper/metric/v4/src/constants"
 	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
 	"github.com/kamontat/fthelper/shared/caches"
@@ -26,9 +27,11 @@ func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, conn *freqtra
 			p.Logger.Debug("warmup freqtrade connection caches")
 			var duration, err = freqtrade.Warmup(conn)
 			if err.HasError() {
-				p.Cache.IncreaseN(constants.WARMUP_ERROR, err.Length())
+				if value, ok := aggregators.Percentage(float64(err.Total()-err.Length()), float64(err.Total())); ok {
+					caches.Global.Update(constants.WARMUP_SUCCEESS_RATE, value, caches.Persistent)
+				}
 			} else {
-				_ = p.Cache.Bucket(
+				_ = caches.Global.Bucket(
 					constants.WARMUP_DURATIONS,
 					int64(duration.Milliseconds()),
 					1000,
