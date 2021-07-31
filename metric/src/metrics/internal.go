@@ -89,6 +89,7 @@ var Internal = collectors.NewMetrics(
 		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
 			var data = caches.Global.Get(constants.WARMUP_SUCCEESS_RATE).Data
 			if data == nil {
+				param.Logger.Info("skip 'internal_warmup' because success rate is nil")
 				return emptyMetrics
 			}
 
