@@ -19,22 +19,23 @@ var FT = collectors.NewMetrics(
 		var stats = freqtrade.NewStat(connection)
 
 		var metrics = make([]prometheus.Metric, 0)
+		var labels = freqtrade.NewSummary(connection, param.Cache)
 		for name, stat := range stats.Reasons {
 			metrics = append(metrics, prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
 				float64(stat.Win),
-				append(freqtrade.NewSummary(connection, param.Cache), name, "win")...,
+				append(labels, name, "win")...,
 			), prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
 				float64(stat.Draw),
-				append(freqtrade.NewSummary(connection, param.Cache), name, "draw")...,
+				append(labels, name, "draw")...,
 			), prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
 				float64(stat.Loss),
-				append(freqtrade.NewSummary(connection, param.Cache), name, "loss")...,
+				append(labels, name, "loss")...,
 			))
 		}
 		return metrics
@@ -48,21 +49,22 @@ var FT = collectors.NewMetrics(
 		var connection = freqtrade.ToConnection(conn)
 		var stats = freqtrade.NewStat(connection)
 
+		var labels = freqtrade.NewSummary(connection, param.Cache)
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
 			stats.WinDuration(),
-			append(freqtrade.NewSummary(connection, param.Cache), "win")...,
+			append(labels, "win")...,
 		), prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
 			stats.DrawDuration(),
-			append(freqtrade.NewSummary(connection, param.Cache), "draw")...,
+			append(labels, "draw")...,
 		), prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
 			stats.LossDuration(),
-			append(freqtrade.NewSummary(connection, param.Cache), "loss")...,
+			append(labels, "loss")...,
 		)}
 	}),
 )
