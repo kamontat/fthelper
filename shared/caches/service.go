@@ -105,6 +105,25 @@ func (s *Service) Increase(key string) {
 	s.IncreaseN(key, 1)
 }
 
+// Bucket will keep value as []interface{}
+func (s *Service) Bucket(key string, value interface{}, limit int, expireAt string) error {
+	return s.UpdateFn(key, func(o interface{}) (interface{}, error) {
+		if o == nil {
+			return []interface{}{value}, nil
+		}
+
+		// keep only last n number
+		var queue = o.([]interface{})
+		if len(queue) > limit {
+			queue[0] = nil    // assign to zero value to free memory
+			queue = queue[1:] // Dequeue
+		}
+
+		queue = append(queue, value) // Enqueue
+		return queue, nil
+	}, expireAt)
+}
+
 func (s *Service) Fetch(key string, updater Updater, expireAt string) error {
 	if !s.Has(key) {
 		return s.SetFn(key, func() (interface{}, error) {

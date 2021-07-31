@@ -25,25 +25,15 @@ func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, conn *freqtra
 		worker.Add(ctx, func(ctx context.Context) {
 			p.Logger.Debug("warmup freqtrade connection caches")
 			var duration, err = freqtrade.Warmup(conn)
-			if err != nil {
-				p.Cache.Increase(constants.WARMUP_ERROR)
+			if err.HasError() {
+				p.Cache.IncreaseN(constants.WARMUP_ERROR, err.Length())
 			} else {
-				_ = p.Cache.UpdateFn(constants.WARMUP_DURATIONS, func(o interface{}) (interface{}, error) {
-					var ms = duration.Milliseconds()
-					if o == nil {
-						return []int64{ms}, nil
-					}
-
-					// keep only last 1000 duration
-					var queue = o.([]int64)
-					if len(queue) > 1000 {
-						queue[0] = 0      // assign to zero value to free memory
-						queue = queue[1:] // Dequeue
-					}
-
-					queue = append(queue, ms) // Enqueue
-					return queue, nil
-				}, caches.Persistent)
+				_ = p.Cache.Bucket(
+					constants.WARMUP_DURATIONS,
+					int64(duration.Milliseconds()),
+					1000,
+					caches.Persistent,
+				)
 			}
 		}, duration)
 	}
