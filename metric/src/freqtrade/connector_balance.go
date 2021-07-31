@@ -1,5 +1,7 @@
 package freqtrade
 
+import "github.com/kamontat/fthelper/shared/caches"
+
 type CryptoBalance struct {
 	Symbol          string  `json:"currency"`
 	Balance         float64 `json:"balance"`
@@ -51,5 +53,12 @@ func FetchBalance(conn *Connection) (*Balance, error) {
 func GetBalance(conn *Connection) (*Balance, error) {
 	var target = new(Balance)
 	var err = GetConnector(conn, API_BALANCE, &target)
+
+	// if fiat value is not exist, use currency rate to est. value
+	if target.CryptoValue > 0 && target.FiatValue <= 0 && caches.Global.Has(CACHE_CURRENCY_RATE) {
+		var rate = caches.Global.Get(CACHE_CURRENCY_RATE)
+		target.FiatValue = target.CryptoValue * rate.Data.(float64)
+	}
+
 	return target, err
 }
