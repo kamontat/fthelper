@@ -25,6 +25,14 @@ type Connection struct {
 	logger *loggers.Logger
 }
 
+func (c *Connection) ExpireAt(name string) string {
+	return c.Config.Cache.Get(name)
+}
+
+func (c *Connection) QueryValues(name string) url.Values {
+	return c.Config.Query.Get(name)
+}
+
 func (c *Connection) request(method, name string, query url.Values, body io.Reader) (*http.Request, error) {
 	url, err := buildPath(c.base, c.version, name)
 	if err != nil {
@@ -70,12 +78,17 @@ func (c *Connection) Cache(name string, expireAt string, fn func() (interface{},
 		caches.Global.Increase(constants.FTCONN_CACHE_MISS)
 		return fn()
 	}, expireAt)
+	var data = c.cache.Get(name).Data
+	// ensure that if err is nil data must not be nil
+	if data == nil {
+		err = fmt.Errorf("receive data as nil value (%s)", name)
+	}
 
 	if err != nil {
 		c.logger.Warn(err.Error())
 	}
 
-	return c.cache.Get(name).Data, err
+	return data, err
 }
 
 func (c *Connection) GET(name string, query url.Values, target interface{}) error {
