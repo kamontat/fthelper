@@ -107,7 +107,7 @@ var Internal = collectors.NewMetrics(
 				return []prometheus.Metric{}
 			}
 
-			var durations = data.Data.([]int64)
+			var durations = data.Data.([]interface{})
 			var histogram = prometheus.NewHistogram(prometheus.HistogramOpts{
 				Namespace: "fthelper",
 				Subsystem: "internal",
@@ -117,7 +117,7 @@ var Internal = collectors.NewMetrics(
 			})
 
 			for _, ms := range durations {
-				histogram.Observe(float64(ms))
+				histogram.Observe(float64(ms.(int64)))
 			}
 
 			return []prometheus.Metric{histogram}
