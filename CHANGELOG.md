@@ -1,9 +1,44 @@
+# Release note of FTHelper
+
 <a name="unreleased"></a>
 ## [Unreleased]
 
 
+<a name="v4.4.0"></a>
+## [v4.4.0] - 2021-07-31
+
+### 1. Features
+- **metric:** add new `freqtrade_perf_daily` for daily profit percentage
+
+### 2. Performance Improvements
+- **metric:** cmd will not use same caches with global
+- **metric:** add warmup for daily performance cal and log
+- **metric:** change all `freqtrade_pair_performance` to `freqtrade_pair_perf`
+- **metric:** remove warmup_error, and use warmup for warmup success rate instead.
+- **metric:** warmup process will collect error and report
+- **metric:** remove perf completely in freqtrade_pair
+- **metric:** change global cache instead for warmup
+- **shared:** exclude some data in cache in String() result
+- **shared:** support AndD for add data and error to errors handler
+- **shared:** create cache.bucket() for collect series of data
+- **shared:** add Total() in error handler for calculate error percentage
+- **shared:** add more error if cache key is empty
+- **shared:** change some method signature and expose fetching status of cache data
+- **shared:** add debug log how cache works
+
+### 3. Bug Fixes
+- **metric:** any global cache should use global cache
+- **metric:** if daily balance is error it will keep trying
+- **metric:** crash after first warmup occurred
+- **metric:** crash when cannot get freqtrade data
+- **metric:** warmup success rate should not report only when error occurred
+- **shared:** total error in handler is not return correct value
+- **shared:** check error in unit-test
+
+
 <a name="v4.3.0"></a>
 ## [v4.3.0] - 2021-07-23
+
 ### 1. Features
 - **gen:** add example for generate docker-compose files
 - **shared:** loading .env support both files and directory
@@ -34,12 +69,14 @@
 
 <a name="v4.2.0"></a>
 ## [v4.2.0] - 2021-07-21
+
 ### 2. Performance Improvements
 - **gen:** add new info log when generators is executing
 
 
 <a name="v4.2.0-beta.1"></a>
 ## [v4.2.0-beta.1] - 2021-07-21
+
 ### 2. Performance Improvements
 - **gen:** add example code for copy type
 - **gen:** refactor code and clustering runners
@@ -50,6 +87,7 @@
 
 <a name="v4.1.1"></a>
 ## [v4.1.1] - 2021-07-20
+
 ### 2. Performance Improvements
 - **docker:** cleanup do nothing, remove it
 - **docker:** change base image for pg to develop_plot
@@ -58,6 +96,7 @@
 
 <a name="v4.1.0"></a>
 ## [v4.1.0] - 2021-07-20
+
 ### 1. Features
 - add 3 metrics at `freqtrade_stat` namespace.
 - **docker:** add new buildflow for docker image with postgres support
@@ -73,20 +112,24 @@
 <a name="v4.1.0-beta.9"></a>
 ## [v4.1.0-beta.9] - 2021-07-14
 
+
 <a name="v4.1.0-beta.8"></a>
 ## [v4.1.0-beta.8] - 2021-07-14
+
 ### 2. Performance Improvements
 - **gen:** remove default settings
 
 
 <a name="v4.1.0-beta.7"></a>
 ## [v4.1.0-beta.7] - 2021-07-14
+
 ### 3. Bug Fixes
 - **gen:** use wrong config mapper
 
 
 <a name="v4.1.0-beta.6"></a>
 ## [v4.1.0-beta.6] - 2021-07-14
+
 ### 1. Features
 - **gen:** remove 'docker' type because it do nothing different from 'template' type
 - **gen:** support generator multiple files base on input clusters
@@ -121,6 +164,7 @@
 
 <a name="v4.1.0-beta.5"></a>
 ## [v4.1.0-beta.5] - 2021-07-11
+
 ### 1. Features
 - **gen:** add configuration and setting
 
@@ -145,6 +189,7 @@
 
 <a name="v4.1.0-beta.4"></a>
 ## [v4.1.0-beta.4] - 2021-07-11
+
 ### 3. Bug Fixes
 - **deps:** invalid platform name for armv6 and armv7
 - **gen:** ref in schema didn't works
@@ -152,6 +197,7 @@
 
 <a name="v4.1.0-beta.3"></a>
 ## [v4.1.0-beta.3] - 2021-07-11
+
 ### 1. Features
 - **gen:** support new type 'strategy' for create strategy code to output
 
@@ -166,6 +212,7 @@
 
 <a name="v4.1.0-beta.2"></a>
 ## [v4.1.0-beta.2] - 2021-07-11
+
 ### 1. Features
 - **core:** support template generator
 - **shared:** support convert data to array via `a,b,c` format
@@ -181,6 +228,7 @@
 
 <a name="v4.1.0-beta.1"></a>
 ## [v4.1.0-beta.1] - 2021-07-11
+
 ### 1. Features
 - refactor code and make generators works with json type
 - change --configs to --config-dirs, --envs to --env-files and --no-env to --no-env-file [BREAK]
@@ -195,6 +243,7 @@
 
 <a name="v4.0.0"></a>
 ## [v4.0.0] - 2021-07-10
+
 ### 2. Performance Improvements
 - **core:** config command will show type of value
 
@@ -202,14 +251,18 @@
 <a name="v4.0.0-beta.4"></a>
 ## [v4.0.0-beta.4] - 2021-07-10
 
+
 <a name="v4.0.0-beta.3"></a>
 ## [v4.0.0-beta.3] - 2021-07-09
+
 
 <a name="v4.0.0-beta.2"></a>
 ## [v4.0.0-beta.2] - 2021-07-09
 
+
 <a name="v4.0.0-beta.1"></a>
 ## [v4.0.0-beta.1] - 2021-07-09
+
 ### 1. Features
 - migrate ftmetric from private repository
 
@@ -217,43 +270,56 @@
 <a name="v0.1.0-beta.12"></a>
 ## [v0.1.0-beta.12] - 2021-07-07
 
+
 <a name="v0.1.0-beta.11"></a>
 ## [v0.1.0-beta.11] - 2021-07-07
+
 
 <a name="v0.1.0-beta.10"></a>
 ## [v0.1.0-beta.10] - 2021-07-07
 
+
 <a name="v0.1.0-beta.9"></a>
 ## [v0.1.0-beta.9] - 2021-07-07
+
 
 <a name="v0.1.0-beta.8"></a>
 ## [v0.1.0-beta.8] - 2021-07-07
 
+
 <a name="v0.1.0-beta.7"></a>
 ## [v0.1.0-beta.7] - 2021-07-07
+
 
 <a name="v0.1.0-beta.6"></a>
 ## [v0.1.0-beta.6] - 2021-07-07
 
+
 <a name="v0.1.0-beta.5"></a>
 ## [v0.1.0-beta.5] - 2021-07-07
+
 
 <a name="v0.1.0-beta.4"></a>
 ## [v0.1.0-beta.4] - 2021-07-07
 
+
 <a name="v0.1.0-beta.3"></a>
 ## [v0.1.0-beta.3] - 2021-07-07
+
 
 <a name="v0.1.0-beta.2"></a>
 ## [v0.1.0-beta.2] - 2021-07-07
 
+
 <a name="v0.1.0-beta.1"></a>
 ## v0.1.0-beta.1 - 2021-07-07
+
 ### 1. Features
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.3.0...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.4.0...HEAD
+[v4.4.0]: https://github.com/kamontat/fthelper/compare/v4.3.0...v4.4.0
 [v4.3.0]: https://github.com/kamontat/fthelper/compare/v4.2.0...v4.3.0
 [v4.2.0]: https://github.com/kamontat/fthelper/compare/v4.2.0-beta.1...v4.2.0
 [v4.2.0-beta.1]: https://github.com/kamontat/fthelper/compare/v4.1.1...v4.2.0-beta.1
