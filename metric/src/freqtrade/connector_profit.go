@@ -1,10 +1,15 @@
 package freqtrade
 
+import (
+	"fmt"
+	"time"
+)
+
 type Profit struct {
-	UnrealizedCryptoProfit float64 `json:"profit_closed_coin"`
-	UnrealizedFiatProfit   float64 `json:"profit_closed_fiat"`
-	RealizedCryptoProfit   float64 `json:"profit_all_coin"`
-	RealizedFiatProfit     float64 `json:"profit_all_fiat"`
+	RealizedCryptoProfit   float64 `json:"profit_closed_coin"`
+	RealizedFiatProfit     float64 `json:"profit_closed_fiat"`
+	UnrealizedCryptoProfit float64 `json:"profit_all_coin"`
+	UnrealizedFiatProfit   float64 `json:"profit_all_fiat"`
 
 	TotalTrades  int `json:"trade_count"`
 	ClosedTrades int `json:"closed_trade_count"`
@@ -22,6 +27,17 @@ type Profit struct {
 
 	BestPair string  `json:"best_pair"`
 	BestRate float64 `json:"best_rate"`
+}
+
+func (p *Profit) GetAverageDuration() time.Duration {
+	var h, m, s int
+	n, err := fmt.Sscanf(p.AverageDuration, "%d:%d:%d", &h, &m, &s)
+	if err != nil || n != 3 {
+		return -1
+	}
+
+	var second = (h * 3600) + (m * 60) + s
+	return time.Duration(second) * time.Second
 }
 
 func EmptyProfit() *Profit {
