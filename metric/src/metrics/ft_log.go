@@ -61,7 +61,6 @@ var FTLog = collectors.NewMetrics(
 
 			var metrics = make([]prometheus.Metric, 0)
 			for key, value := range aggregated {
-
 				var labels = append(freqtrade.NewSummary(connection, param.Cache), key)
 				metrics = append(metrics, prometheus.MustNewConstMetric(
 					desc,
