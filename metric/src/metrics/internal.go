@@ -95,7 +95,7 @@ var Internal = collectors.NewMetrics(
 
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
-				prometheus.CounterValue,
+				prometheus.GaugeValue,
 				data.(float64),
 			)}
 		},
