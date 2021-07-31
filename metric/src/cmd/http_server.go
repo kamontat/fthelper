@@ -21,6 +21,7 @@ func HttpServer(p *commands.ExecutorParameter, conn *freqtrade.Connection) error
 		collectors.New(p, conn, metrics.FTBalance),
 		collectors.New(p, conn, metrics.FTTrade),
 		collectors.New(p, conn, metrics.FTPair),
+		collectors.New(p, conn, metrics.FTPerformance),
 		collectors.New(p, conn, metrics.FTLock),
 		collectors.New(p, conn, metrics.FTLog),
 		collectors.New(p, conn, metrics.Info),
