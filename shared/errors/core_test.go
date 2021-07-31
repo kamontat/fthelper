@@ -50,7 +50,7 @@ func TestErrorHandler(t *testing.T) {
 		MustBeNil()
 
 	assertion.NewName("string - with error").
-		WithExpected(`found '2' errors
+		WithExpected(`found '2' errors (2)
 - a
 - b
 `).
