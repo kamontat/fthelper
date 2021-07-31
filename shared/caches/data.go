@@ -7,9 +7,9 @@ import (
 )
 
 type Data struct {
-	Key     string
+	Key     string `json:"-"`
 	Data    interface{}
-	Error   error
+	Error   error `json:",omitempty"`
 	updater Updater
 
 	createAt time.Time
