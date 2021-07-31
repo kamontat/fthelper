@@ -70,6 +70,23 @@ var FTPerformance = collectors.NewMetrics(
 	),
 	collectors.NewMetric(
 		prometheus.NewDesc(
+			prometheus.BuildFQName("freqtrade", "perf", "realized_pct"),
+			"Realized profit percentage (0-1).",
+			freqtrade.SummaryLabel(),
+			nil,
+		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
+			var connection = freqtrade.ToConnection(conn)
+			var profit = freqtrade.NewProfit(connection)
+			return []prometheus.Metric{prometheus.MustNewConstMetric(
+				desc,
+				prometheus.GaugeValue,
+				profit.RealizedPercentProfit,
+				freqtrade.NewSummary(connection, param.Cache)...,
+			)}
+		},
+	),
+	collectors.NewMetric(
+		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "perf", "unrealized"),
 			"Unrealized profit amount (included both opened/closed trades).",
 			append(freqtrade.SummaryLabel(), "stake"),
@@ -90,6 +107,23 @@ var FTPerformance = collectors.NewMetrics(
 				prometheus.GaugeValue,
 				profit.UnrealizedFiatProfit,
 				append(labels, balance.FiatSymbol)...,
+			)}
+		},
+	),
+	collectors.NewMetric(
+		prometheus.NewDesc(
+			prometheus.BuildFQName("freqtrade", "perf", "unrealized_pct"),
+			"Unrealized profit percentage (0-1).",
+			freqtrade.SummaryLabel(),
+			nil,
+		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
+			var connection = freqtrade.ToConnection(conn)
+			var profit = freqtrade.NewProfit(connection)
+			return []prometheus.Metric{prometheus.MustNewConstMetric(
+				desc,
+				prometheus.GaugeValue,
+				profit.RealizedPercentProfit,
+				freqtrade.NewSummary(connection, param.Cache)...,
 			)}
 		},
 	),

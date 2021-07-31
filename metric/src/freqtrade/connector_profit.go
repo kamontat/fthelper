@@ -6,10 +6,15 @@ import (
 )
 
 type Profit struct {
-	RealizedCryptoProfit   float64 `json:"profit_closed_coin"`
-	RealizedFiatProfit     float64 `json:"profit_closed_fiat"`
+	RealizedCryptoProfit float64 `json:"profit_closed_coin"`
+	RealizedFiatProfit   float64 `json:"profit_closed_fiat"`
+	// Percent is number from 0 to 1 represent percentage of profit from start balance
+	RealizedPercentProfit float64 `json:"profit_closed_ratio"`
+
 	UnrealizedCryptoProfit float64 `json:"profit_all_coin"`
 	UnrealizedFiatProfit   float64 `json:"profit_all_fiat"`
+	// Percent is number from 0 to 1 represent percentage of profit from start balance
+	UnrealizedPercentProfit float64 `json:"profit_all_ratio"`
 
 	TotalTrades  int `json:"trade_count"`
 	ClosedTrades int `json:"closed_trade_count"`
@@ -42,10 +47,12 @@ func (p *Profit) GetAverageDuration() time.Duration {
 
 func EmptyProfit() *Profit {
 	return &Profit{
-		UnrealizedCryptoProfit: 0,
-		UnrealizedFiatProfit:   0,
-		RealizedCryptoProfit:   0,
-		RealizedFiatProfit:     0,
+		UnrealizedCryptoProfit:  0,
+		UnrealizedFiatProfit:    0,
+		UnrealizedPercentProfit: 0,
+		RealizedCryptoProfit:    0,
+		RealizedFiatProfit:      0,
+		RealizedPercentProfit:   0,
 
 		TotalTrades:  0,
 		ClosedTrades: 0,
