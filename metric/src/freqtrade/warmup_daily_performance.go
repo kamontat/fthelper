@@ -22,10 +22,13 @@ func warmupDailyPerformance(start time.Time, conn *Connection, logger *loggers.L
 		logger.Info("initial daily performance balance")
 
 		data = caches.NewData(CACHE_DAILY_PERFORMANCE_BALANCE, func(o interface{}) (interface{}, error) {
-			return NewBalance(conn), nil
+			return FetchBalance(conn)
 		}, expireAt)
 
-		caches.Global.SetData(data) // add data to cache service
+		var err = caches.Global.SetData(data) // add data to cache service
+		if err != nil {
+			return err
+		}
 	}
 
 	if data != nil {
