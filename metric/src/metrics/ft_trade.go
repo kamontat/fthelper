@@ -1,8 +1,6 @@
 package metrics
 
 import (
-	"time"
-
 	"github.com/kamontat/fthelper/metric/v4/src/collectors"
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
@@ -135,12 +133,10 @@ var FTTrade = collectors.NewMetrics(
 		var connection = freqtrade.ToConnection(conn)
 		var profit = freqtrade.NewProfit(connection)
 
-		var baseT, _ = time.Parse("15:04:05", "00:00:00")
-		var avgT, _ = time.Parse("15:04:05", profit.AverageDuration)
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
-			avgT.Sub(baseT).Seconds(),
+			profit.GetAverageDuration().Seconds(),
 			freqtrade.NewSummary(connection, param.Cache)...,
 		)}
 	}),
