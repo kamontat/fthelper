@@ -43,6 +43,8 @@ func (s *Service) Get(key string) *Data {
 func (s *Service) SetData(data *Data) error {
 	if s.Has(data.Key) {
 		return fmt.Errorf("cannot set data with existing data, use Update() instead")
+	} else if data.Key == "" {
+		return fmt.Errorf("cache data key cannot be empty string")
 	}
 
 	err := data.Update()
