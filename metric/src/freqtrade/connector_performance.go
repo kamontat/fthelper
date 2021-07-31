@@ -21,7 +21,7 @@ func NewPerformance(conn *Connection) []*Performance {
 func FetchPerformance(conn *Connection) ([]*Performance, error) {
 	var name = API_PERF
 	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
-		return GetLogs(conn)
+		return GetPerformance(conn)
 	}); err == nil {
 		return data.([]*Performance), nil
 	} else {
