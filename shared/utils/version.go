@@ -29,7 +29,7 @@ func prenameToNumber(name string) int {
 // `v1.2.3-alpha.1`
 // `v1.2.3-rc.1`
 func VersionNumber(version string) float64 {
-	var regex = `v(?P<Major>\d+).(?P<Minor>\d+).(?P<Patch>\d+)-?(?P<Prename>\w+)?.?(?P<Prerelease>\d+)?`
+	var regex = `v?(?P<Major>\d+).(?P<Minor>\d+).(?P<Patch>\d+)-?(?P<Prename>\w+)?.?(?P<Prerelease>\d+)?`
 	var compRegEx = regexp.MustCompile(regex)
 	match := compRegEx.FindStringSubmatch(version)
 	if len(match) < 3 {
