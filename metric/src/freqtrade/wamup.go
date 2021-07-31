@@ -26,6 +26,7 @@ func Warmup(conn *Connection) (time.Duration, *errors.Handler) {
 	err.AndD(FetchWhitelist(conn))
 
 	err.And(warmupDailyPerformance(start, conn, logger))
+	err.And(warmupCurrencyRate(conn, logger))
 
 	if err.HasError() {
 		logger.Warn("Get %d warmup error", err.Length())
