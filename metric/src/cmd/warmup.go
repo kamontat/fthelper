@@ -26,11 +26,11 @@ func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, conn *freqtra
 		worker.Add(ctx, func(ctx context.Context) {
 			p.Logger.Debug("warmup freqtrade connection caches")
 			var duration, err = freqtrade.Warmup(conn)
-			if err.HasError() {
-				if value, ok := aggregators.Percentage(float64(err.Total()-err.Length()), float64(err.Total())); ok {
-					caches.Global.Update(constants.WARMUP_SUCCEESS_RATE, value, caches.Persistent)
-				}
-			} else {
+			if value, ok := aggregators.Percentage(float64(err.Total()-err.Length()), float64(err.Total())); ok {
+				caches.Global.Update(constants.WARMUP_SUCCEESS_RATE, value, caches.Persistent)
+			}
+
+			if !err.HasError() {
 				_ = caches.Global.Bucket(
 					constants.WARMUP_DURATIONS,
 					int64(duration.Milliseconds()),
