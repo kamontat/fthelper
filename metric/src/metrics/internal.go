@@ -81,13 +81,22 @@ var Internal = collectors.NewMetrics(
 	),
 	collectors.NewMetric(
 		prometheus.NewDesc(
-			prometheus.BuildFQName("fthelper", "internal", "warmup_error"),
-			"Counter of how many warmup is fail",
+			prometheus.BuildFQName("fthelper", "internal", "warmup"),
+			"Success rate of warmup process (0.0-1.0)",
 			nil,
 			nil,
 		),
 		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			return callerBuilder(desc, constants.WARMUP_ERROR)
+			var data = caches.Global.Get(constants.WARMUP_SUCCEESS_RATE).Data
+			if data == nil {
+				return emptyMetrics
+			}
+
+			return []prometheus.Metric{prometheus.MustNewConstMetric(
+				desc,
+				prometheus.CounterValue,
+				data.(float64),
+			)}
 		},
 	),
 	collectors.NewRawMetric(
