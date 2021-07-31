@@ -22,10 +22,9 @@ func (h *Handler) Length() int {
 
 func (h *Handler) And(errs ...error) *Handler {
 	for _, err := range errs {
+		h.total += 1
 		if err != nil {
 			h.errors = append(h.errors, err)
-		} else {
-			h.total += 1
 		}
 	}
 
