@@ -8,3 +8,6 @@ USER ftuser
 
 # Add Postgres support
 RUN pip install --user psycopg2
+# Add pandas ta for NostalgiaForInfinity
+# https://github.com/iterativv/NostalgiaForInfinity/wiki/Preliminary-Setup#nfi-deployment
+RUN pip install --user pandas-ta
