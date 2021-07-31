@@ -19,7 +19,7 @@ func NewSummary(conn *Connection, cache *caches.Service) []string {
 	var s = NewStatus(conn)
 
 	return []string{
-		cache.Get("cluster").Data.(string),
+		conn.Cluster,
 		s.Strategy,
 		v,
 	}

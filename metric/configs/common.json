@@ -1,4 +1,6 @@
 {
+  "clusters": [],
+  "cluster": {},
   "freqtrade": {
     "url": "http://localhost:8080",
     "apiver": "v1",

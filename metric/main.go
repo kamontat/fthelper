@@ -38,20 +38,20 @@ func main() {
 		Command(&commands.Command{
 			Name: commands.DEFAULT,
 			Executor: func(p *commands.ExecutorParameter) error {
-				conn, err := freqtrade.NewConnection(p.Config, p.Cache)
+				connections, err := freqtrade.NewConnections(p.Config)
 				if err != nil {
 					return err
 				}
 
-				// print connection information
-				p.Logger.Info(conn.String())
-				// refresh cluster name
-				p.Cache.Update("cluster", p.Config.Mi("freqtrade").So("cluster", "1A"), caches.Persistent)
+				for _, conn := range connections {
+					// print connection information
+					p.Logger.Info(conn.String())
+				}
 
 				// start warmup
-				var worker = cmd.WarmupJob(ctx, p, conn)
+				var worker = cmd.WarmupJob(ctx, p, connections)
 				// start http server
-				err = cmd.HttpServer(p, conn)
+				err = cmd.HttpServer(p, connections)
 
 				// done
 				worker.Stop()

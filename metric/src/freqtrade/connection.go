@@ -5,16 +5,19 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/constants"
 	"github.com/kamontat/fthelper/shared/caches"
+	"github.com/kamontat/fthelper/shared/datatype"
 	"github.com/kamontat/fthelper/shared/loggers"
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
 type Connection struct {
-	Config *Config
+	Cluster string
+	Config  *Config
 
 	base     *url.URL
 	version  string
@@ -111,7 +114,7 @@ func (c *Connection) POST(name string, query url.Values, body io.Reader, target 
 
 func (c *Connection) String() string {
 	var output = `
-Connection: %s
+Connection: %s (%s)
   cache: %s
   query: %s
 `
@@ -119,6 +122,7 @@ Connection: %s
 	return fmt.Sprintf(
 		output,
 		c.base.String(),
+		c.Cluster,
 		c.Config.Cache.Json(),
 		c.Config.Query.Json(),
 	)
@@ -132,16 +136,58 @@ func NewConnection(data maps.Mapper, cache *caches.Service) (*Connection, error)
 	}
 
 	return &Connection{
-		Config: newConfig(freqtrade),
+		Cluster: freqtrade.So("cluster", ""),
+		Config:  newConfig(freqtrade),
 
 		base:     baseUrl,
-		version:  freqtrade.So("version", "v1"),
+		version:  freqtrade.So("apiver", "v1"),
 		username: freqtrade.So("username", "freqtrader"),
 		password: freqtrade.So("password", ""),
 
 		cache:  cache,
 		logger: loggers.Get("freqtrade", "connection"),
 	}, nil
+}
+
+func NewConnections(data maps.Mapper) ([]*Connection, error) {
+	var clusters = data.Ai("clusters")
+	if len(clusters) <= 0 {
+		var conn, err = NewConnection(data, caches.New())
+		if err != nil {
+			return make([]*Connection, 0), err
+		}
+		return []*Connection{conn}, nil
+	}
+
+	var connections = make([]*Connection, 0)
+	for _, raw := range clusters {
+		var cluster = datatype.ForceString(raw)
+		var raw, err = data.Mi("cluster").Gets(cluster, strings.ToLower(cluster))
+		if err != nil {
+			return nil, err
+		}
+		var setting, _ = maps.ToMapper(raw)
+
+		baseUrl, err := url.Parse(setting.So("url", "http://localhost:8080"))
+		if err != nil {
+			return nil, err
+		}
+
+		connections = append(connections, &Connection{
+			Cluster: cluster,
+			Config:  newConfig(data.Mi("freqtrade")),
+
+			base:     baseUrl,
+			version:  setting.So("apiver", "v1"),
+			username: setting.So("username", "freqtrader"),
+			password: setting.So("password", ""),
+
+			cache:  caches.New(),
+			logger: loggers.Get("freqtrade", "connection"),
+		})
+	}
+
+	return connections, nil
 }
 
 func ToConnection(conn connection.Http) *Connection {

@@ -7,9 +7,20 @@ import (
 )
 
 type CCollector struct {
-	param   *commands.ExecutorParameter
-	conn    connection.Http
-	metrics []*Builder
+	param       *commands.ExecutorParameter
+	connections []connection.Http
+	internal    []*Builder
+	metrics     []*Builder
+}
+
+func (c *CCollector) AddInternal(b []*Builder) *CCollector {
+	c.internal = append(c.internal, b...)
+	return c
+}
+
+func (c *CCollector) AddMetrics(b []*Builder) *CCollector {
+	c.metrics = append(c.metrics, b...)
+	return c
 }
 
 func (c *CCollector) Describe(channel chan<- *prometheus.Desc) {
@@ -21,17 +32,26 @@ func (c *CCollector) Describe(channel chan<- *prometheus.Desc) {
 }
 
 func (c *CCollector) Collect(channel chan<- prometheus.Metric) {
-	for _, builder := range c.metrics {
-		for _, metric := range builder.Builder(builder.Desc, c.conn, c.param) {
+	for _, builder := range c.internal {
+		for _, metric := range builder.Builder(builder.Desc, nil, c.param) {
 			channel <- metric
+		}
+	}
+
+	for _, conn := range c.connections {
+		for _, builder := range c.metrics {
+			for _, metric := range builder.Builder(builder.Desc, conn, c.param) {
+				channel <- metric
+			}
 		}
 	}
 }
 
-func New(param *commands.ExecutorParameter, conn connection.Http, metrics []*Builder) *CCollector {
+func New(param *commands.ExecutorParameter, connections []connection.Http) *CCollector {
 	return &CCollector{
-		param:   param,
-		conn:    conn,
-		metrics: metrics,
+		param:       param,
+		connections: connections,
+		internal:    make([]*Builder, 0),
+		metrics:     make([]*Builder, 0),
 	}
 }
