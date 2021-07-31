@@ -40,54 +40,29 @@ var FT = collectors.NewMetrics(
 		return metrics
 	}),
 	collectors.NewMetric(prometheus.NewDesc(
-		prometheus.BuildFQName("freqtrade", "stat", "win_duration"),
-		"Current average wins duration",
-		freqtrade.SummaryLabel(),
+		prometheus.BuildFQName("freqtrade", "stat", "duration"),
+		"Current average wins/draws/losses duration",
+		append(freqtrade.SummaryLabel(), "type"),
 		nil,
 	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
 		var connection = freqtrade.ToConnection(conn)
 		var stats = freqtrade.NewStat(connection)
 
-		var labels = freqtrade.NewSummary(connection, param.Cache)
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
 			stats.WinDuration(),
-			labels...,
-		)}
-	}),
-	collectors.NewMetric(prometheus.NewDesc(
-		prometheus.BuildFQName("freqtrade", "stat", "draw_duration"),
-		"Current average draws duration",
-		freqtrade.SummaryLabel(),
-		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-		var connection = freqtrade.ToConnection(conn)
-		var stats = freqtrade.NewStat(connection)
-
-		var labels = freqtrade.NewSummary(connection, param.Cache)
-		return []prometheus.Metric{prometheus.MustNewConstMetric(
+			append(freqtrade.NewSummary(connection, param.Cache), "win")...,
+		), prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
 			stats.DrawDuration(),
-			labels...,
-		)}
-	}),
-	collectors.NewMetric(prometheus.NewDesc(
-		prometheus.BuildFQName("freqtrade", "stat", "loss_duration"),
-		"Current average loss duration",
-		freqtrade.SummaryLabel(),
-		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-		var connection = freqtrade.ToConnection(conn)
-		var stats = freqtrade.NewStat(connection)
-
-		var labels = freqtrade.NewSummary(connection, param.Cache)
-		return []prometheus.Metric{prometheus.MustNewConstMetric(
+			append(freqtrade.NewSummary(connection, param.Cache), "draw")...,
+		), prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
 			stats.LossDuration(),
-			labels...,
+			append(freqtrade.NewSummary(connection, param.Cache), "loss")...,
 		)}
 	}),
 )
