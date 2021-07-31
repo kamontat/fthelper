@@ -16,14 +16,25 @@ func EmptyCount() *Count {
 }
 
 func NewCount(conn *Connection) *Count {
-	var name, expireAt, query = Connector(conn, API_COUNT)
-	if data, err := conn.Cache(name, expireAt, func() (interface{}, error) {
-		var target = new(Count)
-		err := conn.GET(name, query, &target)
-		return target, err
-	}); err == nil && data != nil {
-		return data.(*Count)
+	if count, err := FetchCount(conn); err == nil {
+		return count
 	}
-
 	return EmptyCount()
+}
+
+func FetchCount(conn *Connection) (*Count, error) {
+	var name = API_COUNT
+	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
+		return GetCount(conn)
+	}); err == nil {
+		return data.(*Count), nil
+	} else {
+		return nil, err
+	}
+}
+
+func GetCount(conn *Connection) (*Count, error) {
+	var target = new(Count)
+	var err = GetConnector(conn, API_COUNT, &target)
+	return target, err
 }

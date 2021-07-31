@@ -14,7 +14,7 @@ func Warmup(conn *Connection) (time.Duration, *errors.Handler) {
 	var start = time.Now()
 
 	err.AndD(FetchBalance(conn))
-	NewCount(conn)
+	err.AndD(FetchCount(conn))
 	NewLocks(conn)
 	NewLogs(conn)
 	NewPerformance(conn)
