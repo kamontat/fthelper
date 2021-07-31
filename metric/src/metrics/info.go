@@ -5,20 +5,22 @@ import (
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
+	"github.com/kamontat/fthelper/shared/utils"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
 var Info = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("fthelper", "build", "info"),
-		"Information relate to fthelper, get information from commandline metadata",
+		"fthelper information. Value will always change when new version is deployed.",
 		[]string{"version", "commit", "date"},
 		nil,
 	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
+		var number = utils.VersionNumber(param.Meta.Version)
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
-			float64(1),
+			number,
 			param.Meta.Version,
 			param.Meta.Commit,
 			param.Meta.Date,
