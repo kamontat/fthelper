@@ -10,21 +10,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-func callerBuilder(desc *prometheus.Desc, cacheKey string) []prometheus.Metric {
-	var cache = caches.Global
-	var data = cache.Get(cacheKey)
-	var metric = 0
-	if data.IsExist() {
-		metric = data.Data.(int)
-	}
-
-	return []prometheus.Metric{prometheus.MustNewConstMetric(
-		desc,
-		prometheus.CounterValue,
-		float64(metric),
-	)}
-}
-
 func callerClusterBuilder(desc *prometheus.Desc, cacheKey, cluster string) []prometheus.Metric {
 	var cache = caches.Global
 	var data = cache.Get(cacheKey + cluster)
