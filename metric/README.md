@@ -31,7 +31,7 @@ After install scripts in your machine. You need to configure freqtrade to connec
 
 - ftmetric get base settings from [configs](./configs) directory.
 - all files in directory must be `json`; otherwise, it will throw error or crash
-- you can change directories name via `--config-dirs <path>` option.
+- you can change directories name via `--configs <path>` option.
   - this option can use multiple time to load multiple directories
   - on each directory also support multiple json file, each json will be merge together
   - warning: this will disable loading from default configs directory
@@ -42,7 +42,7 @@ After install scripts in your machine. You need to configure freqtrade to connec
 - every environment must prefix with `FTH_` or `FTC_`
 - you can list all possible configuration and name via `ftmetric config` command at `Environment` column
 - by default, ftmetric will try to load data from `$pwd/.env` file and warning if not found
-- you can change files path via `--env-files <path>` option.
+- you can change files path via `--envs <path>` option.
   - this option can use multiple time to load multiple file.
   - this load as override, meaning if you have multiple setting in same name, last one will be use.
   - you can disable default `.env` load via `--no-env-file` option.

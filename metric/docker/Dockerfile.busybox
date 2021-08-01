@@ -9,4 +9,4 @@ COPY metric /fth
 ENTRYPOINT [ \
   "/fth/ftmetric", \
   "--pwd", "/fth", \
-  "--env-files", "/fth/.env.docker"]
+  "--envs", "/fth/.env.docker"]
