@@ -17,9 +17,14 @@ func join(input ...interface{}) string {
 	return utils.JoinString("-", str...)
 }
 
+func joinArray(input []interface{}) string {
+	return join(input...)
+}
+
 var stringFuncs template.FuncMap = map[string]interface{}{
-	"join":    join,
-	"toLower": strings.ToLower,
-	"toUpper": strings.ToUpper,
-	"toTitle": strings.ToTitle,
+	"join":      join,
+	"joinArray": joinArray,
+	"toLower":   strings.ToLower,
+	"toUpper":   strings.ToUpper,
+	"toTitle":   strings.ToTitle,
 }
