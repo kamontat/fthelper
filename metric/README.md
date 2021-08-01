@@ -65,3 +65,50 @@ ftmetric --version
 # --all will show all settings including internal
 ftmetric config [--data] [--all]
 ```
+
+## Setup multiclusters
+
+Since version `4.5.0-alpha.1`. I added multicluster support in ftmetric. You needs to follow this step to able to run multicluster mode. 
+
+1. Add `clusters` fields on either json/env/arg as array of clusters to fetch data
+2. Add `cluster` as map of cluster and freqtrade settings
+
+### Example
+
+For json file
+
+```json
+{
+  "clusters": ["1A", "2A"],
+  "cluster": {
+    "1A": {
+      "url": "http://localhost:8080",
+      "apiver": "v1",
+      "username": "admin",
+      "password": "password"
+    },
+    "2A": {
+      "url": "http://localhost:8081",
+      "apiver": "v1",
+      "username": "admin",
+      "password": "password"
+    }
+  }
+}
+```
+
+For environment
+
+```
+FTH_CLUSTERS=1A,2A
+
+FTH_CLUSTER__1A__URL="http://localhost:8080"
+FTH_CLUSTER__1A__APIVER=v1
+FTH_CLUSTER__1A__USERNAME="admin"
+FTH_CLUSTER__1A__PASSWORD=""
+
+FTH_CLUSTER__2A__URL="http://localhost:8081"
+FTH_CLUSTER__2A__APIVER=v1
+FTH_CLUSTER__2A__USERNAME="admin"
+FTH_CLUSTER__2A__PASSWORD=""
+```
