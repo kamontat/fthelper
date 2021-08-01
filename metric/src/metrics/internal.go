@@ -25,6 +25,22 @@ func callerBuilder(desc *prometheus.Desc, cacheKey string) []prometheus.Metric {
 	)}
 }
 
+func callerClusterBuilder(desc *prometheus.Desc, cacheKey, cluster string) []prometheus.Metric {
+	var cache = caches.Global
+	var data = cache.Get(cacheKey + cluster)
+	var metric = 0
+	if data.IsExist() {
+		metric = data.Data.(int)
+	}
+
+	return []prometheus.Metric{prometheus.MustNewConstMetric(
+		desc,
+		prometheus.CounterValue,
+		float64(metric),
+		cluster,
+	)}
+}
+
 var Internal = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("fthelper", "build", "info"),
@@ -53,32 +69,6 @@ var Internal = collectors.NewMetrics(
 		),
 		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
 			return callerBuilder(desc, constants.FTCONN_CALL)
-		},
-	),
-	collectors.NewMetric(
-		prometheus.NewDesc(
-			prometheus.BuildFQName("fthelper", "internal", "ft_call"),
-			"How many time do we call freqtrade apis",
-			nil,
-			prometheus.Labels{
-				"type": "success",
-			},
-		),
-		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			return callerBuilder(desc, constants.FTCONN_CALL_SUCCESS)
-		},
-	),
-	collectors.NewMetric(
-		prometheus.NewDesc(
-			prometheus.BuildFQName("fthelper", "internal", "ft_call"),
-			"How many time do we call freqtrade apis",
-			nil,
-			prometheus.Labels{
-				"type": "failure",
-			},
-		),
-		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			return callerBuilder(desc, constants.FTCONN_CALL_FAILURE)
 		},
 	),
 	collectors.NewMetric(

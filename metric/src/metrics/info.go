@@ -8,7 +8,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-var Info = collectors.NewMetrics(
+var FTInfo = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "build", "info"),
 		"Information relate to freqtrade, 0 meaning server is down",

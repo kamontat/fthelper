@@ -25,8 +25,9 @@ func HttpServer(p *commands.ExecutorParameter, connections []*freqtrade.Connecti
 	var collector = collectors.New(p, cs)
 
 	collector.AddInternal(metrics.Internal)
-	collector.AddInternal(metrics.FTInternal)
+	collector.AddMetrics(metrics.InternalFT)
 
+	collector.AddMetrics(metrics.FTInternal)
 	collector.AddMetrics(metrics.FT)
 	collector.AddMetrics(metrics.FTBalance)
 	collector.AddMetrics(metrics.FTTrade)
@@ -34,7 +35,7 @@ func HttpServer(p *commands.ExecutorParameter, connections []*freqtrade.Connecti
 	collector.AddMetrics(metrics.FTPerformance)
 	collector.AddMetrics(metrics.FTLock)
 	collector.AddMetrics(metrics.FTLog)
-	collector.AddMetrics(metrics.Info)
+	collector.AddMetrics(metrics.FTInfo)
 
 	prometheus.MustRegister(collector)
 	http.Handle(serverPath, promhttp.Handler())

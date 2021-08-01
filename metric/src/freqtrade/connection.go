@@ -76,9 +76,9 @@ func (c *Connection) Connect(method string, url string, query url.Values, body i
 }
 
 func (c *Connection) Cache(name string, expireAt string, fn func() (interface{}, error)) (interface{}, error) {
-	caches.Global.Increase(constants.FTCONN_CACHE_TOTAL)
+	caches.Global.Increase(constants.FTCONN_CACHE_TOTAL + c.Cluster)
 	err := c.cache.Fetch(name, func(o interface{}) (interface{}, error) {
-		caches.Global.Increase(constants.FTCONN_CACHE_MISS)
+		caches.Global.Increase(constants.FTCONN_CACHE_MISS + c.Cluster)
 		return fn()
 	}, expireAt)
 	var data = c.cache.Get(name).Data
@@ -160,7 +160,7 @@ func NewConnections(data maps.Mapper) ([]*Connection, error) {
 	}
 
 	var logger = loggers.Get("freqtrade", "connection")
-	logger.Info("currently we using 'multiple clusters mode' which still on alpha release. you might break when using new release")
+	logger.Info("currently you using 'multiple clusters mode' which still on alpha release")
 	var connections = make([]*Connection, 0)
 	for _, raw := range clusters {
 		var cluster = datatype.ForceString(raw)
