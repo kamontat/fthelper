@@ -60,13 +60,13 @@ func (c *Connection) Connect(method string, url string, query url.Values, body i
 		return nil, err
 	}
 	c.logger.Debug("request: %s %s", req.Method, req.URL.String())
-	caches.Global.Increase(constants.FTCONN_CALL)
+	caches.Global.Increase(constants.FTCONN_CALL + c.Cluster)
 	resp, err := http.DefaultClient.Do(req)
 
 	if err == nil {
-		caches.Global.Increase(constants.FTCONN_CALL_SUCCESS)
+		caches.Global.Increase(constants.FTCONN_CALL_SUCCESS + c.Cluster)
 	} else {
-		caches.Global.Increase(constants.FTCONN_CALL_FAILURE)
+		caches.Global.Increase(constants.FTCONN_CALL_FAILURE + c.Cluster)
 	}
 
 	if err != nil {
