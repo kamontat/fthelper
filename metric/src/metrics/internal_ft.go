@@ -14,7 +14,7 @@ var InternalFT = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("fthelper", "internal", "ft_call"),
 			"How many time do we call freqtrade apis",
-			nil,
+			[]string{"cluster"},
 			prometheus.Labels{
 				"type": "total",
 			},
@@ -28,7 +28,7 @@ var InternalFT = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("fthelper", "internal", "ft_call"),
 			"How many time do we call freqtrade apis",
-			nil,
+			[]string{"cluster"},
 			prometheus.Labels{
 				"type": "success",
 			},
