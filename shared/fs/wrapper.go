@@ -42,10 +42,10 @@ func (w *wrapper) All() []FileSystem {
 func (w *wrapper) String() string {
 	var str strings.Builder
 	for i, fs := range w.fs {
-		if i > 1 {
-			str.WriteString(",")
+		if i >= 1 {
+			str.WriteString(", ")
 		}
-		str.WriteString(fs.Abs())
+		str.WriteString(fmt.Sprintf("%s (%s)", fs.Abs(), fs.Type()))
 	}
 
 	return fmt.Sprintf("wrapper of '%s': [%s]", w.Mode, str.String())
