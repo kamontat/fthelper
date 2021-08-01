@@ -4,6 +4,140 @@
 ## [Unreleased]
 
 
+<a name="v4.5.0"></a>
+## [v4.5.0] - 2021-08-01
+
+### 2. Performance Improvements
+- **docs:** add migration plan for v4.x.x
+
+### 3. Bug Fixes
+- **ci:** upload artifact so I will understand what happen on testing
+
+
+<a name="v4.5.0-beta.1"></a>
+## [v4.5.0-beta.1] - 2021-08-01
+
+### 3. Bug Fixes
+- **metric:** remove deadcode
+
+
+<a name="v4.5.0-alpha.8"></a>
+## [v4.5.0-alpha.8] - 2021-08-01
+
+### 3. Bug Fixes
+- **metric:** crash on previous version
+- **metric:** ft_call didn't report correct number
+
+
+<a name="v4.5.0-alpha.7"></a>
+## [v4.5.0-alpha.7] - 2021-08-01
+
+### 2. Performance Improvements
+- **metric:** remove failure ft_call and add clusters for multicluster mode
+- **metric:** support cache miss per cluster on multicluster mode
+
+
+<a name="v4.5.0-alpha.6"></a>
+## [v4.5.0-alpha.6] - 2021-08-01
+
+### 3. Bug Fixes
+- **shared:** joinArray separator should be comma
+
+
+<a name="v4.5.0-alpha.5"></a>
+## [v4.5.0-alpha.5] - 2021-08-01
+
+### 3. Bug Fixes
+- **gen:** deprecate message always print because docker fixed code
+- **metric:** deprecate message always print because docker fixed code
+
+
+<a name="v4.5.0-alpha.4"></a>
+## [v4.5.0-alpha.4] - 2021-08-01
+
+### 2. Performance Improvements
+- **shared:** add `joinArray` to template for join array variable
+
+
+<a name="v4.5.0-alpha.3"></a>
+## [v4.5.0-alpha.3] - 2021-08-01
+
+### 2. Performance Improvements
+- **metric:** add info when using alpha feature
+
+
+<a name="v4.5.0-alpha.2"></a>
+## [v4.5.0-alpha.2] - 2021-08-01
+
+### 1. Features
+- **shared:** deprecated `--env-files` option, use `--envs` instead
+- **shared:** add support auto fs type to query data from file-system and check the type
+
+### 2. Performance Improvements
+- **docs:** add metric for multiple cluster
+- **shared:** reduce duplicate code in config
+- **shared:** deprecated `--config-dirs` because we have auto type supported
+
+### 3. Bug Fixes
+- **metric:** whitelist didn't return correct information
+- **shared:** formatted config wrapper correctly
+
+
+<a name="v4.5.0-alpha.1"></a>
+## [v4.5.0-alpha.1] - 2021-08-01
+
+### 1. Features
+- **docker:** add pandas-ta to docker images
+- **metric:** alpha version for support multiple cluster on single ftmetric
+
+
+<a name="v4.4.4"></a>
+## [v4.4.4] - 2021-07-31
+
+### 1. Features
+- **metric:** add `freqtrade_perf_realized_pct` for calculated profit as percentage
+
+
+<a name="v4.4.3"></a>
+## [v4.4.3] - 2021-07-31
+
+### 2. Performance Improvements
+- **metric:** add `fthelper_internal_cache_size` label 'type' for local and global cache
+- **metric:** add `freqtrade_perf_unrealized` and `freqtrade_perf_realized`
+- **metric:** add new warmup process to refresh currency rate
+- **metric:** reduce execute time in freqtrade_stat_*
+- **metric:** reduce win_duration/draw_duration/loss_duration to single duration with type label
+
+### 3. Bug Fixes
+- **metric:** try to fix sometime fiat balance return zero value
+- **metric:** realized and unrealized is swopping
+- **metric:** `freqtrade_trade_avg_duration_seconds` not result correct information if average is more than 24 hours
+
+
+<a name="v4.4.2"></a>
+## [v4.4.2] - 2021-07-31
+
+### 3. Bug Fixes
+- **shared:** support version without prefix `v`
+
+
+<a name="v4.4.1"></a>
+## [v4.4.1] - 2021-07-31
+
+### 1. Features
+- **metric:** add new `freqtrade_stat_sell_reason` for win/draw/loss number of each sell reason
+- **metric:** fully support warmup success rate for all processor
+- **shared:** add version converter to convert version string to number
+
+### 2. Performance Improvements
+- **metric:** fthelper_build_info value will now change to new version when new version deployed
+- **shared:** add testcase struct for build loopable test
+
+### 3. Bug Fixes
+- **metric:** crash after first called
+- **metric:** fthelper_internal_warmup should be gauge.
+
+
 <a name="v4.4.0"></a>
 ## [v4.4.0] - 2021-07-31
 
@@ -318,7 +452,21 @@
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.4.0...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.5.0...HEAD
+[v4.5.0]: https://github.com/kamontat/fthelper/compare/v4.5.0-beta.1...v4.5.0
+[v4.5.0-beta.1]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.8...v4.5.0-beta.1
+[v4.5.0-alpha.8]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.7...v4.5.0-alpha.8
+[v4.5.0-alpha.7]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.6...v4.5.0-alpha.7
+[v4.5.0-alpha.6]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.5...v4.5.0-alpha.6
+[v4.5.0-alpha.5]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.4...v4.5.0-alpha.5
+[v4.5.0-alpha.4]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.3...v4.5.0-alpha.4
+[v4.5.0-alpha.3]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.2...v4.5.0-alpha.3
+[v4.5.0-alpha.2]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.1...v4.5.0-alpha.2
+[v4.5.0-alpha.1]: https://github.com/kamontat/fthelper/compare/v4.4.4...v4.5.0-alpha.1
+[v4.4.4]: https://github.com/kamontat/fthelper/compare/v4.4.3...v4.4.4
+[v4.4.3]: https://github.com/kamontat/fthelper/compare/v4.4.2...v4.4.3
+[v4.4.2]: https://github.com/kamontat/fthelper/compare/v4.4.1...v4.4.2
+[v4.4.1]: https://github.com/kamontat/fthelper/compare/v4.4.0...v4.4.1
 [v4.4.0]: https://github.com/kamontat/fthelper/compare/v4.3.0...v4.4.0
 [v4.3.0]: https://github.com/kamontat/fthelper/compare/v4.2.0...v4.3.0
 [v4.2.0]: https://github.com/kamontat/fthelper/compare/v4.2.0-beta.1...v4.2.0
