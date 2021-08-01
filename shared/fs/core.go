@@ -2,6 +2,7 @@ package fs
 
 import (
 	"fmt"
+	"path"
 
 	"github.com/kamontat/fthelper/shared/maps"
 )
@@ -14,29 +15,29 @@ import (
 //     },
 //     "fappname-1": {
 //       "mode": "single", // single | multiple
-//       "type": "file", // file | directory
+//       "type": "file", // auto | file | directory
 //       "fullpath": "{{ .a }}/username/data.txt"
 //     },
 //     "dappname-1": {
 //       "mode": "single", // single | multiple
-//       "type": "directory", // file | directory
+//       "type": "directory", // auto | file | directory
 //       "fullpath": "/tmp/username"
 //     },
 //     "dsappname-1": {
 //       "mode": "multiple", // single | multiple
-//       "type": "file", // file | directory
+//       "type": "file", // auto | file | directory
 //       "fullpath": ["/tmp/username", "/tmp/rootname"]
 //     },
 //     "fappname-2": {
 //       "mode": "single", // single | multiple
-//       "type": "directory", // file | directory
+//       "type": "directory", // auto | file | directory
 //       "paths": [
 //         "{{ .current }}", "hello", "root"
 //       ]
 //     },
 //     "fappname-3": {
 //       "mode": "multiple", // single | multiple
-//       "type": "directory", // file | directory
+//       "type": "directory", // auto | file | directory
 //       "paths": [
 //         ["/etc/test", "hello", "root"],
 //         ["/etc/test", "hello", "user"],
@@ -69,6 +70,7 @@ func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
 			return nil, fmt.Errorf("%s: %v", name, err)
 		}
 
+		ty = resolveAutoType(ty, "/"+path.Join(paths...))
 		switch ty {
 		case FILE:
 			f, e := NewFile(paths)
@@ -83,14 +85,26 @@ func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
 			return nil, fmt.Errorf("%s: %v", name, err)
 		}
 
-		switch ty {
-		case FILE:
-			f, e := NewFiles(paths)
-			return newWrapper(mode, f), e
-		case DIRECTORY:
-			f, e := NewDirectories(paths)
-			return newWrapper(mode, f), e
+		var result = make([]FileSystem, 0)
+		for _, fpath := range paths {
+			ty = resolveAutoType(ty, "/"+path.Join(fpath...))
+			switch ty {
+			case FILE:
+				f, e := NewFile(fpath)
+				if e != nil {
+					return nil, e
+				}
+				result = append(result, f)
+			case DIRECTORY:
+				f, e := NewDirectory(fpath)
+				if e != nil {
+					return nil, e
+				}
+				result = append(result, f)
+			}
 		}
+
+		return newWrapper(mode, result), nil
 	}
 
 	return nil, fmt.Errorf("cannot found builder of following data (type=%s, mode=%s)", ty, mode)
