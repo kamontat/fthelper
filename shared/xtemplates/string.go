@@ -18,7 +18,12 @@ func join(input ...interface{}) string {
 }
 
 func joinArray(input []interface{}) string {
-	return join(input...)
+	var str []string = make([]string, 0)
+	for _, i := range input {
+		str = append(str, datatype.ForceString(i))
+	}
+
+	return utils.JoinString(",", str...)
 }
 
 var stringFuncs template.FuncMap = map[string]interface{}{
