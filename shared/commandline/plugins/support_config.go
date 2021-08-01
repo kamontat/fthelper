@@ -27,13 +27,31 @@ func SupportConfig(p *PluginParameter) error {
 		},
 	})
 
+	// @deprecated - will remove on version 5.0.0
 	p.NewFlags(flags.Array{
 		Name:    "config-dirs",
-		Default: []string{path.Join(wd, "configs")},
+		Default: make([]string, 0),
 		Usage:   "configuration directory, must contains only json files",
 		Action: func(data []string) maps.Mapper {
+			if len(data) > 0 {
+				p.Logger.Warn("--config-dirs is deprecated because config is now support both file and directory. please use --configs instead")
+				return maps.New().
+					Set("fs.config.type", "directory").
+					Set("fs.config.mode", "multiple").
+					Set("fs.config.fullpath", data)
+			}
+
+			return maps.New()
+		},
+	})
+
+	p.NewFlags(flags.Array{
+		Name:    "configs",
+		Default: []string{path.Join(wd, "configs")},
+		Usage:   "configuration file/directory. directory must contains only json files and file must be json",
+		Action: func(data []string) maps.Mapper {
 			return maps.New().
-				Set("fs.config.type", "directory").
+				Set("fs.config.type", "auto").
 				Set("fs.config.mode", "multiple").
 				Set("fs.config.fullpath", data)
 		},
