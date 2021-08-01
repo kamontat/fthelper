@@ -17,13 +17,13 @@ var FTPair = collectors.NewMetrics(
 			nil,
 		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
 			var connection = freqtrade.ToConnection(conn)
-			var locks = freqtrade.NewLocks(connection)
+			var whitelist = freqtrade.NewWhitelist(connection)
 
 			var labels = freqtrade.NewSummary(connection, param.Cache)
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
-				float64(locks.Count),
+				float64(whitelist.Length),
 				labels...,
 			)}
 		},
