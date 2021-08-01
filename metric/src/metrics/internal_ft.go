@@ -4,6 +4,7 @@ import (
 	"github.com/kamontat/fthelper/metric/v4/src/collectors"
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/constants"
+	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -15,11 +16,12 @@ var InternalFT = collectors.NewMetrics(
 			"How many time do we call freqtrade apis",
 			nil,
 			prometheus.Labels{
-				"type": "success",
+				"type": "total",
 			},
 		),
 		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			return callerBuilder(desc, constants.FTCONN_CALL_SUCCESS)
+			var connection = freqtrade.ToConnection(conn)
+			return callerClusterBuilder(desc, constants.FTCONN_CALL, connection.Cluster)
 		},
 	),
 	collectors.NewMetric(
@@ -28,11 +30,12 @@ var InternalFT = collectors.NewMetrics(
 			"How many time do we call freqtrade apis",
 			nil,
 			prometheus.Labels{
-				"type": "failure",
+				"type": "success",
 			},
 		),
 		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			return callerBuilder(desc, constants.FTCONN_CALL_FAILURE)
+			var connection = freqtrade.ToConnection(conn)
+			return callerClusterBuilder(desc, constants.FTCONN_CALL_SUCCESS, connection.Cluster)
 		},
 	),
 )

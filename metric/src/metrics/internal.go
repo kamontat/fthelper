@@ -60,19 +60,6 @@ var Internal = collectors.NewMetrics(
 	}),
 	collectors.NewMetric(
 		prometheus.NewDesc(
-			prometheus.BuildFQName("fthelper", "internal", "ft_call"),
-			"How many time do we call freqtrade apis",
-			nil,
-			prometheus.Labels{
-				"type": "total",
-			},
-		),
-		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			return callerBuilder(desc, constants.FTCONN_CALL)
-		},
-	),
-	collectors.NewMetric(
-		prometheus.NewDesc(
 			prometheus.BuildFQName("fthelper", "internal", "cache_size"),
 			"Total keys we store on cache service, including expired ones",
 			[]string{"type"},
