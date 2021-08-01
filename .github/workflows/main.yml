@@ -50,6 +50,7 @@ jobs:
         run: |
           go test -coverprofile=../reports/coverage.out -json > ../reports/test.out ./...
       - name: Upload artifacts
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.directory }}-reports
