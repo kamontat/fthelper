@@ -18,7 +18,7 @@ import (
 //
 // It's important to note that it WILL NOT OVERRIDE an env variable that already exists - consider the .env file to set dev vars or sensible defaults
 func Load(files ...fs.FileSystem) error {
-	var resolveFiles, err = ResolveFiles(files)
+	var resolveFiles, err = fs.ToFiles(files)
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func Load(files ...fs.FileSystem) error {
 //
 // It's important to note this WILL OVERRIDE an env variable that already exists - consider the .env file to forcefilly set all vars.
 func Overload(files ...fs.FileSystem) error {
-	var resolveFiles, err = ResolveFiles(files)
+	var resolveFiles, err = fs.ToFiles(files)
 	if err != nil {
 		return err
 	}
