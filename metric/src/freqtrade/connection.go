@@ -159,6 +159,8 @@ func NewConnections(data maps.Mapper) ([]*Connection, error) {
 		return []*Connection{conn}, nil
 	}
 
+	var logger = loggers.Get("freqtrade", "connection")
+	logger.Info("currently we using 'multiple clusters mode' which still on alpha release. you might break when using new release")
 	var connections = make([]*Connection, 0)
 	for _, raw := range clusters {
 		var cluster = datatype.ForceString(raw)
@@ -183,7 +185,7 @@ func NewConnections(data maps.Mapper) ([]*Connection, error) {
 			password: setting.So("password", ""),
 
 			cache:  caches.New(),
-			logger: loggers.Get("freqtrade", "connection"),
+			logger: logger,
 		})
 	}
 
