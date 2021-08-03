@@ -63,6 +63,13 @@ func (c *Connection) Connect(method string, url string, query url.Values, body i
 	caches.Global.Increase(constants.FTCONN_CALL + c.Cluster)
 	resp, err := http.DefaultClient.Do(req)
 
+	// Throw error if response status is not 200 and 201 and 202
+	if resp.StatusCode != http.StatusOK &&
+		resp.StatusCode != http.StatusCreated &&
+		resp.StatusCode != http.StatusAccepted {
+		err = fmt.Errorf("freqtrade return error (status %s)", resp.Status)
+	}
+
 	if err == nil {
 		caches.Global.Increase(constants.FTCONN_CALL_SUCCESS + c.Cluster)
 	} else {
@@ -95,7 +102,7 @@ func (c *Connection) Cache(name string, expireAt string, fn func() (interface{},
 }
 
 func (c *Connection) GET(name string, query url.Values, target interface{}) error {
-	var resp, err = c.Connect("GET", name, query, nil)
+	var resp, err = c.Connect(http.MethodGet, name, query, nil)
 	if err != nil {
 		return err
 	}
@@ -104,7 +111,7 @@ func (c *Connection) GET(name string, query url.Values, target interface{}) erro
 }
 
 func (c *Connection) POST(name string, query url.Values, body io.Reader, target interface{}) error {
-	var resp, err = c.Connect("GET", name, query, body)
+	var resp, err = c.Connect(http.MethodPost, name, query, body)
 	if err != nil {
 		return err
 	}
