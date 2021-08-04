@@ -30,11 +30,12 @@ func main() {
 		Commit:  commit,
 		Date:    date,
 		BuiltBy: builtBy,
-	}).Plugin(plugins.SupportLogLevel).
+	}).
 		Plugin(plugins.SupportVersion).
 		Plugin(plugins.SupportListConfig).
 		Plugin(plugins.SupportDotEnv).
 		Plugin(plugins.SupportConfig).
+		Plugin(plugins.SupportLogLevel).
 		Command(&commands.Command{
 			Name: commands.DEFAULT,
 			Executor: func(p *commands.ExecutorParameter) error {

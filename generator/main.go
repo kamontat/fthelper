@@ -26,13 +26,14 @@ func main() {
 		Commit:  commit,
 		Date:    date,
 		BuiltBy: builtBy,
-	}).Plugin(plugins.SupportLogLevel).
+	}).
 		Plugin(plugins.SupportVersion).
-		Plugin(plugins.SupportListConfig).
 		Plugin(plugins.SupportFSVar).
 		Plugin(plugins.SupportCluster). // cluster must come before config
 		Plugin(plugins.SupportDotEnv).  // dotenv must come before config
+		Plugin(plugins.SupportListConfig).
 		Plugin(plugins.SupportConfig).
+		Plugin(plugins.SupportLogLevel). // log-level must come after config
 		Plugin(plugins.SupportBanner).
 		Command(&commands.Command{
 			Name: commands.DEFAULT,
