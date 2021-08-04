@@ -64,7 +64,8 @@ func (c *Connection) Connect(method string, url string, query url.Values, body i
 	resp, err := http.DefaultClient.Do(req)
 
 	// Throw error if response status is not 200 and 201 and 202
-	if resp.StatusCode != http.StatusOK &&
+	if err == nil &&
+		resp.StatusCode != http.StatusOK &&
 		resp.StatusCode != http.StatusCreated &&
 		resp.StatusCode != http.StatusAccepted {
 		err = fmt.Errorf("freqtrade (%s) return error (status %s)", c.Cluster, resp.Status)
