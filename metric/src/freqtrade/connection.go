@@ -67,7 +67,7 @@ func (c *Connection) Connect(method string, url string, query url.Values, body i
 	if resp.StatusCode != http.StatusOK &&
 		resp.StatusCode != http.StatusCreated &&
 		resp.StatusCode != http.StatusAccepted {
-		err = fmt.Errorf("freqtrade return error (status %s)", resp.Status)
+		err = fmt.Errorf("freqtrade (%s) return error (status %s)", c.Cluster, resp.Status)
 	}
 
 	if err == nil {
@@ -142,8 +142,9 @@ func NewConnection(data maps.Mapper, cache *caches.Service) (*Connection, error)
 		return nil, err
 	}
 
+	var cluster = freqtrade.So("cluster", "")
 	return &Connection{
-		Cluster: freqtrade.So("cluster", ""),
+		Cluster: cluster,
 		Config:  newConfig(freqtrade),
 
 		base:     baseUrl,
@@ -152,7 +153,7 @@ func NewConnection(data maps.Mapper, cache *caches.Service) (*Connection, error)
 		password: freqtrade.So("password", ""),
 
 		cache:  cache,
-		logger: loggers.Get("freqtrade", "connection"),
+		logger: loggers.Get("freqtrade", "connection", cluster),
 	}, nil
 }
 
@@ -166,11 +167,15 @@ func NewConnections(data maps.Mapper) ([]*Connection, error) {
 		return []*Connection{conn}, nil
 	}
 
-	var logger = loggers.Get("freqtrade", "connection")
-	logger.Info("currently you using 'multiple clusters mode' which still on alpha release")
+	// TODO: remove this after completed validate
+	loggers.Get("freqtrade", "connection").
+		Info("currently you using 'multiple clusters mode' which still on alpha release")
+
 	var connections = make([]*Connection, 0)
 	for _, raw := range clusters {
 		var cluster = datatype.ForceString(raw)
+		var logger = loggers.Get("freqtrade", "connection", cluster)
+
 		var raw, err = data.Mi("cluster").Gets(cluster, strings.ToLower(cluster))
 		if err != nil {
 			return nil, err
