@@ -93,8 +93,13 @@ var FTPerformance = collectors.NewMetrics(
 			nil,
 		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
 			var connection = freqtrade.ToConnection(conn)
-			var balance = freqtrade.NewBalance(connection)
-			var profit = freqtrade.NewProfit(connection)
+			var balance, err1 = freqtrade.FetchBalance(connection)
+			var profit, err2 = freqtrade.FetchProfit(connection)
+
+			// handle when fetching return error
+			if err1 != nil || err2 != nil {
+				return emptyMetrics
+			}
 
 			var labels = freqtrade.NewSummary(connection, param.Cache)
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
