@@ -32,12 +32,12 @@ func (r *RunnerImpl) Validate() error {
 		return r.updateError(err)
 	}
 
-	return r.info.err.First()
+	return r.info.err.Error()
 }
 
 func (r *RunnerImpl) Run() error {
 	if r.info.status != INITIAL {
-		return r.info.err.First()
+		return r.info.err.Error()
 	}
 
 	startTime := time.Now()
