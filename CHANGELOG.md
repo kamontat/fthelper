@@ -4,6 +4,32 @@
 ## [Unreleased]
 
 
+<a name="v4.5.3"></a>
+## [v4.5.3] - 2021-08-04
+
+### 2. Performance Improvements
+- **shared:** add logger level setup from environment `FTH_INTERNAL__LOG__LEVEL` support
+
+
+<a name="v4.5.2"></a>
+## [v4.5.2] - 2021-08-04
+
+### 2. Performance Improvements
+- **metric:** add cluster detail to log namespace for multicluster mode
+
+### 3. Bug Fixes
+- **metric:** metric not show when 1+ cluster is down
+- **metric:** crash when http connection refuse
+- **metric:** ftmetric return 5xx when one cluster is down
+
+
+<a name="v4.5.1"></a>
+## [v4.5.1] - 2021-08-03
+
+### 2. Performance Improvements
+- **metric:** add better handle when freqtrade return non-success response.
+
+
 <a name="v4.5.0"></a>
 ## [v4.5.0] - 2021-08-01
 
@@ -452,7 +478,10 @@
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.5.0...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.5.3...HEAD
+[v4.5.3]: https://github.com/kamontat/fthelper/compare/v4.5.2...v4.5.3
+[v4.5.2]: https://github.com/kamontat/fthelper/compare/v4.5.1...v4.5.2
+[v4.5.1]: https://github.com/kamontat/fthelper/compare/v4.5.0...v4.5.1
 [v4.5.0]: https://github.com/kamontat/fthelper/compare/v4.5.0-beta.1...v4.5.0
 [v4.5.0-beta.1]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.8...v4.5.0-beta.1
 [v4.5.0-alpha.8]: https://github.com/kamontat/fthelper/compare/v4.5.0-alpha.7...v4.5.0-alpha.8
