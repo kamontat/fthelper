@@ -14,4 +14,9 @@ func TestRandom(t *testing.T) {
 		WithExpected(utils.RandString(5)).
 		WithActual(utils.RandString(5)).
 		MustNotEqual()
+
+	assertion.NewName("random correct string size").
+		WithExpected(8).
+		WithActual(len(utils.RandString(8))).
+		MustEqual()
 }
