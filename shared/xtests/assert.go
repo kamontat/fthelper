@@ -122,6 +122,20 @@ func (a *Assertion) MustNotEqual() bool {
 	return a.mustBoolean(a.actual != a.expected, "we expected '%v' and '%v' to be different", a.expected, a.actual)
 }
 
+func (a *Assertion) MustGreaterThan() bool {
+	var actual, _ = datatype.ForceFloat(a.actual)
+	var expected, _ = datatype.ForceFloat(a.expected)
+
+	return a.mustBoolean(actual < expected, "we expected '%v' greater than '%v'", a.actual, a.expected)
+}
+
+func (a *Assertion) MustLessThan() bool {
+	var actual, _ = datatype.ForceFloat(a.actual)
+	var expected, _ = datatype.ForceFloat(a.expected)
+
+	return a.mustBoolean(actual > expected, "we expected '%v' less than '%v'", a.actual, a.expected)
+}
+
 func (a *Assertion) MustContain() bool {
 	var actual = datatype.ForceString(a.actual)
 	var expected = datatype.ForceString(a.expected)
@@ -148,6 +162,8 @@ func (a *Assertion) Must(checker ...MustChecker) bool {
 	mapper[MUST_DEEP_EQUAL] = a.MustDeepEqual
 	mapper[MUST_EQUAL_STRING] = a.MustEqualString
 	mapper[MUST_NOT_EQUAL] = a.MustNotEqual
+	mapper[MUST_GREATER_THAN] = a.MustGreaterThan
+	mapper[MUST_LESS_THAN] = a.MustLessThan
 	mapper[MUST_CONTAINS] = a.MustContain
 	mapper[MUST_EQUAL_ERROR] = a.MustEqualError
 	mapper[MUST_EQUAL_FLOAT] = a.MustEqualFloat
