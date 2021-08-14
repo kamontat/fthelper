@@ -2,28 +2,27 @@ package loggers
 
 import (
 	"math"
-	"os"
 	"strings"
 	"text/tabwriter"
 )
 
-type TableLogger struct {
+type Table struct {
 	size   uint
 	logger *Logger
 
 	writer *tabwriter.Writer
 }
 
-func (l *TableLogger) Init() *TableLogger {
+func (l *Table) Init() *Table {
 	var lineSize = len(LINE)
 	var size = int(float64(lineSize) / float64(l.size))
 	var min = math.Min(float64(size), float64(4))
 
-	l.writer = tabwriter.NewWriter(os.Stdout, int(min), size, 2, ' ', 0)
+	l.writer = tabwriter.NewWriter(l.logger.writer, int(min), size, 2, ' ', 0)
 	return l
 }
 
-func (l *TableLogger) ToMsg(msg ...string) string {
+func (l *Table) ToMsg(msg ...string) string {
 	var str strings.Builder
 
 	j := 0
@@ -43,14 +42,14 @@ func (l *TableLogger) ToMsg(msg ...string) string {
 	return str.String()
 }
 
-func (l *TableLogger) Header(msg ...string) {
+func (l *Table) Header(msg ...string) {
 	l.logger.FLog(l.writer, l.ToMsg(msg...))
 }
 
-func (l *TableLogger) Row(msg ...string) {
+func (l *Table) Row(msg ...string) {
 	l.logger.FLog(l.writer, l.ToMsg(msg...))
 }
 
-func (l *TableLogger) End() error {
+func (l *Table) End() error {
 	return l.writer.Flush()
 }

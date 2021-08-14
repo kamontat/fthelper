@@ -12,7 +12,12 @@ import (
 )
 
 type Logger struct {
-	Name string
+	Name   string
+	writer io.Writer
+}
+
+func (l *Logger) SetWriter(writer io.Writer) {
+	l.writer = writer
 }
 
 func (l *Logger) IsPrintable(lvl LoggerLevel) bool {
@@ -33,7 +38,7 @@ func (l *Logger) format(lvl, format string, msg ...interface{}) string {
 }
 
 func (l *Logger) log(msg interface{}) {
-	fmt.Println(msg)
+	l.write(l.writer, msg)
 }
 
 func (l *Logger) write(w io.Writer, msg interface{}) {
@@ -100,8 +105,8 @@ func (l *Logger) Newline() {
 	l.Log(EMPTY)
 }
 
-func (l *Logger) Table(size uint) *TableLogger {
-	t := &TableLogger{
+func (l *Logger) Table(size uint) *Table {
+	t := &Table{
 		size:   size,
 		logger: l,
 	}

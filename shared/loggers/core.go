@@ -1,6 +1,8 @@
 package loggers
 
 import (
+	"os"
+
 	"github.com/kamontat/fthelper/shared/utils"
 )
 
@@ -9,7 +11,8 @@ var storage = make(map[string]*Logger)
 
 func new(name string) *Logger {
 	return &Logger{
-		Name: name,
+		Name:   name,
+		writer: os.Stdout,
 	}
 }
 
