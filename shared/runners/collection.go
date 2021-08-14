@@ -54,3 +54,10 @@ func (c *Collection) Information() Information {
 	var infos = c.Informations()
 	return NewMultipleNamedInfo(c.Name, infos...)
 }
+
+func NewCollection(name string, runners ...Runner) *Collection {
+	return &Collection{
+		Name:    name,
+		runners: append([]Runner{}, runners...),
+	}
+}
