@@ -3,6 +3,9 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### 3. Bug Fixes
+- **docs:** readme didn't open correct link
+
 
 <a name="v4.5.3"></a>
 ## [v4.5.3] - 2021-08-04
