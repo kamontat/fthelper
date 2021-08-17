@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"time"
+
+	"github.com/kamontat/fthelper/shared/utils"
 )
 
 type Data struct {
@@ -16,6 +18,10 @@ type Data struct {
 	updateAt time.Time
 	// time when it expired < 0 mean never expire
 	expireAt time.Duration
+}
+
+func (d *Data) Get() (interface{}, error) {
+	return d.Data, d.Error
 }
 
 func (d *Data) CreateAt() time.Time {
@@ -91,9 +97,9 @@ func (d *Data) String() string {
 	}
 
 	return fmt.Sprintf(
-		"%s: %v (%v) | C: %d | U: %d | E: %d",
+		"%s: %s (%v) | C: %d | U: %d | E: %d",
 		d.Key,
-		d.Data,
+		utils.TrimString(fmt.Sprintf("%v", d.Data), 12),
 		d.Error,
 		cteTS,
 		updTS,
@@ -125,4 +131,10 @@ func SData(key string, data interface{}) *Data {
 
 	_, _ = d.Fetch()
 	return d
+}
+
+func NilData(key string) *Data {
+	return NewData(key, func(o interface{}) (interface{}, error) {
+		return nil, errors.New("empty data")
+	}, -1)
 }

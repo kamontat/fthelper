@@ -9,8 +9,8 @@ func missError(m map[string]interface{}, key string) error {
 	return fmt.Errorf("map (%v) missing key='%s'", m, key)
 }
 
-func convertError(data interface{}, datatype string) error {
-	return fmt.Errorf("cannot convert %v to %s", data, datatype)
+func convertError(key string, data interface{}, datatype string) error {
+	return fmt.Errorf("cannot convert map key = %s (%v) to '%s'", key, data, datatype)
 }
 
 func getByKey(m map[string]interface{}, keys []string) (interface{}, error) {

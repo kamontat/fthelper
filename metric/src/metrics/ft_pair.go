@@ -13,13 +13,12 @@ var FTPair = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "pair", "whitelist"),
 			"How many pair are whitelist currently.",
-			freqtrade.SummaryLabel(),
+			FreqtradeLabel(),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
-			var whitelist = freqtrade.NewWhitelist(connection)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var whitelist, _ = freqtrade.ToWhitelist(connector)
+			var labels = FreqtradeLabelValues(connector)
 
-			var labels = freqtrade.NewSummary(connection, param.Cache)
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
@@ -32,19 +31,18 @@ var FTPair = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "pair", "profit_pct"),
 			"Total percent profit per pair.",
-			append(freqtrade.SummaryLabel(), "pair"),
+			append(FreqtradeLabel(), "pair"),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
-			var performances = freqtrade.NewPerformance(connection)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var performances, _ = freqtrade.ToPerformance(connector)
 
 			var metrics []prometheus.Metric = make([]prometheus.Metric, 0)
-			for _, perf := range performances {
+			for _, perf := range performances.Data {
 				var metric = prometheus.MustNewConstMetric(
 					desc,
 					prometheus.GaugeValue,
 					perf.Profit,
-					append(freqtrade.NewSummary(connection, param.Cache), perf.Pair)...,
+					append(FreqtradeLabelValues(connector), perf.Pair)...,
 				)
 				metrics = append(metrics, metric)
 			}
@@ -55,19 +53,18 @@ var FTPair = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "pair", "profit_abs"),
 			"Total profit per pair (as crypto currency).",
-			append(freqtrade.SummaryLabel(), "pair"),
+			append(FreqtradeLabel(), "pair"),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
-			var performances = freqtrade.NewPerformance(connection)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var performances, _ = freqtrade.ToPerformance(connector)
 
 			var metrics []prometheus.Metric = make([]prometheus.Metric, 0)
-			for _, perf := range performances {
+			for _, perf := range performances.Data {
 				var metric = prometheus.MustNewConstMetric(
 					desc,
 					prometheus.GaugeValue,
 					perf.ProfitAbs,
-					append(freqtrade.NewSummary(connection, param.Cache), perf.Pair)...,
+					append(FreqtradeLabelValues(connector), perf.Pair)...,
 				)
 				metrics = append(metrics, metric)
 			}
@@ -78,19 +75,18 @@ var FTPair = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "pair", "count"),
 			"Total buy for specify pair (including both opened and closed)",
-			append(freqtrade.SummaryLabel(), "pair"),
+			append(FreqtradeLabel(), "pair"),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
-			var performances = freqtrade.NewPerformance(connection)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var performances, _ = freqtrade.ToPerformance(connector)
 
 			var metrics []prometheus.Metric = make([]prometheus.Metric, 0)
-			for _, perf := range performances {
+			for _, perf := range performances.Data {
 				var metric = prometheus.MustNewConstMetric(
 					desc,
 					prometheus.GaugeValue,
 					float64(perf.Count),
-					append(freqtrade.NewSummary(connection, param.Cache), perf.Pair)...,
+					append(FreqtradeLabelValues(connector), perf.Pair)...,
 				)
 				metrics = append(metrics, metric)
 			}

@@ -7,10 +7,10 @@ import (
 )
 
 type CCollector struct {
-	param       *commands.ExecutorParameter
-	connections []connection.Http
-	internal    []*Builder
-	metrics     []*Builder
+	param      *commands.ExecutorParameter
+	connectors []connection.Connector
+	internal   []*Builder
+	metrics    []*Builder
 }
 
 func (c *CCollector) AddInternal(b []*Builder) *CCollector {
@@ -38,20 +38,20 @@ func (c *CCollector) Collect(channel chan<- prometheus.Metric) {
 		}
 	}
 
-	for _, conn := range c.connections {
+	for _, connector := range c.connectors {
 		for _, builder := range c.metrics {
-			for _, metric := range builder.Builder(builder.Desc, conn, c.param) {
+			for _, metric := range builder.Builder(builder.Desc, connector, c.param) {
 				channel <- metric
 			}
 		}
 	}
 }
 
-func New(param *commands.ExecutorParameter, connections []connection.Http) *CCollector {
+func New(param *commands.ExecutorParameter, connectors []connection.Connector) *CCollector {
 	return &CCollector{
-		param:       param,
-		connections: connections,
-		internal:    make([]*Builder, 0),
-		metrics:     make([]*Builder, 0),
+		param:      param,
+		connectors: connectors,
+		internal:   make([]*Builder, 0),
+		metrics:    make([]*Builder, 0),
 	}
 }

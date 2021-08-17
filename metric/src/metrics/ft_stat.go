@@ -8,18 +8,17 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-var FT = collectors.NewMetrics(
+var FTStat = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "stat", "sell_reason"),
 		"Sell reason wins/draws/losses number.",
-		append(freqtrade.SummaryLabel(), "reason", "type"),
+		append(FreqtradeLabel(), "reason", "type"),
 		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-		var connection = freqtrade.ToConnection(conn)
-		var stats = freqtrade.NewStat(connection)
+	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+		var stats, _ = freqtrade.ToStat(connector)
+		var labels = FreqtradeLabelValues(connector)
 
 		var metrics = make([]prometheus.Metric, 0)
-		var labels = freqtrade.NewSummary(connection, param.Cache)
 		for name, stat := range stats.Reasons {
 			metrics = append(metrics, prometheus.MustNewConstMetric(
 				desc,
@@ -43,13 +42,12 @@ var FT = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "stat", "duration"),
 		"Current average wins/draws/losses duration",
-		append(freqtrade.SummaryLabel(), "type"),
+		append(FreqtradeLabel(), "type"),
 		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-		var connection = freqtrade.ToConnection(conn)
-		var stats = freqtrade.NewStat(connection)
+	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+		var stats, _ = freqtrade.ToStat(connector)
 
-		var labels = freqtrade.NewSummary(connection, param.Cache)
+		var labels = FreqtradeLabelValues(connector)
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,

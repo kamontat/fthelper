@@ -17,6 +17,11 @@ func TestConstantCacheData(t *testing.T) {
 		WithActual(normalData.IsExist() && !normalData.IsExpired()).
 		MustEqual()
 
+	assertion.NewName("expire date is nil").
+		WithActual(normalData.ExpireAt() == nil).
+		WithExpected(true).
+		MustEqual()
+
 	normalData.Extend()
 	assertion.NewName("update updateAt time").
 		WithActual(normalData.CreateAt()).

@@ -1,12 +1,7 @@
 {
-  "clusters": [],
+  "clusters": ["1A"],
   "cluster": {},
   "freqtrade": {
-    "url": "http://localhost:8080",
-    "apiver": "v1",
-    "username": "admin",
-    "password": "",
-    "cluster": "1A",
     "query": {
       "logs": {
         "limit": 100

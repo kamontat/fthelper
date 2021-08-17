@@ -3,9 +3,37 @@ package freqtrade
 import (
 	"fmt"
 	"time"
+
+	"github.com/kamontat/fthelper/metric/v4/src/connection"
+	"github.com/kamontat/fthelper/shared/datatype"
 )
 
-type Profit struct {
+const PROFIT_CONST = "profit"
+
+func NewProfit() *profit {
+	return &profit{
+		UnrealizedCryptoProfit:  0,
+		UnrealizedFiatProfit:    0,
+		UnrealizedPercentProfit: 0,
+		RealizedCryptoProfit:    0,
+		RealizedFiatProfit:      0,
+		RealizedPercentProfit:   0,
+
+		TotalTrades:  0,
+		ClosedTrades: 0,
+		WinTrades:    0,
+		LossTrades:   0,
+
+		FirstTradeTimestamp: 0,
+		LastTradeTimestamp:  0,
+		AverageDuration:     "00:00:00",
+
+		BestPair: "",
+		BestRate: 0,
+	}
+}
+
+type profit struct {
 	RealizedCryptoProfit float64 `json:"profit_closed_coin"`
 	RealizedFiatProfit   float64 `json:"profit_closed_fiat"`
 	// Percent is number from 0 to 1 represent percentage of profit from start balance
@@ -34,7 +62,7 @@ type Profit struct {
 	BestRate float64 `json:"best_rate"`
 }
 
-func (p *Profit) GetAverageDuration() time.Duration {
+func (p *profit) GetAverageDuration() time.Duration {
 	var h, m, s int
 	n, err := fmt.Sscanf(p.AverageDuration, "%d:%d:%d", &h, &m, &s)
 	if err != nil || n != 3 {
@@ -45,49 +73,19 @@ func (p *Profit) GetAverageDuration() time.Duration {
 	return time.Duration(second) * time.Second
 }
 
-func EmptyProfit() *Profit {
-	return &Profit{
-		UnrealizedCryptoProfit:  0,
-		UnrealizedFiatProfit:    0,
-		UnrealizedPercentProfit: 0,
-		RealizedCryptoProfit:    0,
-		RealizedFiatProfit:      0,
-		RealizedPercentProfit:   0,
-
-		TotalTrades:  0,
-		ClosedTrades: 0,
-		WinTrades:    0,
-		LossTrades:   0,
-
-		FirstTradeTimestamp: 0,
-		LastTradeTimestamp:  0,
-		AverageDuration:     "00:00:00",
-
-		BestPair: "",
-		BestRate: 0,
-	}
+func (p *profit) Name() string {
+	return PROFIT_CONST
 }
 
-func NewProfit(conn *Connection) *Profit {
-	if profit, err := FetchProfit(conn); err == nil {
-		return profit
-	}
-	return EmptyProfit()
+func (p *profit) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+	err := connection.Http.GET(p.Name(), p)
+	return p, err
 }
 
-func FetchProfit(conn *Connection) (*Profit, error) {
-	var name = API_PROFIT
-	if data, err := conn.Cache(name, conn.ExpireAt(name), func() (interface{}, error) {
-		return GetProfit(conn)
-	}); err == nil {
-		return data.(*Profit), nil
-	} else {
+func ToProfit(connector connection.Connector) (*profit, error) {
+	raw, err := connector.Connect(PROFIT_CONST)
+	if err != nil {
 		return nil, err
 	}
-}
-
-func GetProfit(conn *Connection) (*Profit, error) {
-	var target = new(Profit)
-	var err = GetConnector(conn, API_PROFIT, &target)
-	return target, err
+	return raw.(*profit), nil
 }

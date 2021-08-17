@@ -47,16 +47,12 @@ func (s *Service) SetData(data *Data) error {
 		return fmt.Errorf("cache data key cannot be empty string")
 	}
 
-	err := data.Update()
-	if err != nil {
-		return err
-	}
-
+	_ = data.Update()
 	s.logger.Debug("creating '%s' data", data.Key)
 	s.mutex.Lock()
 	s.caches[data.Key] = data
 	s.mutex.Unlock()
-	return nil
+	return data.Error
 }
 
 func (s *Service) SetFn(key string, creator Creator, expireAt string) error {
@@ -126,9 +122,9 @@ func (s *Service) Bucket(key string, value interface{}, limit int, expireAt stri
 	}, expireAt)
 }
 
-func (s *Service) Fetch(key string, updater Updater, expireAt string) error {
+func (s *Service) Fetch(key string, updater Updater, expireAt string) (bool, error) {
 	if !s.Has(key) {
-		return s.SetFn(key, func() (interface{}, error) {
+		return true, s.SetFn(key, func() (interface{}, error) {
 			return updater(nil)
 		}, expireAt)
 	}
@@ -138,7 +134,7 @@ func (s *Service) Fetch(key string, updater Updater, expireAt string) error {
 		s.logger.Debug("fetching '%s' data", key)
 	}
 
-	return err
+	return fetch, err
 }
 
 func (s *Service) FetchAll() error {

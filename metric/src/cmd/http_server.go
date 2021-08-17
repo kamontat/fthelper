@@ -6,33 +6,27 @@ import (
 
 	"github.com/kamontat/fthelper/metric/v4/src/collectors"
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
-	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
 	"github.com/kamontat/fthelper/metric/v4/src/metrics"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-func HttpServer(p *commands.ExecutorParameter, connections []*freqtrade.Connection) error {
+func HttpServer(p *commands.ExecutorParameter, connectors []connection.Connector) error {
 	var serverPort = p.Config.Mi("server").No("port", 8090)
 	var serverPath = p.Config.Mi("server").So("metric-path", "/metrics")
 
-	var cs []connection.Http = make([]connection.Http, 0)
-	for _, c := range connections {
-		cs = append(cs, c)
-	}
-
-	var collector = collectors.New(p, cs)
+	var collector = collectors.New(p, connectors)
 
 	collector.AddInternal(metrics.Internal)
 	collector.AddMetrics(metrics.InternalFT)
 
 	collector.AddMetrics(metrics.FTInternal)
-	collector.AddMetrics(metrics.FT)
+	collector.AddMetrics(metrics.FTStat)
 	collector.AddMetrics(metrics.FTBalance)
-	collector.AddMetrics(metrics.FTTrade)
+	// collector.AddMetrics(metrics.FTTrade)
 	collector.AddMetrics(metrics.FTPair)
-	collector.AddMetrics(metrics.FTPerformance)
+	// collector.AddMetrics(metrics.FTPerformance)
 	collector.AddMetrics(metrics.FTLock)
 	collector.AddMetrics(metrics.FTLog)
 	collector.AddMetrics(metrics.FTInfo)

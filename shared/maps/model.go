@@ -38,7 +38,7 @@ func (m Mapper) Me(key string) (Mapper, error) {
 		return d, nil
 	}
 
-	return New(), convertError(m[key], "map[string]interface{}")
+	return New(), convertError(key, m[key], "map[string]interface{}")
 }
 
 func (m Mapper) Mo(key string, i Mapper) Mapper {
@@ -61,7 +61,7 @@ func (m Mapper) Ae(key string) ([]interface{}, error) {
 		return d, nil
 	}
 
-	return make([]interface{}, 0), convertError(m[key], "array")
+	return make([]interface{}, 0), convertError(key, m[key], "array")
 }
 
 func (m Mapper) Ao(key string, i []interface{}) []interface{} {
@@ -84,7 +84,7 @@ func (m Mapper) Se(key string) (string, error) {
 		return d, nil
 	}
 
-	return "", convertError(m[key], "string")
+	return "", convertError(key, m[key], "string")
 }
 
 func (m Mapper) So(key string, i string) string {
@@ -107,7 +107,7 @@ func (m Mapper) Fe(key string) (float64, error) {
 		return d, nil
 	}
 
-	return 0, convertError(m[key], "float64")
+	return 0, convertError(key, m[key], "float64")
 }
 
 func (m Mapper) Fo(key string, i float64) float64 {
@@ -130,7 +130,7 @@ func (m Mapper) Ie(key string) (int64, error) {
 		return d, nil
 	}
 
-	return 0, convertError(m[key], "int64")
+	return 0, convertError(key, m[key], "int64")
 }
 
 func (m Mapper) Io(key string, i int64) int64 {
@@ -159,7 +159,7 @@ func (m Mapper) Ne(key string) (float64, error) {
 		return d, nil
 	}
 
-	return 0, convertError(m[key], "number")
+	return 0, convertError(key, m[key], "number")
 }
 
 func (m Mapper) No(key string, i float64) float64 {
@@ -182,7 +182,7 @@ func (m Mapper) Be(key string) (bool, error) {
 		return d, nil
 	}
 
-	return false, convertError(m[key], "bool")
+	return false, convertError(key, m[key], "bool")
 }
 
 func (m Mapper) Bo(key string, i bool) bool {

@@ -12,29 +12,30 @@ var FTInfo = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "build", "info"),
 		"Information relate to freqtrade, 0 meaning server is down",
-		freqtrade.SummaryLabel(),
+		FreqtradeLabel(),
 		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-		var connection = freqtrade.ToConnection(conn)
-		var up = freqtrade.NewPingI(connection)
+	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+		var up float64 = 0
+		if freqtrade.ToPing(connector) {
+			up = 1
+		}
 
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
-			float64(up),
-			freqtrade.NewSummary(connection, param.Cache)...,
+			up,
+			FreqtradeLabelValues(connector)...,
 		)}
 	}),
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "", "state"),
 		"Freqtrade run state",
-		append(freqtrade.SummaryLabel(), "text"),
+		append(FreqtradeLabel(), "text"),
 		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-		var connection = freqtrade.ToConnection(conn)
-		var status = freqtrade.NewStatus(connection)
+	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+		var status, _ = freqtrade.ToStatus(connector)
 
-		var labels = append(freqtrade.NewSummary(connection, param.Cache), status.StateStr())
+		var labels = append(FreqtradeLabelValues(connector), status.StateStr())
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,
@@ -45,13 +46,12 @@ var FTInfo = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "", "mode"),
 		"Freqtrade mode",
-		append(freqtrade.SummaryLabel(), "text"),
+		append(FreqtradeLabel(), "text"),
 		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-		var connection = freqtrade.ToConnection(conn)
-		var status = freqtrade.NewStatus(connection)
+	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+		var status, _ = freqtrade.ToStatus(connector)
 
-		var labels = append(freqtrade.NewSummary(connection, param.Cache), status.RunMode)
+		var labels = append(FreqtradeLabelValues(connector), status.RunMode)
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,

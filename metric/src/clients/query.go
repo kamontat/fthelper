@@ -1,4 +1,4 @@
-package freqtrade
+package clients
 
 import (
 	"encoding/json"
@@ -8,11 +8,11 @@ import (
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
-type QueryConfig struct {
+type Query struct {
 	data maps.Mapper
 }
 
-func (c *QueryConfig) Get(key string) url.Values {
+func (c *Query) Get(key string) url.Values {
 	var values = make(url.Values)
 
 	var mapper = c.data.Mi(key)
@@ -23,7 +23,7 @@ func (c *QueryConfig) Get(key string) url.Values {
 	return values
 }
 
-func (c *QueryConfig) Json() string {
+func (c *Query) Json() string {
 	var j, err = json.Marshal(c.data)
 	if err != nil {
 		return err.Error()
@@ -32,8 +32,8 @@ func (c *QueryConfig) Json() string {
 	}
 }
 
-func newQueryConfig(query maps.Mapper) *QueryConfig {
-	return &QueryConfig{
+func newQuery(query maps.Mapper) *Query {
+	return &Query{
 		data: query,
 	}
 }

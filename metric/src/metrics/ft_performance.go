@@ -1,11 +1,9 @@
 package metrics
 
 import (
-	"github.com/kamontat/fthelper/metric/v4/src/aggregators"
 	"github.com/kamontat/fthelper/metric/v4/src/collectors"
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
-	"github.com/kamontat/fthelper/shared/caches"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -15,21 +13,21 @@ var FTPerformance = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "perf", "daily"),
 			"Profit calculate by balance from yesterday and today (update once a day).",
-			freqtrade.SummaryLabel(),
+			FreqtradeLabel(),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			// TODO: correct how daily performance calculate
+			// var data = caches.Global.Get(freqtrade.CACHE_DAILY_PERFORMANCE_BALANCE)
 
-			var data = caches.Global.Get(freqtrade.CACHE_DAILY_PERFORMANCE_BALANCE)
+			// var balance, _ = freqtrade.ToBalance(connector)
+			// var previous = freqtrade.NewBalance()
+			// if data.IsExist() {
+			// 	previous = data.Data.(*freqtrade.Balance)
+			// }
 
-			var balance = freqtrade.NewBalance(connection)
-			var previous = freqtrade.EmptyBalance()
-			if data.IsExist() {
-				previous = data.Data.(*freqtrade.Balance)
-			}
-
-			var labels = freqtrade.NewSummary(connection, param.Cache)
-			var value, ok = aggregators.PercentChange(previous.CryptoValue, balance.CryptoValue)
+			var labels = FreqtradeLabelValues(connector)
+			// var value, ok = aggregators.PercentChange(previous.CryptoValue, balance.CryptoValue)
+			var value, ok = float64(0), true
 			if !ok {
 				param.Logger.Info("skip 'perf_daily' because previous is not exist")
 				return emptyMetrics
@@ -47,19 +45,18 @@ var FTPerformance = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "perf", "realized"),
 			"Realized profit amount (included only closed trades).",
-			append(freqtrade.SummaryLabel(), "stake"),
+			append(FreqtradeLabel(), "stake"),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
-			var balance, err1 = freqtrade.FetchBalance(connection)
-			var profit, err2 = freqtrade.FetchProfit(connection)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var balance, err1 = freqtrade.ToBalance(connector)
+			var profit, err2 = freqtrade.ToProfit(connector)
 
 			// handle when fetching return error
 			if err1 != nil || err2 != nil {
 				return emptyMetrics
 			}
 
-			var labels = freqtrade.NewSummary(connection, param.Cache)
+			var labels = FreqtradeLabelValues(connector)
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
@@ -77,16 +74,15 @@ var FTPerformance = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "perf", "realized_pct"),
 			"Realized profit percentage (0-1).",
-			freqtrade.SummaryLabel(),
+			FreqtradeLabel(),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
-			var profit = freqtrade.NewProfit(connection)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var profit, _ = freqtrade.ToProfit(connector)
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
 				profit.RealizedPercentProfit,
-				freqtrade.NewSummary(connection, param.Cache)...,
+				FreqtradeLabelValues(connector)...,
 			)}
 		},
 	),
@@ -94,19 +90,18 @@ var FTPerformance = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "perf", "unrealized"),
 			"Unrealized profit amount (included both opened/closed trades).",
-			append(freqtrade.SummaryLabel(), "stake"),
+			append(FreqtradeLabel(), "stake"),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
-			var balance, err1 = freqtrade.FetchBalance(connection)
-			var profit, err2 = freqtrade.FetchProfit(connection)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var balance, err1 = freqtrade.ToBalance(connector)
+			var profit, err2 = freqtrade.ToProfit(connector)
 
 			// handle when fetching return error
 			if err1 != nil || err2 != nil {
 				return emptyMetrics
 			}
 
-			var labels = freqtrade.NewSummary(connection, param.Cache)
+			var labels = FreqtradeLabelValues(connector)
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
@@ -124,16 +119,15 @@ var FTPerformance = collectors.NewMetrics(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("freqtrade", "perf", "unrealized_pct"),
 			"Unrealized profit percentage (0-1).",
-			freqtrade.SummaryLabel(),
+			FreqtradeLabel(),
 			nil,
-		), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-			var connection = freqtrade.ToConnection(conn)
-			var profit = freqtrade.NewProfit(connection)
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var profit, _ = freqtrade.ToProfit(connector)
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
 				profit.RealizedPercentProfit,
-				freqtrade.NewSummary(connection, param.Cache)...,
+				FreqtradeLabelValues(connector)...,
 			)}
 		},
 	),

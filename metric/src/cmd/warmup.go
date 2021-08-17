@@ -5,15 +5,15 @@ import (
 	"time"
 
 	"github.com/kamontat/fthelper/metric/v4/src/aggregators"
+	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/constants"
-	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
 	"github.com/kamontat/fthelper/shared/caches"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 	"github.com/kamontat/fthelper/shared/errors"
 	"github.com/kamontat/fthelper/shared/schedulers"
 )
 
-func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, connections []*freqtrade.Connection) *schedulers.Scheduler {
+func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, connectors []connection.Connector) *schedulers.Scheduler {
 	var worker = schedulers.New()
 
 	var warmupConfig = p.Config.Mi("warmup")
@@ -27,9 +27,14 @@ func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, connections [
 		worker.Add(ctx, func(ctx context.Context) {
 			var globalError = errors.New()
 			var duration = time.Duration(0)
-			for _, conn := range connections {
-				p.Logger.Debug("warmup freqtrade cluster %s", conn.Cluster)
-				var d, err = freqtrade.Warmup(conn)
+
+			for _, connector := range connectors {
+				p.Logger.Debug("warmup freqtrade cluster %s", connector.Cluster())
+
+				var start = time.Now()
+				err := connector.ConnectAll()
+				var d = time.Since(start)
+
 				if value, ok := aggregators.Percentage(float64(err.Total()-err.Length()), float64(err.Total())); ok {
 					caches.Global.Update(constants.WARMUP_SUCCEESS_RATE, value, caches.Persistent)
 				}

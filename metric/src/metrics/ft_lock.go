@@ -12,13 +12,11 @@ var FTLock = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "lock", "count"),
 		"Current active lock data.",
-		freqtrade.SummaryLabel(),
+		FreqtradeLabel(),
 		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
-		var connection = freqtrade.ToConnection(conn)
-		var locks = freqtrade.NewLocks(connection)
-
-		var labels = freqtrade.NewSummary(connection, param.Cache)
+	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+		var locks, _ = freqtrade.ToLocks(connector)
+		var labels = FreqtradeLabelValues(connector)
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
 			prometheus.GaugeValue,

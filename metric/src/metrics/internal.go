@@ -10,29 +10,13 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-func callerClusterBuilder(desc *prometheus.Desc, cacheKey, cluster string) []prometheus.Metric {
-	var cache = caches.Global
-	var data = cache.Get(cacheKey + cluster)
-	var metric = 0
-	if data.IsExist() {
-		metric = data.Data.(int)
-	}
-
-	return []prometheus.Metric{prometheus.MustNewConstMetric(
-		desc,
-		prometheus.CounterValue,
-		float64(metric),
-		cluster,
-	)}
-}
-
 var Internal = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("fthelper", "build", "info"),
 		"fthelper information. Value will always change when new version is deployed.",
 		[]string{"version", "commit", "date"},
 		nil,
-	), func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
+	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 		var number = utils.VersionNumber(param.Meta.Version)
 		return []prometheus.Metric{prometheus.MustNewConstMetric(
 			desc,
@@ -50,7 +34,7 @@ var Internal = collectors.NewMetrics(
 			[]string{"type"},
 			nil,
 		),
-		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
+		func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
 				prometheus.CounterValue,
@@ -71,7 +55,7 @@ var Internal = collectors.NewMetrics(
 			nil,
 			nil,
 		),
-		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
+		func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 			var data = caches.Global.Get(constants.WARMUP_SUCCEESS_RATE).Data
 			if data == nil {
 				param.Logger.Info("skip 'internal_warmup' because success rate is nil")
@@ -86,7 +70,7 @@ var Internal = collectors.NewMetrics(
 		},
 	),
 	collectors.NewRawMetric(
-		func(desc *prometheus.Desc, conn connection.Http, param *commands.ExecutorParameter) []prometheus.Metric {
+		func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 			var cache = caches.Global
 			var data = cache.Get(constants.WARMUP_DURATIONS)
 			if !data.IsExist() {
