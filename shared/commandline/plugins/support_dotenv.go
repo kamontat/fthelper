@@ -11,29 +11,12 @@ import (
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
-// SupportDotEnv will create --env-files option for custom load .env files
+// SupportDotEnv will create --envs option for custom load .env files
 func SupportDotEnv(p *PluginParameter) error {
 	var wd, err = os.Getwd()
 	if err != nil {
 		return err
 	}
-
-	// @deprecated - will remove after version 5.0.0
-	p.NewFlags(flags.Array{
-		Name:    "env-files",
-		Default: make([]string, 0),
-		Usage:   "environment files, must follow .env regulation",
-		Action: func(data []string) maps.Mapper {
-			if len(data) > 0 {
-				p.Logger.Warn("--env-files is deprecated because environment is now support both file and directory. please use --envs instead")
-				return maps.New().
-					Set("fs.env.type", "file").
-					Set("fs.env.mode", "multiple").
-					Set("fs.env.fullpath", data)
-			}
-			return maps.New()
-		},
-	})
 
 	p.NewFlags(flags.Array{
 		Name:    "envs",

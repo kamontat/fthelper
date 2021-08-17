@@ -13,20 +13,6 @@ import (
 )
 
 func SupportListConfig(p *PluginParameter) error {
-	p.NewFlags(flags.Bool{
-		Name:    "list-config",
-		Default: false,
-		Usage:   "list all configuration",
-		Action: func(data bool) maps.Mapper {
-			var m = maps.New()
-			if data {
-				p.Logger.Warn("option '--list-config' is deprecated (v4.x.x), please use 'config' command instead.")
-				return m.Set("internal.command", "config")
-			}
-			return m
-		},
-	})
-
 	p.NewCommand(&commands.Command{
 		Name: "config",
 		Flags: flags.New(flags.Bool{
