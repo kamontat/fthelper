@@ -24,6 +24,7 @@ func SupportLogLevel(p *PluginParameter) error {
 		Action: func(data bool) maps.Mapper {
 			var m = maps.New()
 			if data {
+				loggers.Level(loggers.LoggerLevel(4)) // force if --debug is exist
 				return m.Set("internal.log.level", 4)
 			}
 			return m
