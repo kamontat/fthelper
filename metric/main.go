@@ -22,6 +22,7 @@ var (
 	builtBy string = "manually"
 )
 
+// TODO: Integrate clusters in `cluster` fields to underscroll format same with generator
 func defaultCommand(p *commands.ExecutorParameter) error {
 	// start warmup
 	ctx := context.Background()
