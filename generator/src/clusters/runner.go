@@ -20,7 +20,7 @@ func NewRunner(data maps.Mapper, mapper maps.Mapper, executor Executor, setting 
 		var log = loggers.Get("generator", strconv.FormatInt(int64(index), 10))
 
 		// add .clusters to data
-		var raws = config.Mi("internal").Ai("clusters")
+		var raws = config.Ai("clusters")
 		if len(raws) < 1 {
 			raws = append(raws, "") // add default empty cluster
 		}
