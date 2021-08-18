@@ -3,6 +3,7 @@ package clusters
 import (
 	"strconv"
 
+	"github.com/kamontat/fthelper/shared/configs"
 	"github.com/kamontat/fthelper/shared/loggers"
 	"github.com/kamontat/fthelper/shared/maps"
 	"github.com/kamontat/fthelper/shared/runners"
@@ -51,8 +52,7 @@ func NewRunner(data maps.Mapper, mapper maps.Mapper, executor Executor, setting 
 				// 2. Add data to config
 				param.Config.Set("data", param.Data)
 				// 3. Override config with cluster
-				var merger = maps.Merger(param.Config).Add(param.Config.Mi("_").Mi(cluster))
-				param.Config = merger.Merge()
+				param.Config = configs.BuildClusterConfig(cluster, param.Config)
 
 				var err = executor(param)
 				if err != nil {

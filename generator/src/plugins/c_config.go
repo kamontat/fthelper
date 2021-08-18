@@ -32,12 +32,8 @@ func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
 			files = input.Multiple()
 		}
 
-		var config = maps.Merger(p.Config)
-		if key := p.Data.Si("withEnv"); key != "" {
-			config.Add(p.Config.Mi("_").Mi(key))
-		}
-
-		content, err := configs.LoadConfigFromFileSystem(files, config.Merge(), p.Data.Mi("merger"))
+		var config = configs.BuildClusterConfig(p.Data.Si("withEnv"), p.Config)
+		content, err := configs.LoadConfigFromFileSystem(files, config, p.Data.Mi("merger"))
 		if err != nil {
 			p.Logger.Error("cannot load template data")
 			return err

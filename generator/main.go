@@ -29,10 +29,10 @@ func main() {
 	}).
 		Plugin(plugins.SupportVersion).
 		Plugin(plugins.SupportFSVar).
-		Plugin(plugins.SupportCluster). // cluster must come before config
-		Plugin(plugins.SupportDotEnv).  // dotenv must come before config
+		Plugin(plugins.SupportDotEnv). // dotenv must come before config
 		Plugin(plugins.SupportListConfig).
 		Plugin(plugins.SupportConfig).
+		Plugin(plugins.SupportCluster).  // cluster must come after config
 		Plugin(plugins.SupportLogLevel). // log-level must come after config
 		Plugin(plugins.SupportBanner).
 		Command(&commands.Command{
