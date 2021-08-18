@@ -1,11 +1,24 @@
 {
-  "clusters": ["1A"],
-  "cluster": {},
   "freqtrade": {
-    "query": {
-      "logs": {
-        "limit": 100
+    "http": {
+      "enabled": true,
+      "url": "http://localhost:8080",
+      "apiver": "v1",
+      "username": "",
+      "password": "",
+      "query": {
+        "logs": {
+          "limit": 100
+        }
       }
+    },
+    "db": {
+      "enabled": true,
+      "type": "postgres",
+      "url": "localhost:5432",
+      "name": "freqtrade",
+      "username": "",
+      "password": ""
     },
     "cache": {
       "ping": "1s",

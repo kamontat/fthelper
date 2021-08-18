@@ -2,9 +2,9 @@ package connection
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/kamontat/fthelper/metric/v4/src/clients"
+	"github.com/kamontat/fthelper/shared/configs"
 	"github.com/kamontat/fthelper/shared/maps"
 )
 
@@ -26,15 +26,16 @@ func NewConnections(config maps.Mapper) ([]*Connection, error) {
 	var connections = make([]*Connection, 0)
 	for _, raw := range clusters {
 		var cluster = raw.(string)
-		var rawSetting, _ = config.Mi("cluster").Gets(cluster, strings.ToLower(cluster), strings.ToUpper(cluster))
-		var setting, _ = maps.ToMapper(rawSetting)
 
-		http, err := clients.NewHttp(cluster, setting.Mi("http"), config.Mi("freqtrade").Mi("query"))
+		var finalConfig = configs.BuildClusterConfig(cluster, config)
+		var freqtradeConfig = finalConfig.Mi("freqtrade")
+
+		http, err := clients.NewHttp(cluster, freqtradeConfig.Mi("http"))
 		if err != nil {
 			return connections, err
 		}
 
-		db, err := clients.NewDatabase(cluster, setting.Mi("db"))
+		db, err := clients.NewDatabase(cluster, freqtradeConfig.Mi("db"))
 		if err != nil {
 			return connections, err
 		}

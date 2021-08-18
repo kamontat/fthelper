@@ -102,7 +102,7 @@ func (c *Http) String() string {
 	return fmt.Sprintf("%s '%s:%s'", c.base.String(), c.username, utils.MaskString(c.password, utils.MEDIUM))
 }
 
-func NewHttp(cluster string, config, globalQuery maps.Mapper) (*Http, error) {
+func NewHttp(cluster string, config maps.Mapper) (*Http, error) {
 	var enabled = config.Bo("enabled", true)
 
 	urlString, err := config.Se("url")
@@ -129,7 +129,7 @@ func NewHttp(cluster string, config, globalQuery maps.Mapper) (*Http, error) {
 	return &Http{
 		Enabled: enabled,
 		Cluster: cluster,
-		Query:   newQuery(config.Mo("query", globalQuery)),
+		Query:   newQuery(config.Mi("query")),
 
 		base:     baseUrl,
 		version:  apiver,
