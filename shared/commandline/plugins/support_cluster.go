@@ -9,7 +9,7 @@ import (
 func SupportCluster(p *PluginParameter) error {
 	p.NewFlags(flags.Array{
 		Name:    "clusters",
-		Default: []string{},
+		Default: []string{""},
 		Usage:   "setup output clusters",
 		Action: func(data []string) maps.Mapper {
 			return maps.New().Set("clusters", data)
