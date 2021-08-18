@@ -68,47 +68,20 @@ ftmetric config [--data] [--all]
 
 ## Setup multiclusters
 
-Since version `4.5.0-alpha.1`. I added multicluster support in ftmetric. You needs to follow this step to able to run multicluster mode. 
+I centralize code between ftgenerator and ftmetric to use same logic for clustering.
+So since version `5.0.0.beta.3`, you require to change how to set cluster configuration.
 
-1. Add `clusters` fields on either json/env/arg as array of clusters to fetch data
-2. Add `cluster` as map of cluster and freqtrade settings
+Normally, all fthelper module already support custom configuration via custom (`_`) fields (more information is [here](../shared/configs/README.md)).
 
-### Example
+Below is a steps for setup multiple clusters mode
 
-For json file
+1. Setup how many clusters (and name) you want
+   1. Set by config file: field name `clusters`
+   2. Set by environment: field name `FTH_CLUSTERS`
+   3. Set by arguments: `--clusters <name>`
+2. Setup configuration for specify cluster
+   1. Set by config file: `{"_": {"1A": {...}}}`
+   2. Set by environment: `FTC_1A__FREQTRADE__HTTP__URL=http://localhost:8081`
+   3. Set by arguments: `_.1A.freqtrade.http.url=http://localhost:8081`
 
-```json
-{
-  "clusters": ["1A", "2A"],
-  "cluster": {
-    "1A": {
-      "url": "http://localhost:8080",
-      "apiver": "v1",
-      "username": "admin",
-      "password": "password"
-    },
-    "2A": {
-      "url": "http://localhost:8081",
-      "apiver": "v1",
-      "username": "admin",
-      "password": "password"
-    }
-  }
-}
-```
-
-For environment
-
-```
-FTH_CLUSTERS=1A,2A
-
-FTH_CLUSTER__1A__URL="http://localhost:8080"
-FTH_CLUSTER__1A__APIVER=v1
-FTH_CLUSTER__1A__USERNAME="admin"
-FTH_CLUSTER__1A__PASSWORD=""
-
-FTH_CLUSTER__2A__URL="http://localhost:8081"
-FTH_CLUSTER__2A__APIVER=v1
-FTH_CLUSTER__2A__USERNAME="admin"
-FTH_CLUSTER__2A__PASSWORD=""
-```
+You will find default value of config file [here](./configs/common.json) and example value for environment [here](./.env.default)
