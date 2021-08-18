@@ -1,5 +1,15 @@
 # FTMetric
 
+## v4.x.x -> v5.0.0 (18 Aug 2021)
+
+- all @deprecated fields has been removed
+- completely redesign multiclusters mode
+  - to specify clusters, either `--clusters <name>` or `FTH_CLUSTERS`
+  - setup cluster config will use `FTC_<CLUSTER_NAME>` instead
+- freqtrade config separate between `http` and `db`
+- move `freqtrade.query` to `freqtrade.http.query`
+- remove `freqtrade.cluster`, if you didn't specify cluster name fallback to empty string
+
 ## v4.4.0 -> v4.5.0 (1 Aug 2021)
 
 - `job` no longer unique, use `cluster` instead
