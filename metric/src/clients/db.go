@@ -27,6 +27,11 @@ type Database struct {
 }
 
 func (c *Database) Initial() error {
+	if !c.Enabled {
+		c.logger.Debug("not initial database because it disabled")
+		return nil
+	}
+
 	if c.Type != "postgres" {
 		return fmt.Errorf("current database only support 'postgres' type")
 	}
