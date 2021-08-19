@@ -46,6 +46,17 @@ func (c *cache) Cleanup() error {
 	return c.err
 }
 
+// cache connector should never has parent
+func (c *cache) Parent() Connector {
+	return nil
+}
+
+// WithParent of cache will do nothing
+// cache connector should be the top level of connector
+func (c *cache) WithParent(parent Connector) Connector {
+	return c
+}
+
 func (c *cache) Save(name string, data interface{}) Connector {
 	c.connector.Save(name, data)
 	return c
@@ -54,7 +65,7 @@ func (c *cache) Save(name string, data interface{}) Connector {
 func (c *cache) Connect(name string) (interface{}, error) {
 	var expiredAt, err = c.config.Se(name)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("you forget to set cache duration for '%s'", name)
 	}
 
 	caches.Global.Increase(CACHE_TOTAL + c.Cluster())
@@ -84,7 +95,7 @@ func (c *cache) String() string {
 }
 
 func WithCache(c Connector, service *caches.Service, config maps.Mapper) Connector {
-	return &cache{
+	var val = &cache{
 		state: CREATED,
 		err:   nil,
 
@@ -92,4 +103,7 @@ func WithCache(c Connector, service *caches.Service, config maps.Mapper) Connect
 		service:   service,
 		config:    config,
 	}
+
+	c.WithParent(val)
+	return val
 }
