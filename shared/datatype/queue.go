@@ -48,6 +48,10 @@ func (q *Queue) Size() int {
 	return len(q.internal)
 }
 
+func (q *Queue) Empty() bool {
+	return q.Size() == 0
+}
+
 func NewQueue() *Queue {
 	return NewLimitQueue(-1)
 }

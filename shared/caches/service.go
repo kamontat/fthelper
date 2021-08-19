@@ -76,7 +76,8 @@ func (s *Service) UpdateFn(key string, updater Updater, expireAt string) error {
 		}, expireAt)
 	}
 
-	s.logger.Debug("updating '%s' data", key)
+	// Too many log
+	// s.logger.Debug("updating '%s' data", key)
 	var data = s.Get(key)
 	data.updater = updater
 	return data.Update()

@@ -32,7 +32,10 @@ func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, connectors []
 				p.Logger.Debug("warmup freqtrade cluster %s", connector.Cluster())
 
 				var start = time.Now()
+
+				// Warmup connection with freqtrade (APIs and DB)
 				err := connector.ConnectAll()
+
 				var d = time.Since(start)
 
 				if value, ok := aggregators.Percentage(float64(err.Total()-err.Length()), float64(err.Total())); ok {

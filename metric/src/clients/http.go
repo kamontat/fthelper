@@ -36,7 +36,9 @@ func (c *Http) Request(method, name string, body io.Reader) (*http.Request, erro
 	}
 
 	query := c.Query.Get(name)
-	c.logger.Debug("found request query for %s: '%v'", name, query.Encode())
+	if len(query) > 0 {
+		c.logger.Debug("found request query for %s: '%v'", name, query.Encode())
+	}
 
 	url.RawQuery = query.Encode()
 	req, err := http.NewRequest(method, url.String(), body)
