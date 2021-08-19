@@ -1,7 +1,6 @@
 package metrics
 
 import (
-	"github.com/kamontat/fthelper/metric/v4/src/aggregators"
 	"github.com/kamontat/fthelper/metric/v4/src/collectors"
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
@@ -53,11 +52,9 @@ var FTLog = collectors.NewMetrics(
 			append(FreqtradeLabel(), "level"),
 			nil,
 		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
-			var logs, _ = freqtrade.ToLogs(connector)
-			var aggregated = aggregators.LogLevel(logs)
-
+			var logs, _ = freqtrade.ToLogLevel(connector)
 			var metrics = make([]prometheus.Metric, 0)
-			for key, value := range aggregated {
+			for key, value := range logs {
 				var labels = append(FreqtradeLabelValues(connector), key)
 				metrics = append(metrics, prometheus.MustNewConstMetric(
 					desc,
