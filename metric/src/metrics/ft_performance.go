@@ -1,6 +1,8 @@
 package metrics
 
 import (
+	"fmt"
+
 	"github.com/kamontat/fthelper/metric/v4/src/collectors"
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/freqtrade"
@@ -11,32 +13,76 @@ import (
 var FTPerformance = collectors.NewMetrics(
 	collectors.NewMetric(
 		prometheus.NewDesc(
-			prometheus.BuildFQName("freqtrade", "perf", "daily"),
-			"Profit calculate by balance from yesterday and today (update once a day).",
+			prometheus.BuildFQName("freqtrade", "perf", "minute"),
+			"Profit calculate by balance from last minute to now (update every minute).",
 			FreqtradeLabel(),
 			nil,
 		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
-			// TODO: correct how daily performance calculate
-			// var data = caches.Global.Get(freqtrade.CACHE_DAILY_PERFORMANCE_BALANCE)
-
-			// var balance, _ = freqtrade.ToBalance(connector)
-			// var previous = freqtrade.NewBalance()
-			// if data.IsExist() {
-			// 	previous = data.Data.(*freqtrade.Balance)
-			// }
+			var perf, err = freqtrade.ToSchedulerPerformance(connector)
+			if err != nil {
+				fmt.Println(err)
+			}
 
 			var labels = FreqtradeLabelValues(connector)
-			// var value, ok = aggregators.PercentChange(previous.CryptoValue, balance.CryptoValue)
-			var value, ok = float64(0), true
-			if !ok {
-				param.Logger.Info("skip 'perf_daily' because previous is not exist")
-				return emptyMetrics
-			}
 
 			return []prometheus.Metric{prometheus.MustNewConstMetric(
 				desc,
 				prometheus.GaugeValue,
-				value,
+				perf.Minute,
+				labels...,
+			)}
+		},
+	),
+	collectors.NewMetric(
+		prometheus.NewDesc(
+			prometheus.BuildFQName("freqtrade", "perf", "hourly"),
+			"Profit calculate by balance from last hour to now (update once every hour).",
+			FreqtradeLabel(),
+			nil,
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var perf, _ = freqtrade.ToSchedulerPerformance(connector)
+			var labels = FreqtradeLabelValues(connector)
+
+			return []prometheus.Metric{prometheus.MustNewConstMetric(
+				desc,
+				prometheus.GaugeValue,
+				perf.Hourly,
+				labels...,
+			)}
+		},
+	),
+	collectors.NewMetric(
+		prometheus.NewDesc(
+			prometheus.BuildFQName("freqtrade", "perf", "daily"),
+			"Profit calculate by balance from yesterday to now (update once everyday).",
+			FreqtradeLabel(),
+			nil,
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var perf, _ = freqtrade.ToSchedulerPerformance(connector)
+			var labels = FreqtradeLabelValues(connector)
+
+			return []prometheus.Metric{prometheus.MustNewConstMetric(
+				desc,
+				prometheus.GaugeValue,
+				perf.Daily,
+				labels...,
+			)}
+		},
+	),
+	collectors.NewMetric(
+		prometheus.NewDesc(
+			prometheus.BuildFQName("freqtrade", "perf", "monthly"),
+			"Profit calculate by balance from last month to now (update once every month).",
+			FreqtradeLabel(),
+			nil,
+		), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
+			var perf, _ = freqtrade.ToSchedulerPerformance(connector)
+			var labels = FreqtradeLabelValues(connector)
+
+			return []prometheus.Metric{prometheus.MustNewConstMetric(
+				desc,
+				prometheus.GaugeValue,
+				perf.Monthly,
 				labels...,
 			)}
 		},

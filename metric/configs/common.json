@@ -32,7 +32,8 @@
       "whitelist": "15m",
       "performance": "1m",
       "logs": "1m",
-      "stats": "5m"
+      "stats": "5m",
+      "schedule_perf": "1m"
     }
   },
   "server": {
