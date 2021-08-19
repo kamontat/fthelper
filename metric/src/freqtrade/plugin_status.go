@@ -61,7 +61,7 @@ func (s *status) Name() string {
 	return STATUS_CONST
 }
 
-func (s *status) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (s *status) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	err := connection.Http.GET(s.Name(), s)
 	return s, err
 }

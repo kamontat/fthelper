@@ -40,7 +40,7 @@ func (b *balance) Name() string {
 	return BALANCE_CONST
 }
 
-func (b *balance) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (b *balance) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	err := connection.Http.GET(b.Name(), b)
 	if err == nil && b.CryptoValue > 0 && b.FiatValue <= 0 {
 		err = errors.New("invalid balance because fiat value is zero")

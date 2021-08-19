@@ -77,7 +77,7 @@ func (p *profit) Name() string {
 	return PROFIT_CONST
 }
 
-func (p *profit) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (p *profit) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	err := connection.Http.GET(p.Name(), p)
 	return p, err
 }

@@ -13,5 +13,5 @@ type Plugin interface {
 	// This function also provide history data from previous build,
 	// history data will avaliable only if you add `WithCache()` to the connector
 	// otherwise, history data will always be empty.
-	Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error)
+	Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error)
 }

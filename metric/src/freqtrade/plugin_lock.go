@@ -32,7 +32,7 @@ func (l *locks) Name() string {
 	return LOCK_CONST
 }
 
-func (l *locks) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (l *locks) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	err := connection.Http.GET(l.Name(), l)
 	return l, err
 }

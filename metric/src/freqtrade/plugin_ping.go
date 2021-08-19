@@ -17,7 +17,7 @@ func (p *ping) Name() string {
 	return PING_CONST
 }
 
-func (p *ping) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (p *ping) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	var target = make(map[string]interface{})
 	err := connection.Http.GET(p.Name(), &target)
 	return target["status"] == "pong", err

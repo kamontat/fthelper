@@ -28,7 +28,7 @@ func (p *performances) Name() string {
 	return PERF_CONST
 }
 
-func (p *performances) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (p *performances) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	err := connection.Http.GET(p.Name(), &p.Data)
 	return p, err
 }

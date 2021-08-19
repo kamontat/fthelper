@@ -18,7 +18,7 @@ func (v *version) Name() string {
 	return VERSION_CONST
 }
 
-func (p *version) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (p *version) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	var target = make(maps.Mapper)
 	err := connection.Http.GET(p.Name(), &target)
 	if err != nil {

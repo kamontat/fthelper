@@ -69,7 +69,7 @@ func (s *stat) Name() string {
 	return STAT_CONST
 }
 
-func (s *stat) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (s *stat) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	err := connection.Http.GET(s.Name(), s)
 	return s, err
 }

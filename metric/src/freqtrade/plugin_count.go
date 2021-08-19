@@ -26,7 +26,7 @@ func (c *count) Name() string {
 	return COUNT_CONST
 }
 
-func (c *count) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (c *count) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	err := connection.Http.GET(c.Name(), c)
 	return c, err
 }

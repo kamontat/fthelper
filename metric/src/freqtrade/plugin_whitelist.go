@@ -21,7 +21,7 @@ func (w *whitelist) Name() string {
 	return WHITELIST_CONST
 }
 
-func (w *whitelist) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (w *whitelist) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	err := connection.Http.GET(w.Name(), w)
 	return w, err
 }
