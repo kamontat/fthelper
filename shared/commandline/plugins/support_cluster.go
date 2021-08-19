@@ -12,7 +12,10 @@ func SupportCluster(p *PluginParameter) error {
 		Default: []string{""},
 		Usage:   "setup output clusters",
 		Action: func(data []string) maps.Mapper {
-			return maps.New().Set("clusters", data)
+			if len(data) > 0 {
+				return maps.New().Set("clusters", data)
+			}
+			return maps.New()
 		},
 	})
 

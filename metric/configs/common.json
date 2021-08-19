@@ -1,4 +1,5 @@
 {
+  "clusters": [],
   "freqtrade": {
     "http": {
       "enabled": true,
