@@ -11,6 +11,7 @@ import (
 type Freqtrade struct {
 	Connection *connection.Connection
 
+	parent  connection.Connector
 	plugins map[string]Plugin
 	history map[string]*datatype.Queue
 }
@@ -30,6 +31,15 @@ func (f *Freqtrade) Initial() error {
 
 func (f *Freqtrade) Cleanup() error {
 	return f.Connection.Db.Cleanup()
+}
+
+func (f *Freqtrade) Parent() connection.Connector {
+	return f.parent
+}
+
+func (f *Freqtrade) WithParent(p connection.Connector) connection.Connector {
+	f.parent = p
+	return f
 }
 
 func (f *Freqtrade) Save(name string, data interface{}) connection.Connector {
@@ -53,9 +63,9 @@ func (f *Freqtrade) ConnectAll() *errors.Handler {
 func (f *Freqtrade) Connect(name string) (interface{}, error) {
 	if plugin, ok := f.plugins[name]; ok {
 		if queue, ok := f.history[name]; ok {
-			return plugin.Build(f.Connection, queue)
+			return plugin.Build(f, f.Connection, queue)
 		}
-		return plugin.Build(f.Connection, datatype.NewQueue())
+		return plugin.Build(f, f.Connection, datatype.NewQueue())
 	}
 	return nil, fmt.Errorf("'%s' is not valid name / or never implement it before", name)
 }
@@ -67,8 +77,10 @@ func (f *Freqtrade) String() string {
 func New(connection *connection.Connection) connection.Connector {
 	var freqtrade = &Freqtrade{
 		Connection: connection,
-		plugins:    make(map[string]Plugin),
-		history:    make(map[string]*datatype.Queue),
+
+		parent:  nil,
+		plugins: make(map[string]Plugin),
+		history: make(map[string]*datatype.Queue),
 	}
 
 	freqtrade.
@@ -82,6 +94,7 @@ func New(connection *connection.Connection) connection.Connector {
 		Plugin(NewCount()).
 		Plugin(NewWhitelist()).
 		Plugin(NewPerformance()).
+		Plugin(NewSchedulerPerformance()).
 		Plugin(NewProfit())
 
 	return freqtrade
