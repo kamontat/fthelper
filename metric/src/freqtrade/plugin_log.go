@@ -39,7 +39,7 @@ func (l *Logs) Name() string {
 	return LOG_CONST
 }
 
-func (l *Logs) Build(connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
+func (l *Logs) Build(connector connection.Connector, connection *connection.Connection, history *datatype.Queue) (interface{}, error) {
 	var target = make(maps.Mapper)
 	err := connection.Http.GET(l.Name(), &target)
 	return buildLogs(target), err
@@ -51,6 +51,20 @@ func ToLogs(connector connection.Connector) (*Logs, error) {
 		return nil, err
 	}
 	return raw.(*Logs), nil
+}
+
+func ToLogLevel(connector connection.Connector) (map[string]float64, error) {
+	var mapper = make(map[string]float64)
+	var logs, err = ToLogs(connector)
+	if err != nil {
+		return mapper, err
+	}
+
+	for _, log := range logs.List {
+		mapper[log.Level] += 1
+	}
+
+	return mapper, nil
 }
 
 func buildLogs(mapper maps.Mapper) *Logs {
