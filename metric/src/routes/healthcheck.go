@@ -5,11 +5,6 @@ import (
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 )
 
-type healthCheckResult struct {
-	connector connection.Connector
-	err       error
-}
-
 var HealthCheck = &Route{
 	Path: "/healthcheck",
 	Handler: func(p *commands.ExecutorParameter, connectors []connection.Connector) (int, interface{}) {
