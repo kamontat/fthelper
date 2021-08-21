@@ -89,7 +89,7 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	}
 	b.OverrideStrings(args)
 
-	configs, err := fs.Build(b.name, result.Mi("fs"))
+	configs, err := fs.Build(result.Mi("fs").Mi(b.name), result.Mi("variables"))
 	if err != nil {
 		return result, err
 	}

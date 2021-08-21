@@ -50,24 +50,21 @@ import (
 // New will extract data from mapper base on following criteria
 // 1. Try to get `fullpath` if any
 // 2. Try to build fullpath with `paths`
-func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
-	var variable = fsMapper.Mi("variables")
-	var m = fsMapper.Mi(name)
-
+func Build(m, variable maps.Mapper) (*wrapper, error) {
 	ty, ok := ToType(m.Si("type"))
 	if !ok {
-		return nil, fmt.Errorf("cannot get type of '%s' file-system, (%v)", name, m)
+		return nil, fmt.Errorf("cannot get file-system type, (%v)", m)
 	}
 	mode, ok := ToMode(m.Si("mode"))
 	if !ok {
-		return nil, fmt.Errorf("cannot get mode of '%s' file-system, (%v)", name, m)
+		return nil, fmt.Errorf("cannot get file-system mode, (%v)", m)
 	}
 
 	switch mode {
 	case SINGLE:
 		var paths, err = parseSinglePaths(m, variable)
 		if err != nil {
-			return nil, fmt.Errorf("%s: %v", name, err)
+			return nil, err
 		}
 
 		ty = resolveAutoType(ty, "/"+path.Join(paths...))
@@ -82,7 +79,7 @@ func Build(name string, fsMapper maps.Mapper) (*wrapper, error) {
 	case MULTIPLE:
 		var paths, err = parseMultiplePaths(m, variable)
 		if err != nil {
-			return nil, fmt.Errorf("%s: %v", name, err)
+			return nil, err
 		}
 
 		var result = make([]FileSystem, 0)
