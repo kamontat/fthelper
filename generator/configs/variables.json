@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/variables.json",
+  "variables": {
+    "freqtrade": ".freqtrade",
+    "template": ".templates",
+    "config": "configs",
+    "userdata": "user_data",
+    "strategy": "strategies",
+    "docker": "dockers"
+  }
+}
