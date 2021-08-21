@@ -3,3 +3,6 @@
 
 templates/*
 !templates/.gitkeep
+
+.templates/*
+!.templates/.gitkeep
