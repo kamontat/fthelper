@@ -45,7 +45,7 @@ func SupportDotEnv(p *PluginParameter) error {
 			return nil
 		}
 
-		envs, err := fs.Build("env", m.Mi("fs"))
+		envs, err := fs.Build(m.Mi("fs").Mi("env"), m.Mi("variables"))
 		if err != nil {
 			p.Logger.Warn("cannot found environment file: %v", err)
 			return nil
