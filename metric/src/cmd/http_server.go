@@ -7,6 +7,7 @@ import (
 	"github.com/kamontat/fthelper/metric/v4/src/collectors"
 	"github.com/kamontat/fthelper/metric/v4/src/connection"
 	"github.com/kamontat/fthelper/metric/v4/src/metrics"
+	"github.com/kamontat/fthelper/metric/v4/src/routes"
 	"github.com/kamontat/fthelper/shared/commandline/commands"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -32,10 +33,12 @@ func HttpServer(p *commands.ExecutorParameter, connectors []connection.Connector
 	collector.AddMetrics(metrics.FTInfo)
 
 	prometheus.MustRegister(collector)
+
 	http.Handle(serverPath, promhttp.Handler())
-	http.HandleFunc("/version", func(rw http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(rw, "%s: %s (%s)", p.Meta.Name, p.Meta.Version, p.Meta.Commit)
-	})
+	routes.Apply(p, connectors,
+		routes.HealthCheck,
+		routes.Version,
+	)
 
 	p.Logger.Info("Start server at 0.0.0.0:%.0f", serverPort)
 	return http.ListenAndServe(fmt.Sprintf(":%.0f", serverPort), nil)
