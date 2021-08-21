@@ -25,6 +25,10 @@ type Http struct {
 	logger *loggers.Logger
 }
 
+func (c *Http) Initial() error {
+	return c.GET("ping", make(maps.Mapper))
+}
+
 func (c *Http) Request(method, name string, body io.Reader) (*http.Request, error) {
 	if !c.Enabled {
 		return nil, fmt.Errorf("http client of '%s' is disabled", c.Cluster)

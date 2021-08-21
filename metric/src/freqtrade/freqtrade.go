@@ -26,7 +26,9 @@ func (f *Freqtrade) Plugin(plugin Plugin) *Freqtrade {
 }
 
 func (f *Freqtrade) Initial() error {
-	return f.Connection.Db.Initial()
+	var err1 = f.Connection.Http.Initial()
+	var err2 = f.Connection.Db.Initial()
+	return errors.New().And(err1, err2).Error()
 }
 
 func (f *Freqtrade) Cleanup() error {
