@@ -28,13 +28,13 @@ func NewRunner(data maps.Mapper, mapper maps.Mapper, executor Executor, setting 
 
 		// update new input value
 		i.In(&ExecutorParameter{
-			Index:    index,
-			Name:     i.Name(),
-			Type:     generatorType,
-			Config:   config,
-			FsConfig: config.Mi("fs"),
-			Logger:   log,
-			Data:     data.Set("clusters", raws),
+			Index:     index,
+			Name:      i.Name(),
+			Type:      generatorType,
+			Config:    config,
+			VarConfig: config.Mi("variables"),
+			Logger:    log,
+			Data:      data.Set("clusters", raws),
 		})
 
 		return nil

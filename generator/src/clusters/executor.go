@@ -22,7 +22,7 @@ type ExecutorParameter struct {
 	Data maps.Mapper
 
 	// fs configuration
-	FsConfig maps.Mapper
+	VarConfig maps.Mapper
 
 	// helper for logging message
 	Logger *loggers.Logger

@@ -10,13 +10,13 @@ import (
 
 func Json(data maps.Mapper, config maps.Mapper) runners.Runner {
 	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
-		templates, err := fs.Build(p.Data.Si("inputs"), p.FsConfig)
+		templates, err := fs.Build(p.Data.Mi("inputs"), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get inputs information")
 			return err
 		}
 
-		output, err := fs.Build(p.Data.Si("output"), p.FsConfig)
+		output, err := fs.Build(p.Data.Mi("output"), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
 			return err

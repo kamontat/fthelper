@@ -11,12 +11,12 @@ import (
 // CStrategy is custom plugins for and only for freqtrade strategy
 func CStrategy(data maps.Mapper, config maps.Mapper) runners.Runner {
 	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
-		input, err := fs.Build(p.Data.So("input", "template"), p.FsConfig)
+		input, err := fs.Build(p.Data.Mi("input"), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get input information")
 			return err
 		}
-		strategy, err := fs.NewFile(fs.Next(input.Single(), p.FsConfig.Mi("variables").Si("strategy"), p.Data.Si("name")))
+		strategy, err := fs.NewFile(fs.Next(input.Single(), p.VarConfig.Si("strategy"), p.Data.Si("name")))
 		if err != nil {
 			p.Logger.Error("cannot get find strategy template directory")
 			return err
@@ -27,12 +27,12 @@ func CStrategy(data maps.Mapper, config maps.Mapper) runners.Runner {
 			return err
 		}
 
-		freqtrade, err := fs.Build(p.Data.So("output", "freqtrade"), p.FsConfig)
+		freqtrade, err := fs.Build(p.Data.Mi("output"), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
 			return err
 		}
-		output, err := fs.NewFile(fs.Next(freqtrade.Single(), p.FsConfig.Mi("variables").Si("userdata"), p.FsConfig.Mi("variables").Si("strategy"), p.Data.Si("name")))
+		output, err := fs.NewFile(fs.Next(freqtrade.Single(), p.VarConfig.Si("userdata"), p.VarConfig.Si("strategy"), p.Data.Si("name")))
 		if err != nil {
 			p.Logger.Error("cannot get find strategy output directory")
 			return err

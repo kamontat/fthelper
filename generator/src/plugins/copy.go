@@ -9,13 +9,13 @@ import (
 
 func Copy(data maps.Mapper, config maps.Mapper) runners.Runner {
 	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
-		input, err := fs.Build(p.Data.Si("input"), p.FsConfig)
+		input, err := fs.Build(p.Data.Mi("input"), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
 			return err
 		}
 
-		output, err := fs.Build(p.Data.Si("output"), p.FsConfig)
+		output, err := fs.Build(p.Data.Mi("output"), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
 			return err
