@@ -29,6 +29,7 @@ func main() {
 	}).
 		Plugin(plugins.SupportVersion).
 		Plugin(plugins.SupportFSVar).
+		Plugin(plugins.SupportVar).
 		Plugin(plugins.SupportDotEnv). // dotenv must come before config
 		Plugin(plugins.SupportListConfig).
 		Plugin(plugins.SupportConfig).
