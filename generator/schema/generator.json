@@ -5,6 +5,64 @@
   "title": "configuration",
   "description": "root configuration for generators",
   "required": ["generators"],
+  "definitions": {
+    "singlefs": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["file", "directory"]
+        },
+        "mode": {
+          "type": "string",
+          "const": "single"
+        },
+        "fullpath": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "oneOf": [{ "required": ["mode", "fullpath"] }, { "required": ["mode", "paths"] }]
+    },
+    "multifs": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["file", "directory"]
+        },
+        "mode": {
+          "type": "string",
+          "const": "multiple"
+        },
+        "fullpath": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "paths": {
+          "type": "array",
+          "items": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "oneOf": [{ "required": ["mode", "fullpath"] }, { "required": ["mode", "paths"] }]
+    },
+    "fs": {
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "$ref": "#/definitions/singlefs"
+        },
+        {
+          "type": "object",
+          "$ref": "#/definitions/multifs"
+        }
+      ]
+    }
+  },
   "properties": {
     "generators": {
       "type": "array",
@@ -29,10 +87,12 @@
                 "description": "name to display in summary log"
               },
               "inputs": {
-                "type": "string"
+                "type": "object",
+                "$ref": "#/definitions/multifs"
               },
               "output": {
-                "type": "string"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               },
               "merger": {
                 "type": "object",
@@ -70,7 +130,8 @@
                 "description": "name to display in summary log"
               },
               "output": {
-                "type": "string"
+                "type": "object",
+                "$ref": "#/definitions/fs"
               }
             },
             "required": ["type", "output"],
@@ -93,10 +154,12 @@
                 "description": "name to display in summary log"
               },
               "input": {
-                "type": "string"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               },
               "output": {
-                "type": "string"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               }
             },
             "required": ["type", "input", "output"],
@@ -119,10 +182,12 @@
                 "description": "name to display in summary log"
               },
               "input": {
-                "type": "string"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               },
               "output": {
-                "type": "string"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               }
             },
             "required": ["type", "input", "output"],
@@ -150,12 +215,12 @@
                 "description": "strategy name with extension (e.g. Strategy.py)"
               },
               "input": {
-                "type": "string",
-                "default": "template"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               },
               "output": {
-                "type": "string",
-                "default": "freqtrade"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               }
             },
             "required": ["type", "name"],
@@ -194,12 +259,12 @@
                 "default": ""
               },
               "input": {
-                "type": "string",
-                "default": "template"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               },
               "output": {
-                "type": "string",
-                "default": "freqtrade"
+                "type": "object",
+                "$ref": "#/definitions/singlefs"
               },
               "merger": {
                 "type": "object",
