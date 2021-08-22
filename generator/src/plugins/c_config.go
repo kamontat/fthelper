@@ -14,7 +14,7 @@ import (
 // CConfig is custom plugins for and only for freqtrade config
 func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
 	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
-		input, err := fs.Build(p.Data.Mi("input"), p.VarConfig)
+		input, err := fs.Build(fs.ToObject(p.Data.Zi("input"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get input information")
 			return err
@@ -54,7 +54,7 @@ func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
 			filename.WriteString("-" + cluster)
 		}
 		filename.WriteString(".json")
-		output, err := fs.Build(p.Data.Mi("output"), p.VarConfig)
+		output, err := fs.Build(fs.ToObject(p.Data.Zi("output"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
 			return err

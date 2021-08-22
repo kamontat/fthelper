@@ -10,7 +10,7 @@ import (
 
 func Create(data maps.Mapper, config maps.Mapper) runners.Runner {
 	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
-		var output, err = fs.Build(p.Data.Mi("output"), p.VarConfig)
+		var output, err = fs.Build(fs.ToObject(p.Data.Zi("output"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
 			return err

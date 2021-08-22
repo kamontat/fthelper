@@ -11,7 +11,7 @@ import (
 // CStrategy is custom plugins for and only for freqtrade strategy
 func CStrategy(data maps.Mapper, config maps.Mapper) runners.Runner {
 	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
-		input, err := fs.Build(p.Data.Mi("input"), p.VarConfig)
+		input, err := fs.Build(fs.ToObject(p.Data.Zi("input"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get input information")
 			return err
@@ -27,7 +27,7 @@ func CStrategy(data maps.Mapper, config maps.Mapper) runners.Runner {
 			return err
 		}
 
-		freqtrade, err := fs.Build(p.Data.Mi("output"), p.VarConfig)
+		freqtrade, err := fs.Build(fs.ToObject(p.Data.Zi("output"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
 			return err
