@@ -11,6 +11,8 @@ import (
 func GetRunner(data maps.Mapper, config maps.Mapper) (runners.Runner, error) {
 	var name = data.Si("type")
 	switch name {
+	case "bash":
+		return plugins.Bash(data, config), nil
 	case "json":
 		return plugins.Json(data, config), nil
 	case "create":

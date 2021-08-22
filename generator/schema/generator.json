@@ -284,6 +284,44 @@
             },
             "required": ["type"],
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "bash",
+                "description": "execute shell script"
+              },
+              "display": {
+                "type": "string",
+                "description": "name to display in summary log"
+              },
+              "withCluster": {
+                "type": "boolean",
+                "description": "enable this will make your generator run x times (where x is number of clusters)",
+                "default": true
+              },
+              "withSudo": {
+                "type": "boolean",
+                "description": "this will apply only when file is provided"
+              },
+              "commands": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "file": {
+                "$ref": "#/definitions/singlefs"
+              }
+            },
+            "oneOf": [
+              {
+                "required": ["type", "commands"]
+              },
+              {
+                "required": ["type", "file"]
+              }
+            ]
           }
         ]
       }
