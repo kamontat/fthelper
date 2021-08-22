@@ -64,8 +64,11 @@ func (a *Assertion) wrapper(ok bool) bool {
 }
 
 func (a *Assertion) must(fn func(t *testing.T) bool) bool {
-	if a.name != "" {
-		return a.T.Run(a.name, func(t *testing.T) {
+	return a.mustName("", fn)
+}
+func (a *Assertion) mustName(suffix string, fn func(t *testing.T) bool) bool {
+	if a.name != "" || suffix != "" {
+		return a.T.Run(a.name+suffix, func(t *testing.T) {
 			a.wrapper(fn(t))
 		})
 	}
