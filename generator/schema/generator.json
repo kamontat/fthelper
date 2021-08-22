@@ -98,7 +98,7 @@
                 "description": "name to display in summary log"
               },
               "inputs": {
-                "$ref": "#/definitions/multifs"
+                "$ref": "#/definitions/fs"
               },
               "output": {
                 "$ref": "#/definitions/singlefs"
@@ -261,7 +261,7 @@
                 "default": ""
               },
               "input": {
-                "$ref": "#/definitions/singlefs"
+                "$ref": "#/definitions/fs"
               },
               "output": {
                 "$ref": "#/definitions/singlefs"
