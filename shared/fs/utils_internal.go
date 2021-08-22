@@ -51,7 +51,10 @@ func copyDir(a, b FileSystem) error {
 		relative := afile.Relative(a)
 
 		out := newFile(Next(b, relative))
-		return copyFile(afile, out)
+		err = copyFile(afile, out)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
