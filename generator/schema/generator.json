@@ -64,7 +64,6 @@
       ]
     },
     "fs": {
-      "type": "object",
       "oneOf": [
         {
           "$ref": "#/definitions/singlefs"
