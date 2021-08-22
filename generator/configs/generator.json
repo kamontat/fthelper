@@ -14,6 +14,11 @@
         "mode": "single",
         "paths": ["{{ .current }}", "{{ .freqtrade }}", "test"]
       }
+    },
+    {
+      "type": "bash",
+      "commands": ["echo", "hello"],
+      "withSudo": false
     }
   ]
 }
