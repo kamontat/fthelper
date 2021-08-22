@@ -1,4 +1,19 @@
 {
   "$schema": "https://raw.githubusercontent.com/kamontat/fthelper/main/generator/schema/generator.json",
-  "generators": []
+  "generators": [
+    {
+      "display": "test",
+      "type": "copy",
+      "input": {
+        "type": "directory",
+        "mode": "single",
+        "paths": ["{{ .current }}", "{{ .template }}", "test"]
+      },
+      "output": {
+        "type": "directory",
+        "mode": "single",
+        "paths": ["{{ .current }}", "{{ .freqtrade }}", "test"]
+      }
+    }
+  ]
 }
