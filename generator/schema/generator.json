@@ -67,11 +67,9 @@
       "type": "object",
       "oneOf": [
         {
-          "type": "object",
           "$ref": "#/definitions/singlefs"
         },
         {
-          "type": "object",
           "$ref": "#/definitions/multifs"
         }
       ]
@@ -101,11 +99,9 @@
                 "description": "name to display in summary log"
               },
               "inputs": {
-                "type": "object",
                 "$ref": "#/definitions/multifs"
               },
               "output": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               },
               "merger": {
@@ -144,7 +140,6 @@
                 "description": "name to display in summary log"
               },
               "output": {
-                "type": "object",
                 "$ref": "#/definitions/fs"
               }
             },
@@ -168,11 +163,9 @@
                 "description": "name to display in summary log"
               },
               "input": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               },
               "output": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               }
             },
@@ -196,11 +189,9 @@
                 "description": "name to display in summary log"
               },
               "input": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               },
               "output": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               }
             },
@@ -229,11 +220,9 @@
                 "description": "strategy name with extension (e.g. Strategy.py)"
               },
               "input": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               },
               "output": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               }
             },
@@ -273,11 +262,9 @@
                 "default": ""
               },
               "input": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               },
               "output": {
-                "type": "object",
                 "$ref": "#/definitions/singlefs"
               },
               "merger": {
