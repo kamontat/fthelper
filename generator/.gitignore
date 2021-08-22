@@ -6,3 +6,6 @@ templates/*
 
 .templates/*
 !.templates/.gitkeep
+
+# compiled code
+generator
