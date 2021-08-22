@@ -24,7 +24,7 @@ func Template(data maps.Mapper, config maps.Mapper) runners.Runner {
 			return err
 		}
 
-		output, err := fs.Buildfs.ToObject(p.Data.Zi("output"), p.Config), p.VarConfig)
+		output, err := fs.Build(fs.ToObject(p.Data.Zi("output"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
 			return err
