@@ -2,6 +2,8 @@ package fs
 
 import (
 	"fmt"
+
+	"github.com/kamontat/fthelper/shared/maps"
 )
 
 func Copy(a, b FileSystem) error {
@@ -14,6 +16,21 @@ func Copy(a, b FileSystem) error {
 	}
 
 	return fmt.Errorf("cannot copy from directory (%s) to file (%s)", a.Abs(), b.Abs())
+}
+
+func ToObject(data interface{}, config maps.Mapper) maps.Mapper {
+	// Pass FS object
+	if m, ok := maps.ToMapper(data); ok {
+		return m
+	}
+
+	// Pass FS name
+	if s, ok := data.(string); ok {
+		return config.Mi("fs").Mi(s)
+	}
+
+	// Error
+	return maps.New()
 }
 
 // ToFiles will resolve all directory into file
