@@ -8,6 +8,10 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+const (
+	emptyFTBalance = "freqtrade.balance return empty: %v"
+)
+
 var FTBalance = collectors.NewMetrics(
 	collectors.NewMetric(prometheus.NewDesc(
 		prometheus.BuildFQName("freqtrade", "crypto", "balance"),
@@ -17,7 +21,7 @@ var FTBalance = collectors.NewMetrics(
 	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 		var balance, err = freqtrade.ToBalance(connector)
 		if err != nil {
-			param.Logger.Warn("freqtrade.balance return empty: %v", err)
+			param.Logger.Warn(emptyFTBalance, err)
 			return emptyMetrics
 		}
 
@@ -37,7 +41,7 @@ var FTBalance = collectors.NewMetrics(
 	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 		var balance, err = freqtrade.ToBalance(connector)
 		if err != nil {
-			param.Logger.Warn("freqtrade.balance return empty: %v", err)
+			param.Logger.Warn(emptyFTBalance, err)
 			return emptyMetrics
 		}
 
@@ -57,7 +61,7 @@ var FTBalance = collectors.NewMetrics(
 	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 		var balance, err = freqtrade.ToBalance(connector)
 		if err != nil {
-			param.Logger.Warn("freqtrade.balance return empty: %v", err)
+			param.Logger.Warn(emptyFTBalance, err)
 			return emptyMetrics
 		}
 
@@ -82,7 +86,7 @@ var FTBalance = collectors.NewMetrics(
 	), func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 		var balance, err = freqtrade.ToBalance(connector)
 		if err != nil {
-			param.Logger.Warn("freqtrade.balance return empty: %v", err)
+			param.Logger.Warn(emptyFTBalance, err)
 			return emptyMetrics
 		}
 
