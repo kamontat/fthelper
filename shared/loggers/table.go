@@ -13,6 +13,11 @@ type Table struct {
 	writer *tabwriter.Writer
 }
 
+func (l *Table) SetSize(size uint) *Table {
+	l.size = size
+	return l
+}
+
 func (l *Table) Init() *Table {
 	var lineSize = len(LINE)
 	var size = int(float64(lineSize) / float64(l.size))
@@ -24,19 +29,12 @@ func (l *Table) Init() *Table {
 
 func (l *Table) ToMsg(msg ...string) string {
 	var str strings.Builder
-
-	j := 0
-	for i := uint(0); i < l.size; i++ {
+	for i := 0; i < int(math.Min(float64(len(msg)), float64(l.size))); i++ {
 		if i > 0 {
 			str.WriteRune('\t')
 		}
 
-		if j >= len(msg) {
-			str.WriteString("")
-		} else {
-			str.WriteString(msg[i])
-		}
-		j++
+		str.WriteString(msg[i])
 	}
 
 	return str.String()
