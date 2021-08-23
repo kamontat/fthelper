@@ -32,3 +32,12 @@ func Get(names ...string) *Logger {
 
 	return storage[name]
 }
+
+// Get table with empty size
+// Before you use this table, run `SetSize` and `Init` first
+func GetTable() *Table {
+	return &Table{
+		size:   0,
+		logger: Get(),
+	}
+}
