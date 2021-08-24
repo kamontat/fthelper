@@ -84,6 +84,11 @@
           {
             "type": "object",
             "properties": {
+              "disabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "if you add disabled to true, this generator will be marked as disable mode"
+              },
               "type": {
                 "type": "string",
                 "const": "json"
@@ -125,6 +130,11 @@
           {
             "type": "object",
             "properties": {
+              "disabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "if you add disabled to true, this generator will be marked as disable mode"
+              },
               "type": {
                 "type": "string",
                 "const": "create"
@@ -148,6 +158,11 @@
           {
             "type": "object",
             "properties": {
+              "disabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "if you add disabled to true, this generator will be marked as disable mode"
+              },
               "type": {
                 "type": "string",
                 "const": "copy"
@@ -174,6 +189,11 @@
           {
             "type": "object",
             "properties": {
+              "disabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "if you add disabled to true, this generator will be marked as disable mode"
+              },
               "type": {
                 "type": "string",
                 "const": "template"
@@ -200,6 +220,11 @@
           {
             "type": "object",
             "properties": {
+              "disabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "if you add disabled to true, this generator will be marked as disable mode"
+              },
               "type": {
                 "type": "string",
                 "const": "strategy",
@@ -231,6 +256,11 @@
           {
             "type": "object",
             "properties": {
+              "disabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "if you add disabled to true, this generator will be marked as disable mode"
+              },
               "type": {
                 "type": "string",
                 "const": "config",
@@ -288,6 +318,11 @@
           {
             "type": "object",
             "properties": {
+              "disabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "if you add disabled to true, this generator will be marked as disable mode"
+              },
               "type": {
                 "type": "string",
                 "const": "bash",
