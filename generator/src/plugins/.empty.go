@@ -6,8 +6,8 @@ import (
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
-func Empty(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
+func Empty(data maps.Mapper, config maps.Mapper) *runners.Runner {
+	return clusters.NewRunnerV2(data, config, func(p *clusters.ExecutorParameter) error {
 		return nil
 	}, &clusters.Settings{
 		DefaultWithCluster: true,

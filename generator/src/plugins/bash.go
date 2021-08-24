@@ -11,8 +11,8 @@ import (
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
-func Bash(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
+func Bash(data maps.Mapper, config maps.Mapper) *runners.Runner {
+	return clusters.NewRunnerV2(data, config, func(p *clusters.ExecutorParameter) error {
 		var withSudo = p.Data.Bo("withSudo", false)
 
 		var sudoPath = ""

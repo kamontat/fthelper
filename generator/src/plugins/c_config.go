@@ -12,8 +12,8 @@ import (
 
 // TODO: support override config from environment variable
 // CConfig is custom plugins for and only for freqtrade config
-func CConfig(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
+func CConfig(data maps.Mapper, config maps.Mapper) *runners.Runner {
+	return clusters.NewRunnerV2(data, config, func(p *clusters.ExecutorParameter) error {
 		input, err := fs.Build(fs.ToObject(p.Data.Zi("input"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get input information")

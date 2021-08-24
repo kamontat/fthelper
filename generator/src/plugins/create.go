@@ -8,8 +8,8 @@ import (
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
-func Create(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
+func Create(data maps.Mapper, config maps.Mapper) *runners.Runner {
+	return clusters.NewRunnerV2(data, config, func(p *clusters.ExecutorParameter) error {
 		var output, err = fs.Build(fs.ToObject(p.Data.Zi("output"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")

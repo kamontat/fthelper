@@ -8,8 +8,8 @@ import (
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
-func Json(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
+func Json(data maps.Mapper, config maps.Mapper) *runners.Runner {
+	return clusters.NewRunnerV2(data, config, func(p *clusters.ExecutorParameter) error {
 		templates, err := fs.Build(fs.ToObject(p.Data.Zi("inputs"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get inputs information")

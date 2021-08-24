@@ -4,7 +4,6 @@ import (
 	"github.com/kamontat/fthelper/shared/caches"
 	"github.com/kamontat/fthelper/shared/loggers"
 	"github.com/kamontat/fthelper/shared/maps"
-	"github.com/kamontat/fthelper/shared/runners"
 )
 
 type Generator struct {
@@ -14,13 +13,12 @@ type Generator struct {
 }
 
 func (g *Generator) Start() error {
-	var collection, err = Parse(g.config)
+	var runners, err = Parse(g.config)
 	if err != nil {
 		return err
 	}
 
-	var group = runners.NewGroup()
-	group.New(collection).Run(loggers.IsDebug()).Log(g.logger)
+	runners.Run().Log(g.logger)
 	return nil
 }
 

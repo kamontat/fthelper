@@ -6,9 +6,10 @@ import (
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
-func Parse(config maps.Mapper) (*runners.Collection, error) {
+func Parse(config maps.Mapper) (*runners.Runners, error) {
 	var log = loggers.Get("generator", "parser")
-	var collection = runners.NewCollection("default")
+
+	var rs = runners.New()
 	for _, i := range config.Ai("generators") {
 		var mapper, ok = maps.ToMapper(i)
 		if !ok {
@@ -17,11 +18,11 @@ func Parse(config maps.Mapper) (*runners.Collection, error) {
 
 		var runner, err = GetRunner(mapper, config)
 		if err != nil {
-			return collection, err
+			return rs, err
 		}
 
-		collection.Add(runner)
+		rs.Add(runner)
 	}
 
-	return collection, nil
+	return rs, nil
 }

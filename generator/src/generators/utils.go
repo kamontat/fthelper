@@ -8,7 +8,7 @@ import (
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
-func GetRunner(data maps.Mapper, config maps.Mapper) (runners.Runner, error) {
+func GetRunner(data maps.Mapper, config maps.Mapper) (*runners.Runner, error) {
 	var name = data.Si("type")
 	switch name {
 	case "bash":

@@ -7,8 +7,8 @@ import (
 	"github.com/kamontat/fthelper/shared/runners"
 )
 
-func Copy(data maps.Mapper, config maps.Mapper) runners.Runner {
-	return clusters.NewRunner(data, config, func(p *clusters.ExecutorParameter) error {
+func Copy(data maps.Mapper, config maps.Mapper) *runners.Runner {
+	return clusters.NewRunnerV2(data, config, func(p *clusters.ExecutorParameter) error {
 		input, err := fs.Build(fs.ToObject(p.Data.Zi("input"), p.Config), p.VarConfig)
 		if err != nil {
 			p.Logger.Error("cannot get output information")
