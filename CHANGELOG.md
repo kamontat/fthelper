@@ -4,6 +4,133 @@
 ## [Unreleased]
 
 
+<a name="v5.0.0-beta.12"></a>
+## [v5.0.0-beta.12] - 2021-08-24
+
+### 2. Performance Improvements
+- **gen:** add disabled field to disable specify generator
+- **shared:** refactor runners and reduce code size
+- **shared:** add loggers.GetTable() for get table directly
+
+### 3. Bug Fixes
+- **shared:** table log didn't add space if no data
+
+
+<a name="v5.0.0-beta.11"></a>
+## [v5.0.0-beta.11] - 2021-08-22
+
+### 3. Bug Fixes
+- **shared:** copy directory didn't copy every file from directory
+
+
+<a name="v5.0.0-beta.10"></a>
+## [v5.0.0-beta.10] - 2021-08-22
+
+### 1. Features
+- **gen:** new generator 'bash' for execute shell script in generator
+
+### 3. Bug Fixes
+- **gen:** json and config generator also support single/multiple mode
+- **gen:** fs should not force to be object
+- **gen:** update schema to support string input/output
+
+
+<a name="v5.0.0-beta.9"></a>
+## [v5.0.0-beta.9] - 2021-08-22
+
+### 3. Bug Fixes
+- **gen:** compile error
+
+
+<a name="v5.0.0-beta.8"></a>
+## [v5.0.0-beta.8] - 2021-08-22
+
+### 2. Performance Improvements
+- **gen:** restore fs fields back to reduce some duplicate config
+
+
+<a name="v5.0.0-beta.7"></a>
+## [v5.0.0-beta.7] - 2021-08-22
+
+### 3. Bug Fixes
+- **metric:** remove unused struct code
+
+
+<a name="v5.0.0-beta.6"></a>
+## [v5.0.0-beta.6] - 2021-08-22
+
+### 1. Features
+- **gen:** not link fs data from generator to fs fields, but use directly
+- **gen:** move fs.variable to variables instead
+- **metric:** add new path /healthcheck for check connection with freqtrade
+
+### 2. Performance Improvements
+- **gen:** update json schema to support new config format
+- **gen:** deprecate -fsvar and use --var instead
+- **metric:** application will crash if freqtrade http is not available
+- **shared:** fs.Build will use mapper instead of name
+
+
+<a name="v5.0.0-beta.5"></a>
+## [v5.0.0-beta.5] - 2021-08-19
+
+### 1. Features
+- **metric:** add new freqtrade_perf_* for calculated profit hourly, daily, and monthly
+
+### 2. Performance Improvements
+- **metric:** improve error message when user forget to setup cache duration
+- **metric:** significate reduce debug log to left only what importance
+
+### 3. Bug Fixes
+- **shared:** cluster didn't return correct data
+
+
+<a name="v5.0.0-beta.4"></a>
+## [v5.0.0-beta.4] - 2021-08-19
+
+### 3. Bug Fixes
+- **metric:** some metric didn't include on previous version
+
+
+<a name="v5.0.0-beta.3"></a>
+## [v5.0.0-beta.3] - 2021-08-18
+
+### 1. Features
+- **metric:** update cluster config to match with generator module
+
+### 2. Performance Improvements
+- **shared:** update default clusters to be empty string
+- **shared:** when --debug is present, we will force setup log level early
+- **shared:** centralize underscroll override config to support upper and lower case
+
+### 3. Bug Fixes
+- **metric:** db initial should honor enabled flag
+
+
+<a name="v5.0.0-beta.2"></a>
+## [v5.0.0-beta.2] - 2021-08-18
+
+### 2. Performance Improvements
+- remove all deprecated from v4.x.x.
+- **shared:** add support custom clusters in config itself "clusters" fields
+
+
+<a name="v5.0.0-beta.1"></a>
+## [v5.0.0-beta.1] - 2021-08-17
+
+### 1. Features
+- **metric:** add history data support
+- **metric:** add database connection support
+- **metric:** reimplement how metric connect to freqtrade apis and add database support
+
+### 2. Performance Improvements
+- **shared:** update logger to custom writer for log message
+- **shared:** update runner to throw whole list of errors instead of only first one
+
+### 3. Bug Fixes
+- **docs:** readme didn't open correct link
+
+
 <a name="v4.5.3"></a>
 ## [v4.5.3] - 2021-08-04
 
@@ -478,7 +605,19 @@
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v4.5.3...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.12...HEAD
+[v5.0.0-beta.12]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.11...v5.0.0-beta.12
+[v5.0.0-beta.11]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.10...v5.0.0-beta.11
+[v5.0.0-beta.10]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.9...v5.0.0-beta.10
+[v5.0.0-beta.9]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.8...v5.0.0-beta.9
+[v5.0.0-beta.8]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.7...v5.0.0-beta.8
+[v5.0.0-beta.7]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.6...v5.0.0-beta.7
+[v5.0.0-beta.6]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.5...v5.0.0-beta.6
+[v5.0.0-beta.5]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.4...v5.0.0-beta.5
+[v5.0.0-beta.4]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.3...v5.0.0-beta.4
+[v5.0.0-beta.3]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.2...v5.0.0-beta.3
+[v5.0.0-beta.2]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.1...v5.0.0-beta.2
+[v5.0.0-beta.1]: https://github.com/kamontat/fthelper/compare/v4.5.3...v5.0.0-beta.1
 [v4.5.3]: https://github.com/kamontat/fthelper/compare/v4.5.2...v4.5.3
 [v4.5.2]: https://github.com/kamontat/fthelper/compare/v4.5.1...v4.5.2
 [v4.5.1]: https://github.com/kamontat/fthelper/compare/v4.5.0...v4.5.1
