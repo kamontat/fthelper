@@ -33,7 +33,7 @@ func (s *Summary) AddGroup(name string, informations ...*Information) *Summary {
 }
 
 func (s *Summary) Add(informations ...*Information) *Summary {
-	return s.AddGroup("default", informations...)
+	return s.AddGroup(DEFAULT_GROUP_NAME, informations...)
 }
 
 func (s *Summary) Log(logger *loggers.Logger) {
@@ -99,17 +99,13 @@ func (s *Summary) Log(logger *loggers.Logger) {
 }
 
 func NewSummary() *Summary {
-	return &Summary{
-		Name:         "Summary",
-		sortKeys:     make([]string, 0),
-		informations: make(map[string][]*Information),
-	}
+	return NewNamedSummary(DEFAULT_SUMMARY_NAME)
 }
 
-func GetSummary(informations ...*Information) *Summary {
+func NewNamedSummary(name string) *Summary {
 	return &Summary{
-		informations: map[string][]*Information{
-			"default": informations,
-		},
+		Name:         name,
+		sortKeys:     make([]string, 0),
+		informations: make(map[string][]*Information),
 	}
 }
