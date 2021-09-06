@@ -1,9 +1,9 @@
 package runners
 
-func NoValidator(context *Context) error {
+var NoValidator Validator = func(context *Context) error {
 	return nil
 }
 
-func NoExecutor(context *Context) error {
+var NoExecutor Executor = func(context *Context) error {
 	return nil
 }
