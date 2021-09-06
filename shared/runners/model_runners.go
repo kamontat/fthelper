@@ -17,7 +17,7 @@ func (r *Runners) AddGroup(name string, runners ...*Runner) *Runners {
 
 // Add new runner to default group
 func (r *Runners) Add(runners ...*Runner) *Runners {
-	return r.AddGroup("default", runners...)
+	return r.AddGroup(DEFAULT_GROUP_NAME, runners...)
 }
 
 func (r *Runners) Run() *Summary {
