@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"reflect"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -63,9 +64,6 @@ func (a *Assertion) wrapper(ok bool) bool {
 	return ok
 }
 
-func (a *Assertion) must(fn func(t *testing.T) bool) bool {
-	return a.mustName("", fn)
-}
 func (a *Assertion) mustName(suffix string, fn func(t *testing.T) bool) bool {
 	if a.name != "" || suffix != "" {
 		return a.T.Run(a.name+suffix, func(t *testing.T) {
@@ -74,12 +72,23 @@ func (a *Assertion) mustName(suffix string, fn func(t *testing.T) bool) bool {
 	}
 	return a.wrapper(fn(a.T))
 }
+func (a *Assertion) must(fn func(t *testing.T) bool) bool {
+	return a.mustName("", fn)
+}
 func (a *Assertion) mustBoolean(valid bool, msg string, param ...interface{}) bool {
 	return a.must(func(t *testing.T) bool {
 		if !valid {
 			t.Errorf(msg, param...)
 		}
 		return valid
+	})
+}
+func (a *Assertion) mustError(err error) bool {
+	return a.must(func(t *testing.T) bool {
+		if err != nil {
+			t.Errorf("error occurred: %v", err)
+		}
+		return err == nil
 	})
 }
 
@@ -119,6 +128,17 @@ func (a *Assertion) MustEqualString() bool {
 	var actual = datatype.ForceString(a.actual)
 	var expected = datatype.ForceString(a.expected)
 	return a.mustBoolean(actual == expected, "we expected '%v', but got '%v' instead (as string)", a.expected, a.actual)
+}
+
+func (a *Assertion) MustEqualRegex() bool {
+	var actual = datatype.ForceString(a.actual)
+	var expected = datatype.ForceString(a.expected)
+
+	var regex, err = regexp.Compile(expected)
+	var condition1 = a.mustError(err)
+	var condition2 = a.mustBoolean(regex.MatchString(actual), "we expect regex '%v', but got '%v' instead", expected, actual)
+
+	return condition1 && condition2
 }
 
 func (a *Assertion) MustNotEqual() bool {
@@ -170,6 +190,7 @@ func (a *Assertion) Must(checker ...MustChecker) bool {
 	mapper[MUST_CONTAINS] = a.MustContain
 	mapper[MUST_EQUAL_ERROR] = a.MustEqualError
 	mapper[MUST_EQUAL_FLOAT] = a.MustEqualFloat
+	mapper[MUST_EQUAL_REGEX] = a.MustEqualRegex
 	mapper[MUST_CONTAINS_ERROR] = a.MustContainError
 
 	for _, c := range checker {

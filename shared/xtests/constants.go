@@ -13,6 +13,7 @@ const (
 	MUST_EQUAL_STRING   = "equal-string"
 	MUST_EQUAL_ERROR    = "equal-error"
 	MUST_EQUAL_FLOAT    = "equal-float"
+	MUST_EQUAL_REGEX    = "equal-regex"
 	MUST_GREATER_THAN   = "greater-than"
 	MUST_LESS_THAN      = "less-than"
 	MUST_CONTAINS       = "contain"
