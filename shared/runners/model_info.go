@@ -5,6 +5,16 @@ import (
 	"time"
 )
 
+type Status string
+
+const (
+	INITIAL  Status = "initial"
+	DISABLED Status = "disabled"
+	SUCCESS  Status = "success"
+	ERROR    Status = "error"
+	INVALID  Status = "invalid"
+)
+
 type Information struct {
 	name     string
 	status   Status
@@ -20,18 +30,8 @@ func (i *Information) Status() Status {
 	return i.status
 }
 
-func (i *Information) Run(err error) *Information {
-	if !i.IsInitial() {
-		return i
-	}
-
-	if err != nil {
-		i.SetStatus(ERROR)
-		i.err = err
-	} else {
-		i.SetStatus(SUCCESS)
-	}
-	return i
+func (i *Information) Error() error {
+	return i.err
 }
 
 func (i *Information) Duration() time.Duration {
@@ -47,6 +47,7 @@ func (i *Information) SetError(err error) *Information {
 	return i
 }
 
+// Set first time only, if status was set nothing changes
 func (i *Information) SetStatus(status Status) *Information {
 	if !i.IsInitial() {
 		return i
@@ -56,8 +57,13 @@ func (i *Information) SetStatus(status Status) *Information {
 	return i
 }
 
-func (i *Information) SetDuration(startTime time.Time) *Information {
+func (i *Information) CalDuration(startTime time.Time) *Information {
 	i.duration = time.Since(startTime)
+	return i
+}
+
+func (i *Information) SetDuration(duration time.Duration) *Information {
+	i.duration = duration
 	return i
 }
 
