@@ -5,7 +5,7 @@ import "time"
 type Runner struct {
 	Name      string
 	Context   *Context
-	validator Executor
+	validator Validator
 	executor  Executor
 }
 
@@ -23,17 +23,25 @@ func (r *Runner) Run() *Information {
 	var information = NewInformation(r.Name)
 	var startTime = time.Now()
 
+	// Check `Disabled` before user .Run() runner
 	if r.Context.Disabled {
 		return information.
-			SetDuration(startTime).
+			CalDuration(startTime).
 			SetStatus(DISABLED)
 	}
 
 	var err = r.validator(r.Context)
+	// Check `Disabled` status again after run validator
+	if r.Context.Disabled {
+		return information.
+			CalDuration(startTime).
+			SetStatus(DISABLED)
+	}
+
 	if err != nil {
 		return information.
 			SetError(err).
-			SetDuration(startTime).
+			CalDuration(startTime).
 			SetStatus(INVALID)
 	}
 
@@ -41,16 +49,16 @@ func (r *Runner) Run() *Information {
 	if err != nil {
 		return information.
 			SetError(err).
-			SetDuration(startTime).
+			CalDuration(startTime).
 			SetStatus(ERROR)
 	}
 
 	return information.
-		SetDuration(startTime).
+		CalDuration(startTime).
 		SetStatus(SUCCESS)
 }
 
-func NewRunner(name string, validator, executor Executor) *Runner {
+func NewRunner(name string, validator Validator, executor Executor) *Runner {
 	return &Runner{
 		Name:      name,
 		Context:   NewContext(name),
