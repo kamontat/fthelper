@@ -2,6 +2,7 @@ package fs
 
 import (
 	"os"
+	"strings"
 
 	"github.com/kamontat/fthelper/shared/loggers"
 )
@@ -15,7 +16,7 @@ const (
 )
 
 func ToType(s string) (Type, bool) {
-	switch s {
+	switch strings.ToLower(s) {
 	case "auto":
 		return AUTO, true
 	case "file", "f":

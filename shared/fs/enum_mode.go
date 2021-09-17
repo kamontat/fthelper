@@ -1,5 +1,7 @@
 package fs
 
+import "strings"
+
 type Mode string
 
 const (
@@ -8,7 +10,7 @@ const (
 )
 
 func ToMode(s string) (Mode, bool) {
-	switch s {
+	switch strings.ToLower(s) {
 	case "single", "s":
 		return SINGLE, true
 	case "multiple", "mul", "m":
