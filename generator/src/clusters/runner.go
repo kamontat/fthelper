@@ -44,7 +44,9 @@ func NewRunnerV2(data, mapper maps.Mapper, executor Executor, setting *Settings)
 					param.Data.Set("cluster", cluster)
 					// 2. Add data to config
 					param.Config.Set("data", param.Data)
-					// 3. Override config with cluster
+					// 3. Add cluster name to variables, for in file system template
+					param.Config.Set("variables.cluster", cluster)
+					// 4. Override config with cluster
 					param.Config = configs.BuildClusterConfig(cluster, param.Config)
 
 					var err = executor(param)
