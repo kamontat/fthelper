@@ -3,6 +3,15 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### 2. Performance Improvements
+- **shared:** improve runner to handle disabled in validator function
+- **shared:** remove unused code in runner and make information as data model
+- **shared:** avoid using same function on validator and executor
+- **shared:** move summary name to constant
+
+### 3. Bug Fixes
+- **shared:** remove unused code to reduce code size
+
 
 <a name="v5.0.0-beta.12"></a>
 ## [v5.0.0-beta.12] - 2021-08-24
