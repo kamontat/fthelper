@@ -5,6 +5,7 @@ import (
 
 	"github.com/kamontat/fthelper/shared/datatype"
 	"github.com/kamontat/fthelper/shared/loggers"
+	"github.com/kamontat/fthelper/shared/utils"
 )
 
 var avoid = []string{"$schema", "#comment#"}
@@ -42,7 +43,12 @@ func Merge(a, b map[string]interface{}, strategy Mapper) map[string]interface{} 
 		}
 
 		if !replaced {
-			log.Debug("merging key=%s from %v -> %v", key, a[key], value)
+			// mask map value string
+			log.Debug("merging key=%s from %s -> %s",
+				key,
+				utils.MaskString(datatype.ForceString(a[key]), utils.MEDIUM),
+				utils.MaskString(datatype.ForceString(value), utils.MEDIUM),
+			)
 			a[key] = value
 		}
 	}
