@@ -51,14 +51,13 @@ var Internal = collectors.NewMetrics(
 	collectors.NewMetric(
 		prometheus.NewDesc(
 			prometheus.BuildFQName("fthelper", "internal", "warmup"),
-			"Success rate of warmup process (0.0-1.0)",
+			"Success rate of warmup process (0.0-1.0). Negative number meaning warmup is disabled",
 			nil,
 			nil,
 		),
 		func(desc *prometheus.Desc, connector connection.Connector, param *commands.ExecutorParameter) []prometheus.Metric {
 			var data = caches.Global.Get(constants.WARMUP_SUCCEESS_RATE).Data
 			if data == nil {
-				param.Logger.Info("skip 'internal_warmup' because success rate is nil")
 				return emptyMetrics
 			}
 

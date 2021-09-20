@@ -55,6 +55,9 @@ func WarmupJob(ctx context.Context, p *commands.ExecutorParameter, connectors []
 				)
 			}
 		}, duration)
+	} else {
+		// If warmup is disabled, the success rate will be negative number
+		caches.Global.Update(constants.WARMUP_SUCCEESS_RATE, -1, caches.Persistent)
 	}
 
 	return worker
