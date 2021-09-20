@@ -56,7 +56,7 @@ func (h *Handler) String() string {
 	var str strings.Builder
 
 	if h.HasError() {
-		str.WriteString(fmt.Sprintf("found '%d' errors (%d)\n", h.Length(), h.Total()))
+		str.WriteString(fmt.Sprintf("found '%d' errors (total=%d)\n", h.Length(), h.Total()))
 		for _, err := range h.errors {
 			str.WriteString(fmt.Sprintf("- %s\n", err.Error()))
 		}
