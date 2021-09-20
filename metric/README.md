@@ -85,3 +85,9 @@ Below is a steps for setup multiple clusters mode
    3. Set by arguments: `_.1A.freqtrade.http.url=http://localhost:8081`
 
 You will find default value of config file [here](./configs/common.json) and example value for environment [here](./.env.default)
+
+## Example
+
+1. example config - ./configs/common.json
+2. example environment value - ./.env.example
+3. example docker-compose - ./example/docker-compose.yml
