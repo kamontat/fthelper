@@ -43,12 +43,17 @@ func Merge(a, b map[string]interface{}, strategy Mapper) map[string]interface{} 
 		}
 
 		if !replaced {
+			var oldValue = utils.MaskString(datatype.ForceString(a[key]), utils.MEDIUM)
+			var newValue = utils.MaskString(datatype.ForceString(value), utils.MEDIUM)
 			// mask map value string
-			log.Debug("merging key=%s from %s -> %s",
-				key,
-				utils.MaskString(datatype.ForceString(a[key]), utils.MEDIUM),
-				utils.MaskString(datatype.ForceString(value), utils.MEDIUM),
-			)
+			if oldValue != newValue {
+				log.Debug("merging key=%s from %s -> %s",
+					key,
+					oldValue,
+					newValue,
+				)
+			}
+
 			a[key] = value
 		}
 	}
