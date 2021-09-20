@@ -5,7 +5,7 @@
 - all @deprecated fields has been removed
 - completely redesign multiclusters mode
   - to specify clusters, either `--clusters <name>` or `FTH_CLUSTERS`
-  - setup cluster config will use `FTC_<CLUSTER_NAME>` instead
+  - setup cluster config will use `FTC_<CLUSTER_NAME>` instead of `FTH_CLUSTER_<CLUSTER_NAME>`
 - freqtrade config separate between `http` and `db`
 - move `freqtrade.query` to `freqtrade.http.query`
 - remove `freqtrade.cluster`, if you didn't specify cluster name fallback to empty string
