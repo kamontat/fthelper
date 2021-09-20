@@ -88,6 +88,6 @@ You will find default value of config file [here](./configs/common.json) and exa
 
 ## Example
 
-1. example config - ./configs/common.json
-2. example environment value - ./.env.example
-3. example docker-compose - ./example/docker-compose.yml
+1. example config - [./configs/common.json](./configs/common.json)
+2. example environment value - [./.env.example](./.env.example)
+3. example docker-compose - [./example/docker-compose.yml](./example/docker-compose.yml)
