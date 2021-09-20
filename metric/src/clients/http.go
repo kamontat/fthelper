@@ -78,7 +78,7 @@ func (c *Http) Call(method, name string, body io.Reader) (*http.Response, error)
 	}
 	c.logger.Debug("request: %s %s", req.Method, req.URL.String())
 
-	caches.Global.Increase(HTTP_CALL + c.Cluster)
+	caches.Global.Increase(caches.Join(HTTP_CALL, c.Cluster))
 	resp, err := http.DefaultClient.Do(req)
 	if err == nil &&
 		resp.StatusCode != http.StatusOK &&
@@ -88,10 +88,10 @@ func (c *Http) Call(method, name string, body io.Reader) (*http.Response, error)
 	}
 
 	if err == nil {
-		caches.Global.Increase(HTTP_SUCCESS + c.Cluster)
+		caches.Global.Increase(caches.Join(HTTP_SUCCESS, c.Cluster))
 	} else {
 		c.logger.Debug("error: %s", err.Error())
-		caches.Global.Increase(HTTP_FAILURE + c.Cluster)
+		caches.Global.Increase(caches.Join(HTTP_FAILURE, c.Cluster))
 	}
 
 	return resp, err

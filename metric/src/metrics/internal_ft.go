@@ -11,7 +11,7 @@ import (
 
 func callerClusterBuilder(desc *prometheus.Desc, cacheKey, cluster string) []prometheus.Metric {
 	var cache = caches.Global
-	var data = cache.Get(cacheKey + cluster)
+	var data = cache.Get(caches.Join(cacheKey, cluster))
 	var metric = 0
 	if data.IsExist() {
 		metric = data.Data.(int)

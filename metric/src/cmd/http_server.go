@@ -40,6 +40,6 @@ func HttpServer(p *commands.ExecutorParameter, connectors []connection.Connector
 		routes.Version,
 	)
 
-	p.Logger.Info("Start server at 0.0.0.0:%.0f", serverPort)
+	p.Logger.Info("Start server at http://localhost:%.0f", serverPort)
 	return http.ListenAndServe(fmt.Sprintf(":%.0f", serverPort), nil)
 }

@@ -68,7 +68,7 @@ func (c *cache) Connect(name string) (interface{}, error) {
 		return nil, fmt.Errorf("you forget to set cache duration for '%s'", name)
 	}
 
-	caches.Global.Increase(CACHE_TOTAL + c.Cluster())
+	caches.Global.Increase(caches.Join(CACHE_TOTAL, c.Cluster()))
 	updated, _ := c.service.Fetch(name, func(o interface{}) (interface{}, error) {
 		var data = c.service.Get(name)
 		if data.IsExist() {
@@ -79,7 +79,7 @@ func (c *cache) Connect(name string) (interface{}, error) {
 		return c.connector.Connect(name)
 	}, expiredAt)
 	if updated {
-		caches.Global.Increase(CACHE_MISS + c.Cluster())
+		caches.Global.Increase(caches.Join(CACHE_MISS, c.Cluster()))
 	}
 
 	var data = c.service.Get(name)

@@ -1,6 +1,10 @@
 package caches
 
-import "time"
+import (
+	"time"
+
+	"github.com/kamontat/fthelper/shared/utils"
+)
 
 // parseDuration will panic if format error
 func parseDuration(s string) time.Duration {
@@ -14,4 +18,9 @@ func parseDuration(s string) time.Duration {
 	}
 
 	return d
+}
+
+// Join multiple cache name together
+func Join(names ...string) string {
+	return utils.JoinString(".", names...)
 }
