@@ -71,7 +71,7 @@ func TestDisableRunner(t *testing.T) {
 		return nil
 	})
 	assertion.NewName("get result information").
-		WithExpected("^message: disabled \\(([0-9]+[nµ]s)\\)$").
+		WithExpected("^message: disabled \\(([0-9]+[nµ]?s)\\)$").
 		WithActual(before.Disable(true).Run().String()).
 		MustEqualRegex()
 	assertion.NewName("counter is not increase").
