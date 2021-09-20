@@ -21,7 +21,11 @@ func (c *Connection) String() string {
 }
 
 func NewConnections(config maps.Mapper) ([]*Connection, error) {
-	var clusters = config.Ao("clusters", []interface{}{""})
+	var clusters = config.Ai("clusters")
+	if len(clusters) < 1 {
+		// If cluster is missing append empty cluster as default value
+		clusters = append(clusters, "")
+	}
 
 	var connections = make([]*Connection, 0)
 	for _, raw := range clusters {
