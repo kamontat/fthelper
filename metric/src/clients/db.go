@@ -23,7 +23,22 @@ type Database struct {
 	username   string
 	password   string
 
-	logger *loggers.Logger
+	// strict mode will force application to panic stop if connection to database is failed
+	strictMode bool
+	logger     *loggers.Logger
+}
+
+// If error occurred
+// 1. throw error if strict mode
+// 2. log error message and disabled database silently
+func (c *Database) handleError(err error) error {
+	if c.strictMode {
+		return err
+	}
+
+	c.Enabled = false
+	c.logger.Error(err.Error())
+	return nil
 }
 
 func (c *Database) Initial() error {
@@ -33,7 +48,8 @@ func (c *Database) Initial() error {
 	}
 
 	if c.Type != "postgres" {
-		return fmt.Errorf("current database only support 'postgres' type")
+		var err = fmt.Errorf("current database only support 'postgres' type")
+		return c.handleError(err)
 	}
 
 	conn, err := pgxpool.Connect(
@@ -42,7 +58,7 @@ func (c *Database) Initial() error {
 		fmt.Sprintf("postgres://%s:%s@%s/%s", c.username, c.password, c.url, c.dbname),
 	)
 	if err != nil {
-		return err
+		return c.handleError(err)
 	}
 
 	c.connection = conn
@@ -56,10 +72,12 @@ func (c *Database) Cleanup() error {
 	return nil
 }
 
+// TODO: result empty result if database is disabled
 func (c *Database) Query(query string, args ...interface{}) pgx.Row {
 	return c.connection.QueryRow(c.context, query, args...)
 }
 
+// TODO: result empty result if database is disabled
 func (c *Database) Queries(query string, args ...interface{}) (pgx.Rows, error) {
 	return c.connection.Query(c.context, query, args...)
 }
@@ -112,6 +130,7 @@ func NewDatabase(cluster string, config maps.Mapper) (*Database, error) {
 		username:   username,
 		password:   password,
 
-		logger: loggers.Get("client", "db", cluster),
+		strictMode: config.Bi("strict-mode"),
+		logger:     loggers.Get("client", "db", cluster),
 	}, nil
 }

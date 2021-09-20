@@ -22,11 +22,26 @@ type Http struct {
 	username string
 	password string
 
-	logger *loggers.Logger
+	// strict mode will force application to panic stop if connection to http server is failed
+	strictMode bool
+	logger     *loggers.Logger
+}
+
+// If error occurred
+// 1. throw error if strict mode
+// 2. log error message and disabled database silently
+func (c *Http) handleError(err error) error {
+	if c.strictMode {
+		return err
+	}
+
+	c.Enabled = false
+	c.logger.Error(err.Error())
+	return nil
 }
 
 func (c *Http) Initial() error {
-	return c.GET("ping", make(maps.Mapper))
+	return c.handleError(c.GET("ping", make(maps.Mapper)))
 }
 
 func (c *Http) Request(method, name string, body io.Reader) (*http.Request, error) {
@@ -142,6 +157,7 @@ func NewHttp(cluster string, config maps.Mapper) (*Http, error) {
 		username: username,
 		password: password,
 
-		logger: loggers.Get("client", "http", cluster),
+		strictMode: config.Bi("strict-mode"),
+		logger:     loggers.Get("client", "http", cluster),
 	}, nil
 }
