@@ -41,7 +41,8 @@ func (c *Http) handleError(err error) error {
 }
 
 func (c *Http) Initial() error {
-	return c.handleError(c.GET("ping", make(maps.Mapper)))
+	var target = make(maps.Mapper)
+	return c.handleError(c.GET("ping", &target))
 }
 
 func (c *Http) Request(method, name string, body io.Reader) (*http.Request, error) {
