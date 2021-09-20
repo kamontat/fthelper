@@ -4,6 +4,8 @@
 ## [Unreleased]
 
 ### 2. Performance Improvements
+- **gen:** support .cluster in fs template
+- **shared:** type and mode of fs will be case insensitive
 - **shared:** improve runner to handle disabled in validator function
 - **shared:** remove unused code in runner and make information as data model
 - **shared:** avoid using same function on validator and executor
