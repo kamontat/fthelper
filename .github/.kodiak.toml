@@ -4,7 +4,7 @@ version = 1
 [merge]
 # By default, Kodiak will only act on PRs that have this label. You can disable
 # this requirement via `merge.require_automerge_label`.
-automerge_label = "" # default: "automerge"
+automerge_label = "" # default: "Trigger: automerge"
 
 # Require that the automerge label (`merge.automerge_label`) be set for Kodiak
 # to merge a PR.

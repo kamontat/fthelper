@@ -13,8 +13,7 @@ updates:
       day: friday
     labels:
       - "dependabot"
-      - "go"
-      - "generator"
+      - "Module: generator"
 
   - package-ecosystem: gomod
     directory: "/metric"
@@ -24,8 +23,7 @@ updates:
       day: friday
     labels:
       - "dependabot"
-      - "go"
-      - "metric"
+      - "Module: metric"
 
   - package-ecosystem: "github-actions"
     directory: "/"
