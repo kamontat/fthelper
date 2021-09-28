@@ -39,6 +39,6 @@ jobs:
       - name: Create Pull request
         run: |
           gh auth status
-          gh pr create --title "chore: release note ($(date +'%y%m%d'))" --label "release-note" --fill
+          gh pr create --title "chore: release note ($(date +'%y%m%d'))" --label "Type: Release" --fill
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
