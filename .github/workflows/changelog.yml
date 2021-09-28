@@ -34,7 +34,7 @@ jobs:
           branch_name="release/$(date +'%y%m%d')"
 
           git checkout -b "$branch_name"
-          git commit -am "chore: auto generate changelog [skip-ci]"
+          git commit -am "chore: auto generate changelog [skip ci]"
           git push --set-upstream origin "$branch_name"
       - name: Create Pull request
         run: |
