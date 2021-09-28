@@ -26,7 +26,9 @@ func TestVersion(t *testing.T) {
 		xtests.NewCase("major version", "1.0.0", float64(10000)),
 		xtests.NewCase("mixed version", "1.2.11", float64(10211)),
 		xtests.NewCase("two digit", "1.10.10", float64(11010)),
+		xtests.NewCase("alpha prerelease", "1.1.1-alpha.1", float64(10101.101)),
 		xtests.NewCase("beta prerelease", "1.1.1-beta.1", float64(10101.201)),
+		xtests.NewCase("rc prerelease", "1.1.1-rc.1", float64(10101.301)),
 
 		xtests.NewCase("invalid", "x.x.x", -1),
 		xtests.NewCase("invalid prerelease", "1.1.1-test.1", -1),

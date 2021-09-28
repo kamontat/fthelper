@@ -2,12 +2,17 @@ package utils
 
 import (
 	"fmt"
+	"math"
 	"strings"
 )
 
 func TrimString(str string, limit int) string {
+	var dot = "..."
+	var dotSize = len(dot)
+	var realLimit = math.Max(0, float64(limit-dotSize))
+
 	if len(str) > limit {
-		return str[0:limit]
+		return str[0:int(realLimit)] + dot
 	}
 	return str
 }
@@ -55,16 +60,16 @@ func maskString(dot rune, prefix int, s string, suffix int, max int) string {
 	return string(rs)
 }
 
-// mask last 20% of string
+// mask last 35% of string
 func lowMaskString(s string) string {
-	var percent = 0.2
+	var percent = 0.35
 
 	var size = len(s)
 	var mask = int(percent * float64(size))
 	return maskString('*', size-mask, s, 0, -1)
 }
 
-// mask last 80% of string but remain last 15% as unmask
+// mask last 80% of string but remain last 15% unmask
 func mediumMaskString(s string) string {
 	var percent = 0.8
 	var remain = 0.15
@@ -76,18 +81,18 @@ func mediumMaskString(s string) string {
 	return maskString('*', size-mask, s, remainMask, -1)
 }
 
-// mask last 90% of string but remain last 5% as unmask
-// and max dot to only 3
+// mask last 80% of string but remain last 10% unmask
+// and limit max dot to only 3
 func highMaskString(s string) string {
-	var percent = 0.90
-	var remain = 0.05
+	var percent = 0.8
+	var remain = 0.10
 	var maxdot = 3
 
 	var size = len(s)
 	var mask = int(percent * float64(size))
 	var remainMask = int(remain * float64(size))
 
-	return maskString('.', size-mask, s, remainMask, maxdot)
+	return maskString('*', size-mask, s, remainMask, maxdot)
 }
 
 func MaskString(s string, sensitive MaskLevel) string {
