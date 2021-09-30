@@ -30,4 +30,19 @@ func TestJoin(t *testing.T) {
 		WithExpected("").
 		WithActualAndError(xtemplates.Text(`{{ join }}`, maps.New())).
 		MustEqual()
+
+	assertion.NewName("joining empty array").
+		WithExpected("").
+		WithActualAndError(xtemplates.Text(`{{ joinArray .a }}`, maps.New().Set("a", []interface{}{}))).
+		MustEqual()
+
+	assertion.NewName("joining array error when not parameter").
+		WithExpected("wrong number of args for joinArray").
+		WithActualAndError(xtemplates.Text(`{{ joinArray }}`, maps.New())).
+		MustContainError()
+
+	assertion.NewName("joining array").
+		WithExpected("a,b,c").
+		WithActualAndError(xtemplates.Text(`{{ joinArray .a }}`, maps.New().Set("a", []interface{}{"a", "b", "c"}))).
+		MustEqual()
 }
