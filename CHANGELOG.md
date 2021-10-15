@@ -3,8 +3,30 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v5.0.0-beta.14"></a>
+## [v5.0.0-beta.14] - 2021-09-20
+
+### 2. Performance Improvements
+- **shared:** improve how cache join together with new caches.Join apis
+
+### 3. Bug Fixes
+- **metric:** http strict-mode panic always failed because non-pointer is passed
+- **metric:** single mode didn't work properly because connection didn't create correctly
+
+
+<a name="v5.0.0-beta.13"></a>
+## [v5.0.0-beta.13] - 2021-09-20
+
+### 1. Features
+- **metric:** new 'strict-mode' to panic stop server if it cannot connect to freqtrade
+
 ### 2. Performance Improvements
 - **gen:** support .cluster in fs template
+- **metric:** remove annoy log when user disable warmup
+- **shared:** add more information in aggreegate error message
+- **shared:** improve merger log by reduce duplicate assign value
+- **shared:** mask some of map:merger log to reduce security leak [#26](https://github.com/kamontat/fthelper/issues/26)
 - **shared:** type and mode of fs will be case insensitive
 - **shared:** improve runner to handle disabled in validator function
 - **shared:** remove unused code in runner and make information as data model
@@ -12,6 +34,9 @@
 - **shared:** move summary name to constant
 
 ### 3. Bug Fixes
+- **metric:** update example env to match with new environment variable
+- **shared:** update test of error aggregator output
+- **shared:** test fail on CI
 - **shared:** remove unused code to reduce code size
 
 
@@ -616,7 +641,9 @@
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.12...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.14...HEAD
+[v5.0.0-beta.14]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.13...v5.0.0-beta.14
+[v5.0.0-beta.13]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.12...v5.0.0-beta.13
 [v5.0.0-beta.12]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.11...v5.0.0-beta.12
 [v5.0.0-beta.11]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.10...v5.0.0-beta.11
 [v5.0.0-beta.10]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.9...v5.0.0-beta.10
