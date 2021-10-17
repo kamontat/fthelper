@@ -8,6 +8,7 @@ type Assertions struct {
 
 func (a *Assertions) New() *Assertion {
 	return &Assertion{
+		enabled:  true,
 		name:     "",
 		desc:     "",
 		actual:   nil,
@@ -19,6 +20,7 @@ func (a *Assertions) New() *Assertion {
 
 func (a *Assertions) NewName(name string) *Assertion {
 	return &Assertion{
+		enabled:  true,
 		name:     name,
 		desc:     "",
 		actual:   nil,
