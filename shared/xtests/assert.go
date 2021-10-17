@@ -12,6 +12,7 @@ import (
 )
 
 type Assertion struct {
+	enabled  bool
 	name     string
 	desc     string
 	actual   interface{}
@@ -19,6 +20,11 @@ type Assertion struct {
 	err      error
 
 	T *testing.T
+}
+
+func (a *Assertion) Disabled() *Assertion {
+	a.enabled = false
+	return a
 }
 
 func (a *Assertion) WithDesc(s string) *Assertion {
@@ -65,8 +71,14 @@ func (a *Assertion) wrapper(ok bool) bool {
 }
 
 func (a *Assertion) mustName(suffix string, fn func(t *testing.T) bool) bool {
+	var name = a.name + suffix
+	if !a.enabled {
+		a.T.Logf("you disabled testcase: %s", name)
+		return false
+	}
+
 	if a.name != "" || suffix != "" {
-		return a.T.Run(a.name+suffix, func(t *testing.T) {
+		return a.T.Run(name, func(t *testing.T) {
 			a.wrapper(fn(t))
 		})
 	}

@@ -24,10 +24,12 @@ func BuildClusterConfig(cluster string, config maps.Mapper) maps.Mapper {
 		return config
 	}
 
-	// We check both cluster directly and cluster with lower case
-	// for user who setup from environment variable, which cannot setup with upper case
-	var c, _ = config.Mi("_").Gets(cluster, strings.ToLower(cluster))
-	var clusterConfig, _ = maps.ToMapper(c)
+	// We check cluster as case-insensitive
+	// TODO: move this code to when we write cluster key in map, it will reduce significant number of calculate
+	var underscroll = config.Mi("_")
+	var c1 = underscroll.Mi(cluster)
+	var c2 = underscroll.Mi(strings.ToLower(cluster))
+	var c3 = underscroll.Mi(strings.ToUpper(cluster))
 
-	return maps.Merger(config).Add(clusterConfig).Merge()
+	return maps.Merger(config).Add(c1).Add(c2).Add(c3).Merge()
 }

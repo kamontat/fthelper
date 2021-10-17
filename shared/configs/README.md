@@ -87,3 +87,8 @@ command_cli \
   "hello=message with space" \
   number=10
 ```
+
+## Limitation
+
+1. You should not use underscroll in any place except for clustering purpose
+     - We cannot determine whether that underscroll is actual underscroll or dash

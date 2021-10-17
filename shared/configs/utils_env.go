@@ -6,15 +6,15 @@ import (
 )
 
 func IsEnvKey(k string) bool {
-	return strings.HasPrefix(k, ENV_PREFIX)
+	return strings.HasPrefix(k, ENV_PREFIX+"_")
 }
 
 func IsCEnvKey(k string) bool {
-	return strings.HasPrefix(k, ENV_CUSTOM_PREFIX)
+	return strings.HasPrefix(k, ENV_CUSTOM_PREFIX+"_")
 }
 
 func EnvToKey(c string) (string, bool) {
-	if !IsCEnvKey(c) && !IsEnvKey(c) {
+	if (!IsCEnvKey(c) && !IsEnvKey(c)) || strings.Contains(c, "___") {
 		return "", false
 	}
 
@@ -30,9 +30,12 @@ func EnvToKey(c string) (string, bool) {
 	if IsCEnvKey(c) {
 		output = "_." + output
 	}
+
 	return strings.ToLower(output), true
 }
 
+// NOTE: ou should not use _ as a key, since we cannot parse underscroll back after it created environment variable
+// Please use - (dash) instead
 func KeyToEnv(key string) string {
 	if key[0] == '_' {
 		var result = fmt.Sprintf("%s-%s", ENV_CUSTOM_PREFIX, key[2:])
