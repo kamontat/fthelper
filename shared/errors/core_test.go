@@ -29,9 +29,19 @@ func TestErrorHandler(t *testing.T) {
 		WithActual(errors.New().And(Mock()).And(nil).Length()).
 		MustEqual()
 
-	assertion.NewName("has error").
+	assertion.NewName("and error").
 		WithExpected(true).
 		WithActual(errors.New().And(Mock()).And(nil).HasError()).
+		MustEqual()
+
+	var data, err = errors.New().AndD("string", Mock())
+	assertion.NewName("andD return error").
+		WithExpected(true).
+		WithActual(err.HasError()).
+		MustEqual()
+	assertion.NewName("andD return data").
+		WithExpected("string").
+		WithActual(data).
 		MustEqual()
 
 	assertion.NewName("merging").
@@ -61,4 +71,15 @@ func TestErrorHandler(t *testing.T) {
 		WithExpected(`not found any errors`).
 		WithActual(errors.New().String()).
 		MustEqual()
+
+	assertion.NewName("get error - when no error").
+		WithActual(errors.New().Error()).
+		MustBeNil()
+
+	assertion.NewName("get error - when has error").
+		WithExpected(`found '1' errors (total=1)
+- this is error message
+`).
+		WithError(errors.New().And(fmt.Errorf("this is error message")).Error()).
+		MustEqualError()
 }
