@@ -31,8 +31,12 @@ func (h *Handler) And(errs ...error) *Handler {
 	return h
 }
 
-func (h *Handler) AndD(_ interface{}, err error) *Handler {
-	return h.And(err)
+// AndD will help user to not need variable for checking error
+// For example if method return (string, error)
+// instead create variable and pass only error to And method you can pass entirely to this function
+// and use error handler to handle error instead
+func (h *Handler) AndD(data interface{}, err error) (interface{}, *Handler) {
+	return data, h.And(err)
 }
 
 func (h *Handler) Merge(nh *Handler) *Handler {
