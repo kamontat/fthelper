@@ -77,7 +77,9 @@ func TestErrorHandler(t *testing.T) {
 		MustBeNil()
 
 	assertion.NewName("get error - when has error").
-		WithExpected("this is error message").
+		WithExpected(`found '1' errors (total=1)
+- this is error message
+`).
 		WithError(errors.New().And(fmt.Errorf("this is error message")).Error()).
 		MustEqualError()
 }
