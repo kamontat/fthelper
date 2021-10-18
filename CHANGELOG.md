@@ -3,6 +3,9 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### 3. Bug Fixes
+- **shared:** add more coverage on configs modules ([#34](https://github.com/kamontat/fthelper/issues/34))
+
 
 <a name="v5.0.0-beta.14"></a>
 ## [v5.0.0-beta.14] - 2021-09-20
