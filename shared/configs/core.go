@@ -8,7 +8,6 @@ import (
 func New(name string, config maps.Mapper) *Builder {
 	return &Builder{
 		name:     name,
-		env:      "",
 		config:   config,
 		override: maps.New(),
 		strategy: maps.New(),
