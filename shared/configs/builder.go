@@ -12,7 +12,6 @@ import (
 
 type Builder struct {
 	name     string
-	env      string
 	config   maps.Mapper
 	override maps.Mapper
 	strategy maps.Mapper
@@ -21,11 +20,6 @@ type Builder struct {
 
 func (b *Builder) Strategy(strategy maps.Mapper) *Builder {
 	b.strategy = strategy
-	return b
-}
-
-func (b *Builder) Environment(name string) *Builder {
-	b.env = name
 	return b
 }
 
@@ -79,7 +73,7 @@ func (b *Builder) updateResult(t string, base, input maps.Mapper) {
 	})
 }
 
-func (b *Builder) Build() (maps.Mapper, error) {
+func (b *Builder) Build(environments []string) (maps.Mapper, error) {
 	var result = maps.Merger(maps.New()).Add(b.config).SetConfig(b.strategy).Merge()
 	b.logger.Debug("base configuration is %v", result)
 
@@ -105,7 +99,7 @@ func (b *Builder) Build() (maps.Mapper, error) {
 	})
 
 	// 2. override it with environment
-	fromEnv, err := LoadConfigFromEnv()
+	fromEnv, err := ParseConfigFromEnv(environments)
 	if err != nil {
 		return result, err
 	}
