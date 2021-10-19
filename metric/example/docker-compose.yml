@@ -14,7 +14,7 @@ services:
         --logfile "/freqtrade/user_data/logs/freqtrade.log"
         --config "/freqtrade/user_data/config.json"
     healthcheck:
-      test: ["CMD-SHELL", "python3 /freqtrade/scripts/rest_client.py --config /freqtrade/user_data/config-rest-.json version | grep -q version"]
+      test: ["CMD-SHELL", "python3 /freqtrade/scripts/rest_client.py --config /freqtrade/user_data/config-rest-.json version ping | grep -q pong"]
       interval: 30s
       timeout: 4s
       retries: 3
