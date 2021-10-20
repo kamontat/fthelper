@@ -35,8 +35,10 @@ func (c *Http) handleError(err error) error {
 		return err
 	}
 
-	c.Enabled = false
-	c.logger.Error(err.Error())
+	if err != nil {
+		c.Enabled = false
+		c.logger.Error(err.Error())
+	}
 	return nil
 }
 
