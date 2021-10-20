@@ -14,7 +14,7 @@ services:
         --logfile "/freqtrade/user_data/logs/freqtrade.log"
         --config "/freqtrade/user_data/config.json"
     healthcheck:
-      test: ["CMD-SHELL", "python3 /freqtrade/scripts/rest_client.py --config /freqtrade/user_data/config-rest-.json version | grep -q version"]
+      test: ["CMD-SHELL", "python3 /freqtrade/scripts/rest_client.py --config /freqtrade/user_data/config-rest.json version | grep -q version"]
       interval: 30s
       timeout: 4s
       retries: 3
@@ -25,7 +25,7 @@ services:
     container_name: ftmetric
     restart: on-failure
     environment:
-      - FTH_INTERNAL__LOG__LEVEL=3 # enabled info log
+      - FTH_INTERNAL__LOG__LEVEL=3 # 0=silent, 1=error, 2=warn, 3=info, 4=debug
 
       - FTH_FREQTRADE__HTTP__ENABLED=true
       - FTH_FREQTRADE__HTTP__URL=http://freqtrade:8080
