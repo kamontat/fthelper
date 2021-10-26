@@ -3,8 +3,31 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v5.0.0-beta.17"></a>
+## [v5.0.0-beta.17] - 2021-10-20
+
 ### 3. Bug Fixes
+- **metric:** nil pointer when error is not exist, but we still want to get it ([#40](https://github.com/kamontat/fthelper/issues/40))
+
+
+<a name="v5.0.0-beta.16"></a>
+## [v5.0.0-beta.16] - 2021-10-19
+
+### 3. Bug Fixes
+- **shared:** update several bug in configs and improve code coverage ([#37](https://github.com/kamontat/fthelper/issues/37))
 - **shared:** add more coverage on configs modules ([#34](https://github.com/kamontat/fthelper/issues/34))
+- **shared:** test failed because wrong output string
+
+
+<a name="v5.0.0-beta.15"></a>
+## [v5.0.0-beta.15] - 2021-10-19
+
+### 2. Performance Improvements
+- **shared:** update configs module when parse config from env
+
+### 3. Bug Fixes
+- **shared:** add more coverage on configs modules
 
 
 <a name="v5.0.0-beta.14"></a>
@@ -644,7 +667,10 @@
 - **init:** start new project
 
 
-[Unreleased]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.14...HEAD
+[Unreleased]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.17...HEAD
+[v5.0.0-beta.17]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.16...v5.0.0-beta.17
+[v5.0.0-beta.16]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.15...v5.0.0-beta.16
+[v5.0.0-beta.15]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.14...v5.0.0-beta.15
 [v5.0.0-beta.14]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.13...v5.0.0-beta.14
 [v5.0.0-beta.13]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.12...v5.0.0-beta.13
 [v5.0.0-beta.12]: https://github.com/kamontat/fthelper/compare/v5.0.0-beta.11...v5.0.0-beta.12
