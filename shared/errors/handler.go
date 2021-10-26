@@ -3,6 +3,7 @@ package errors
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 )
 
@@ -76,6 +77,16 @@ func (h *Handler) Error() error {
 		return errors.New(h.String())
 	}
 	return nil
+}
+
+func (h *Handler) Exit(n int) {
+	if h.HasError() {
+		os.Exit(n)
+	}
+}
+
+func (h *Handler) Exit1() {
+	h.Exit(1)
 }
 
 func (h *Handler) Panic() {
