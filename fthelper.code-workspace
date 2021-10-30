@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "path": "generator"
+    },
+    {
+      "path": "metric"
+    },
+    {
+      "path": "shared"
+    },
+    {
+      "path": "docker"
+    },
+    {
+      "path": "scripts"
+    },
+    {
+      "name": "root",
+      "path": "."
+    }
+  ]
+}
