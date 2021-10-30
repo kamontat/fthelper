@@ -9,6 +9,16 @@ body:
     attributes:
       value: |
         Please look into currently issue created to not duplicate the request
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      description: What module you refer to?
+      options:
+        - ftgenerator
+        - fthelper
+    validations:
+      required: true
   - type: textarea
     id: what-happened
     attributes:
@@ -27,13 +37,3 @@ body:
         Anything else I need to aware of?
     validations:
       required: false
-  - type: dropdown
-    id: module
-    attributes:
-      label: Module
-      description: What module you refer to?
-      options:
-        - ftgenerator
-        - fthelper
-    validations:
-      required: true
