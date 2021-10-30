@@ -50,4 +50,31 @@ func TestNormalQueue(t *testing.T) {
 			Enqueue(5).
 			Tail()).
 		MustEqual()
+
+	var queue = datatype.NewLimitQueue(3).
+		Enqueue(1).
+		Enqueue(2).
+		Enqueue(3)
+
+	assertion.NewName("should able to get first queue").
+		WithExpected(1).
+		WithActual(queue.Get()).
+		MustEqual()
+
+	assertion.NewName("should able to remove queue").
+		WithExpected(2).
+		WithActual(queue.Size()).
+		MustEqual()
+
+	var queue1 = datatype.NewLimitQueue(0)
+
+	assertion.NewName("should not able to get first queue").
+		WithExpected(nil).
+		WithActual(queue1.Get()).
+		MustEqual()
+
+	// assertion.NewName("should able to remove queue").
+	// 	WithExpected(nil).
+	// 	WithActual(queue1.Size()).
+	// 	MustEqual()
 }

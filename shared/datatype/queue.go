@@ -28,15 +28,26 @@ func (q *Queue) Enqueue(d interface{}) *Queue {
 func (q *Queue) Get() interface{} {
 	var data = q.Head()
 
-	// Remove data from first queue
-	q.internal[0] = nil // free memory
-	q.internal = q.internal[1:]
+	if data == nil {
+		return data
+	}
 
+	if data != nil {
+		// Remove data from first queue
+		q.internal[0] = nil // free memory
+		q.internal = q.internal[1:]
+
+	}
 	return data
 }
 
 // Head will get first queue but not change queue size
 func (q *Queue) Head() interface{} {
+
+	if q.Size() == 0 {
+		return nil
+	}
+
 	return q.internal[0]
 }
 
