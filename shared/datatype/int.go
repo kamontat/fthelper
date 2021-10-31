@@ -2,6 +2,7 @@ package datatype
 
 import "strconv"
 
+// ToInt will try to convert interface{} to integer
 func ToInt(i interface{}) (int64, bool) {
 	in, ok := i.(int)
 	if ok {
@@ -31,6 +32,7 @@ func ToInt(i interface{}) (int64, bool) {
 	return -1, false
 }
 
+// ForceInt will force to convert interface{} to integer
 func ForceInt(inf interface{}) (int64, bool) {
 	var i, ok = ToInt(inf)
 	if ok {

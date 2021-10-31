@@ -60,6 +60,7 @@ func ToArray(a interface{}) ([]interface{}, bool) {
 	return make([]interface{}, 0), false
 }
 
+// ForceArray will force to convert interface{} to array of interface{}
 func ForceArray(i interface{}) []interface{} {
 	if a, ok := ToArray(i); ok {
 		return a
