@@ -1,5 +1,6 @@
-name: 'Close stale issues and PRs'
+name: StaleBot
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 3 * * 1' # https://crontab.guru/#0_3_*_*_1
 
@@ -25,4 +26,3 @@ jobs:
           stale-pr-label: 'Status: Stale'
           close-pr-label: 'Trigger: Close'
           exempt-pr-labels: 'Status: Whitelist,Status: NEW'
-          exempt-draft-pr: true
