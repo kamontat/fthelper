@@ -26,4 +26,3 @@ jobs:
           stale-pr-label: 'Status: Stale'
           close-pr-label: 'Trigger: Close'
           exempt-pr-labels: 'Status: Whitelist,Status: NEW'
-          exempt-draft-pr: true
