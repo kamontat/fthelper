@@ -44,30 +44,37 @@ func (q *Queue) Head() interface{} {
 	return q.internal[0]
 }
 
+// Tail will get last queue but not change queue size
 func (q *Queue) Tail() interface{} {
 	return q.internal[q.Size()-1]
 }
 
+// Size will get the size of queue
 func (q *Queue) Size() int {
 	return len(q.internal)
 }
 
+// Empty will check whether queue empty or not
 func (q *Queue) Empty() bool {
 	return q.Size() == 0
 }
 
+// NewQueue will create new infinity queue
 func NewQueue() *Queue {
 	return NewLimitQueue(-1)
 }
 
+// NewLimitQueue will create new limit queue
 func NewLimitQueue(size int) *Queue {
 	return ToLimitQueue(size, make([]interface{}, 0))
 }
 
+// ToQueue will try to convert array to queue
 func ToQueue(v []interface{}) *Queue {
 	return ToLimitQueue(-1, v)
 }
 
+// ToLimitQueue will try to convert array to limit queue
 func ToLimitQueue(size int, v []interface{}) *Queue {
 	return &Queue{
 		limit:    size,

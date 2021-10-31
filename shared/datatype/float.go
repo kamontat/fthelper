@@ -2,6 +2,7 @@ package datatype
 
 import "strconv"
 
+// ToFloat will try to convert interface{} to float
 func ToFloat(i interface{}) (float64, bool) {
 	f32, ok := i.(float32)
 	if ok {
@@ -16,6 +17,7 @@ func ToFloat(i interface{}) (float64, bool) {
 	return -1, false
 }
 
+// ForceFloat will force to convert interface{} to float
 func ForceFloat(i interface{}) (float64, bool) {
 	var f, ok = ToFloat(i)
 	if ok {
