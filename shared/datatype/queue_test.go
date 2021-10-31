@@ -73,8 +73,20 @@ func TestNormalQueue(t *testing.T) {
 		WithActual(queue1.Get()).
 		MustEqual()
 
-	// assertion.NewName("should able to remove queue").
-	// 	WithExpected(nil).
-	// 	WithActual(queue1.Size()).
-	// 	MustEqual()
+	assertion.NewName("should return true if it is empty").
+		WithExpected(true).
+		WithActual(datatype.NewLimitQueue(0).Empty()).
+		MustEqual()
+
+	assertion.NewName("should return false if it is not empty").
+		WithExpected(false).
+		WithActual(datatype.NewLimitQueue(1).Enqueue(1).Empty()).
+		MustEqual()
+
+	var array = []interface{}{1, 2}
+
+	assertion.NewName("should convert array to queue").
+		WithExpected(2).
+		WithActual(datatype.ToQueue(array).Size()).
+		MustDeepEqual()
 }

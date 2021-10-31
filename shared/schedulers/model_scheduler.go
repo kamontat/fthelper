@@ -6,11 +6,13 @@ import (
 	"time"
 )
 
+// Scheduler use for schedule the job
 type Scheduler struct {
 	wg            *sync.WaitGroup
 	cancellations []context.CancelFunc
 }
 
+// To add job and time for scheduler
 func (s *Scheduler) Add(c context.Context, j Job, interval time.Duration) {
 	var ctx, cancel = context.WithCancel(c)
 	s.cancellations = append(s.cancellations, cancel)
@@ -19,6 +21,7 @@ func (s *Scheduler) Add(c context.Context, j Job, interval time.Duration) {
 	go s.process(ctx, j, interval)
 }
 
+// To stop the scheduler
 func (s *Scheduler) Stop() {
 	for _, cancel := range s.cancellations {
 		cancel()
@@ -40,6 +43,7 @@ func (s *Scheduler) process(ctx context.Context, j Job, interval time.Duration) 
 	}
 }
 
+// To create new scheduler
 func New() *Scheduler {
 	return &Scheduler{
 		wg:            new(sync.WaitGroup),
