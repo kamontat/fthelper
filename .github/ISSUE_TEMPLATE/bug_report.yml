@@ -1,0 +1,54 @@
+name: Bug report
+description: File a bug report
+title: "[Bug]: "
+labels: ["Type: bug", "Status: NEW"]
+assignees:
+  - kamontat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      description: What module you refer to?
+      options:
+        - ftgenerator
+        - fthelper
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which version you using?
+      placeholder: v1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: config
+    attributes:
+      label: Docker compose configuration
+      description: |
+        Please copy and paste entirely configuration (DON'T forget to remove any credential).
+      render: yml
+    validations:
+      required: false
