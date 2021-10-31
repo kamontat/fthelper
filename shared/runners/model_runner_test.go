@@ -26,7 +26,7 @@ func TestBasicRunner(t *testing.T) {
 		MustEqual()
 
 	assertion.NewName("get result information").
-		WithExpected("^test: success \\(([0-9]+[nµ]s)\\)$").
+		WithExpected("^test: success \\(([0-9]+[nµ]?s)\\)$").
 		WithActual(runner.Run().String()).
 		MustEqualRegex()
 }
@@ -38,7 +38,7 @@ func TestInvalidRunner(t *testing.T) {
 		return errors.New("error message")
 	}, runners.NoExecutor)
 	assertion.NewName("get result information").
-		WithExpected("^name: invalid \\(([0-9]+[nµ]s)\\)$").
+		WithExpected("^name: invalid \\(([0-9]+[nµ]?s)\\)$").
 		WithActual(runner.Run().String()).
 		MustEqualRegex()
 }
@@ -50,7 +50,7 @@ func TestErrorRunner(t *testing.T) {
 		return errors.New("error message")
 	})
 	assertion.NewName("get result information").
-		WithExpected("^information: error \\(([0-9]+[nµ]s)\\)$").
+		WithExpected("^information: error \\(([0-9]+[nµ]?s)\\)$").
 		WithActual(runner.Run().String()).
 		MustEqualRegex()
 }
@@ -89,7 +89,7 @@ func TestDisableRunner(t *testing.T) {
 		return nil
 	})
 	assertion.NewName("get result information").
-		WithExpected("^validate: disabled \\(([0-9]+[nµ]s)\\)$").
+		WithExpected("^validate: disabled \\(([0-9]+[nµ]?s)\\)$").
 		WithActual(inValidate.Run().String()).
 		MustEqualRegex()
 	assertion.NewName("counter increase by one").
