@@ -12,6 +12,7 @@ jobs:
   docker:
     name: "Docker Image"
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       packages: write
     steps:
