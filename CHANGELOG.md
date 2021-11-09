@@ -3,6 +3,12 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### 2. Performance Improvements
+- **shared:** add new exit method for error module
+
+### 3. Bug Fixes
+- **shared:** sometime disabled return 0 second when it run too fast in CI.
+
 
 <a name="v5.0.0-beta.17"></a>
 ## [v5.0.0-beta.17] - 2021-10-20
